@@ -61,7 +61,8 @@
       <AdditionalDependencies>glfw3.lib;glew32.lib;openGL32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>copy "..\libs\glew-1.13.0\bin\Release\Win32\glew32.dll" "$(OutputPath)"</Command>
+      <Command>copy "..\libs\glew-1.13.0\bin\Release\Win32\glew32.dll" "$(OutputPath)"
+copy "shaders\" "$(OutputPath)"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">

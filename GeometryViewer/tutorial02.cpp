@@ -1,3 +1,6 @@
+#include <thread>
+#include <mutex>
+
 // Include standard headers
 #include <stdio.h>
 #include <stdlib.h>
@@ -9,6 +12,12 @@
 #include <glfw3.h>
 GLFWwindow* window;
 
+
+GLuint VertexArrayID;
+GLuint vertexbuffer;
+GLuint programID;
+std::mutex OGLmutex;
+
 // Include GLM
 #include <glm/glm.hpp>
 using namespace glm;
@@ -17,7 +26,9 @@ using namespace glm;
 
 #include "gvAPI.h"
 
-int tutorial2( void )
+
+
+int renderCycle()
 {
 	// Initialise GLFW
 	if( !glfwInit() )
@@ -43,6 +54,7 @@ int tutorial2( void )
 	}
 	glfwMakeContextCurrent(window);
 
+
 	// Initialize GLEW
 	glewExperimental = true; // Needed for core profile
 	if (glewInit() != GLEW_OK) {
@@ -52,33 +64,36 @@ int tutorial2( void )
 		return -1;
 	}
 
+
+
+
+
+
 	// Ensure we can capture the escape key being pressed below
 	glfwSetInputMode(window, GLFW_STICKY_KEYS, GL_TRUE);
 
 	// Dark blue background
 	glClearColor(0.0f, 0.0f, 0.4f, 0.0f);
 
-	GLuint VertexArrayID;
 	glGenVertexArrays(1, &VertexArrayID);
 	glBindVertexArray(VertexArrayID);
 
 	// Create and compile our GLSL program from the shaders
-	GLuint programID = LoadShaders( "SimpleVertexShader.vertexshader", "SimpleFragmentShader.fragmentshader" );
-
+	programID = LoadShaders( "SimpleVertexShader.vertexshader", "SimpleFragmentShader.fragmentshader" );
 
 	static const GLfloat g_vertex_buffer_data[] = { 
 		-1.0f, -1.0f, 0.0f,
-		 1.0f, -1.0f, 0.0f,
-		 0.0f,  1.0f, 0.0f,
+		1.0f, -1.0f, 0.0f,
+		0.0f,  1.0f, 0.0f,
 	};
 
-	GLuint vertexbuffer;
+
 	glGenBuffers(1, &vertexbuffer);
 	glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(g_vertex_buffer_data), g_vertex_buffer_data, GL_STATIC_DRAW);
 
 	do{
-
+		OGLmutex.lock();
 		// Clear the screen
 		glClear( GL_COLOR_BUFFER_BIT );
 
@@ -95,7 +110,7 @@ int tutorial2( void )
 			GL_FALSE,           // normalized?
 			0,                  // stride
 			(void*)0            // array buffer offset
-		);
+			);
 
 		// Draw the triangle !
 		glDrawArrays(GL_TRIANGLES, 0, 3); // 3 indices starting at 0 -> 1 triangle
@@ -105,10 +120,12 @@ int tutorial2( void )
 		// Swap buffers
 		glfwSwapBuffers(window);
 		glfwPollEvents();
+		OGLmutex.unlock();
+		std::this_thread::sleep_for(std::chrono::milliseconds(16));
 
 	} // Check if the ESC key was pressed or the window was closed
 	while( glfwGetKey(window, GLFW_KEY_ESCAPE ) != GLFW_PRESS &&
-		   glfwWindowShouldClose(window) == 0 );
+		glfwWindowShouldClose(window) == 0 );
 
 	// Cleanup VBO
 	glDeleteBuffers(1, &vertexbuffer);
@@ -117,6 +134,16 @@ int tutorial2( void )
 
 	// Close OpenGL window and terminate GLFW
 	glfwTerminate();
+
+	return 0;
+}
+
+
+
+int tutorial2( void )
+{
+	std::thread renderCycleThread(renderCycle);
+	renderCycleThread.detach();
 
 	return 0;
 }

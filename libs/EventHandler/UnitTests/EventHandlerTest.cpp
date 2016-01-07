@@ -4,6 +4,7 @@
 #include "../EventHandler.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
+using namespace skb;
 
 namespace UnitTests
 {
@@ -111,6 +112,13 @@ namespace UnitTests
 				if(view.btnClickEvent != nullptr)
 					Assert::Fail();
 
+			}
+
+
+			TEST_METHOD(EmptyHandlerTest)
+			{
+				MockView view;
+				view.btnClickEvent(EventArgs("first", 1));
 			}
 
 			TEST_METHOD(EventHandlingTest)

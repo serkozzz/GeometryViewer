@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="gv::IPoint">
+    <Position X="0.5" Y="1.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAIABAAAAAAAAAAKAAAAAAAAAAA4AAAAAEACAAAAA=</HashCode>
+      <FileName>D:\Programming\C++\GeometryViewer\Common\IPoint.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="gv::View::gvView" Collapsed="true">
+    <Position X="3.75" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAJIIAAAAKCAQAQAAAAAAAAAAgAcAAAAAEAAAAAAAAA=</HashCode>
+      <FileName>gvView.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="gv::View::IView">
+    <Position X="3.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAJAICAAAAAAAAQAAAAQAAAIAAAAAAAAEAAAAAAAABA=</HashCode>
+      <FileName>IView.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="gv::View::MainForm" Collapsed="true">
+    <Position X="5.75" Y="5" Width="1.5" />
+    <NestedTypes>
+      <Delegate Name="gv::View::MainForm::collectionChanged" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>MainForm.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+      <Delegate Name="gv::View::MainForm::propChanged" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>MainForm.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>CQAIAEFAAgCGABAAAiGEIBYCQgBGAAAAAAAAxQwAAEk=</HashCode>
+      <FileName>MainForm.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="gv::View::vPoint" Collapsed="true">
+    <Position X="0.5" Y="5.25" Width="1.5" />
+    <InheritanceLine Type="gv::IPoint">
+      <InheritanceModifierLabel ManuallyPlaced="true">
+        <Position X="0.162" Y="0.06" />
+      </InheritanceModifierLabel>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>AAAAIAAAACAAAIAAAoAAAAACAAAAA4BAAAAEgAAAAAA=</HashCode>
+      <FileName>vPoint.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

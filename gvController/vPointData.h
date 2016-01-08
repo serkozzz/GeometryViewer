@@ -9,7 +9,7 @@ using namespace glm;
 namespace gv
 {
 
-	struct vPointData
+	struct IPointData
 	{
 		vec3 position;
 		std::string name;

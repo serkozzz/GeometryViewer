@@ -1,14 +1,14 @@
 #pragma once
 
 #include "../EventHandler/EventHandler.h"
-#include "vPointData.h"
+#include "IPointData.h"
 
 namespace gv
 {
 	class IView
 	{
 	public:
-		skb::EventHandler<vPointData> addPointClick;
+		skb::EventHandler<IPointData> addPointClick;
 		skb::EventHandler<std> addPointClick;
 	};
 }

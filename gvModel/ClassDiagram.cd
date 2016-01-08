@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="gv::IPoint" Collapsed="true">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIABAAAAAAAAAAKAAAAAAAAAAA4AAAAAEACAAAAA=</HashCode>
+      <FileName>D:\Programming\C++\GeometryViewer\Common\IPoint.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="IgvModel" Collapsed="true">
+    <Position X="3" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>IgvModel.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="gv::Model::mPoint" Collapsed="true">
+    <Position X="0.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAAAACAAAIAAIIAAAAACAAAAA4BAAAAEgAAAAAA=</HashCode>
+      <FileName>mPoint.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

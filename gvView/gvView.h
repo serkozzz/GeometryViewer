@@ -4,13 +4,13 @@
 
 namespace gv
 {
-	namespace gvView
+	namespace View
 	{
 
 		class gvView : public IView
 		{
 		private:
-			std::shared_ptr<vPoint> _selectedPoint;
+			std::shared_ptr<IPoint> _selectedPoint;
 			int pointPropChangedSubscriptionId;
 
 
@@ -24,24 +24,24 @@ namespace gv
 
 		public:
 
-			std::shared_ptr<vPoint>& getSelectedPoint()
+			std::shared_ptr<IPoint>& getSelectedPoint()
 			{
 				return _selectedPoint;
 			}
 
-			void pointAdded(const std::shared_ptr<vPoint>& p)
+			void pointAdded(const std::shared_ptr<IPoint>& p)
 			{
 				if(pointAddedEvent != nullptr)
 					pointAddedEvent(p);
 			}
 
-			void pointRemoved(const std::shared_ptr<vPoint>& p)
+			void pointRemoved(const std::shared_ptr<IPoint>& p)
 			{
 				if(pointRemovedEvent != nullptr)
 					pointRemovedEvent(p);
 			}
 
-			void pointSelected(const std::shared_ptr<vPoint>& p)
+			void pointSelected(const std::shared_ptr<IPoint>& p)
 			{
 				/*if (_selectedPoint != nullptr)
 				_selectedPoint->propertyChanged -= pointPropChangedSubscriptionId;*/
@@ -54,7 +54,7 @@ namespace gv
 					pointSelectedEvent(p);
 			}
 
-			void pointUnSelected(const std::shared_ptr<vPoint>& p)
+			void pointUnSelected(const std::shared_ptr<IPoint>& p)
 			{
 				_selectedPoint->propertyChanged -= pointPropChangedSubscriptionId;
 				_selectedPoint.reset();
@@ -62,16 +62,16 @@ namespace gv
 					pointUnselectedEvent(p);
 			}
 
-			skb::EventHandler<std::shared_ptr<vPoint> > pointAddedEvent;
-			skb::EventHandler<std::shared_ptr<vPoint> > pointRemovedEvent;
-			skb::EventHandler<std::shared_ptr<vPoint> > pointSelectedEvent;
-			skb::EventHandler<std::shared_ptr<vPoint> > pointUnselectedEvent;
+			skb::EventHandler<std::shared_ptr<IPoint> > pointAddedEvent;
+			skb::EventHandler<std::shared_ptr<IPoint> > pointRemovedEvent;
+			skb::EventHandler<std::shared_ptr<IPoint> > pointSelectedEvent;
+			skb::EventHandler<std::shared_ptr<IPoint> > pointUnselectedEvent;
 
 			skb::EventHandler<const std::string&> selectedPointPropChangedEvent;
 
 			void (CALLBACK *testMethod)(int);
 
-			void TestCallback(std::shared_ptr<vPoint> p)
+			void TestCallback(std::shared_ptr<IPoint> p)
 			{
 				pointAdded(p);
 			}

@@ -1,17 +1,16 @@
 #pragma once
 
 #include "EventHandler.h"
-#include "vPoint.h"
+#include "IPoint.h"
 #include <memory>
-
 
 
 namespace gv
 {
-	namespace gvView
+	namespace View
 	{
 
-		///to work with property changed events use vPoint class 
+		///to work with property changed events use IPoint class 
 		///It has appropriate EventHandlers propertyChanged and tryPropertyChange
 
 		class IView
@@ -20,8 +19,8 @@ namespace gv
 			//to controller     <------ 
 			//GUI events:
 			//EventHandler<PropertyChangedArgs> 
-			skb::EventHandler<const std::shared_ptr<vPoint>& > addPointClick;
-			skb::EventHandler<const std::shared_ptr<vPoint>& > removePointClick;
+			skb::EventHandler<const std::shared_ptr<IPoint>& > addPointClick;
+			skb::EventHandler<const std::shared_ptr<IPoint>& > removePointClick;
 			//here can be added selection by gui events
 			skb::EventHandler<int> changePointSizeClick;
 			skb::EventHandler<const std::string&> loadPlanClick;
@@ -30,10 +29,10 @@ namespace gv
 
 
 			//from controller   ------> 
-			virtual void pointAdded(const std::shared_ptr<vPoint>& p) = 0;
-			virtual void pointRemoved(const std::shared_ptr<vPoint>& p) = 0;
-			virtual void pointSelected(const std::shared_ptr<vPoint>& p) = 0;
-			virtual void pointUnSelected(const std::shared_ptr<vPoint>& p) = 0;
+			virtual void pointAdded(const std::shared_ptr<IPoint>& p) = 0;
+			virtual void pointRemoved(const std::shared_ptr<IPoint>& p) = 0;
+			virtual void pointSelected(const std::shared_ptr<IPoint>& p) = 0;
+			virtual void pointUnSelected(const std::shared_ptr<IPoint>& p) = 0;
 		};
 	}
 }

@@ -5,13 +5,12 @@
 #include <msclr\marshal_cppstd.h>
 
 #include "gvView.h"
+#include "vPoint.h"
 
 namespace gv
 {
 
-	namespace gvView {
-
-		class gvView;
+	namespace View {
 
 		using namespace System;
 		using namespace System::ComponentModel;
@@ -33,9 +32,9 @@ namespace gv
 
 
 			gvView* _gvView;
-			std::map<const skb::EventHandler<const std::shared_ptr<vPoint>& >*, int>* _subscriptions;
+			std::map<const skb::EventHandler<const std::shared_ptr<IPoint>& >*, int>* _subscriptions;
 
-			delegate void collectionChanged(std::shared_ptr<vPoint>);
+			delegate void collectionChanged(std::shared_ptr<IPoint>);
 			delegate void propChanged(const std::string& propName);
 
 			template<typename TDelegateType, typename TArgType>
@@ -49,20 +48,20 @@ namespace gv
 		public:
 			MainForm(gvView* gvView) : _gvView(gvView)
 			{
-				_subscriptions = new std::map<const skb::EventHandler<const std::shared_ptr<vPoint>& >*, int>();
+				_subscriptions = new std::map<const skb::EventHandler<const std::shared_ptr<IPoint>& >*, int>();
 
 				//May be I must save delagates reference as class member
 				collectionChanged^ pointAddedEventDel =  gcnew collectionChanged(this, &MainForm::pointAddedEvent);
-				bindHelperMethod<collectionChanged, std::shared_ptr<vPoint>>(pointAddedEventDel, _gvView->pointAddedEvent);
+				bindHelperMethod<collectionChanged, std::shared_ptr<IPoint>>(pointAddedEventDel, _gvView->pointAddedEvent);
 
 				collectionChanged^ pointRemovedEventDel =  gcnew collectionChanged(this, &MainForm::pointRemovedEvent);
-				bindHelperMethod<collectionChanged, std::shared_ptr<vPoint>>(pointRemovedEventDel, _gvView->pointRemovedEvent);
+				bindHelperMethod<collectionChanged, std::shared_ptr<IPoint>>(pointRemovedEventDel, _gvView->pointRemovedEvent);
 
 				collectionChanged^ pointSelectedEventDel =  gcnew collectionChanged(this, &MainForm::pointSelectedEvent);
-				bindHelperMethod<collectionChanged, std::shared_ptr<vPoint>>(pointSelectedEventDel, _gvView->pointSelectedEvent);
+				bindHelperMethod<collectionChanged, std::shared_ptr<IPoint>>(pointSelectedEventDel, _gvView->pointSelectedEvent);
 
 				collectionChanged^ pointUnselectedEventDel =  gcnew collectionChanged(this, &MainForm::pointUnselectedEvent);
-				bindHelperMethod<collectionChanged, std::shared_ptr<vPoint>>(pointUnselectedEventDel, _gvView->pointUnselectedEvent);
+				bindHelperMethod<collectionChanged, std::shared_ptr<IPoint>>(pointUnselectedEventDel, _gvView->pointUnselectedEvent);
 
 				propChanged^ propChangedDel =  gcnew propChanged(this, &MainForm::selectedPointPropertyChanged);
 				bindHelperMethod<propChanged, const std::string&>(propChangedDel, _gvView->selectedPointPropChangedEvent);
@@ -395,7 +394,7 @@ namespace gv
 				return vPoint(name, pos, primitive);
 			}
 
-			void setGUIFromvPoint(const vPoint* point)
+			void setGUIFromIPoint(const IPoint* point)
 			{
 				tbName->Text = gcnew String(point->getName().c_str());
 				tbX->Text = System::Convert::ToString(point->getPosition().x);
@@ -407,8 +406,8 @@ namespace gv
 
 			void resetGUI()
 			{
-				vPoint point("", glm::vec3(0, 0, 0), PrimitiveType::cubePrimitiveType);
-				setGUIFromvPoint(&point);
+				gv::View::vPoint point("", glm::vec3(0, 0, 0), PrimitiveType::cubePrimitiveType);
+				setGUIFromIPoint(&point);
 			}
 
 			System::String^ getStrFromPrimitiveType(PrimitiveType primitive)
@@ -504,27 +503,29 @@ namespace gv
 
 #pragma region Model Events
 
-				 void pointAddedEvent(std::shared_ptr<vPoint> p)
+				 void pointAddedEvent(std::shared_ptr<IPoint> p)
+				 {
+					 int a = 10;
+					 a++;
+				 }
+
+				 void pointRemovedEvent(std::shared_ptr<IPoint> p)
 				 {
 				 }
 
-				 void pointRemovedEvent(std::shared_ptr<vPoint> p)
+				 void pointSelectedEvent(/*args is not used*/ std::shared_ptr<IPoint> p)
 				 {
+					 setGUIFromIPoint(_gvView->getSelectedPoint().get());
 				 }
 
-				 void pointSelectedEvent(/*args is not used*/ std::shared_ptr<vPoint> p)
-				 {
-					 setGUIFromvPoint(_gvView->getSelectedPoint().get());
-				 }
-
-				 void pointUnselectedEvent(/*args is not used*/ std::shared_ptr<vPoint> p)
+				 void pointUnselectedEvent(/*args is not used*/ std::shared_ptr<IPoint> p)
 				 {
 					 resetGUI();
 				 }
 
 				 void selectedPointPropertyChanged(const std::string& propName)
 				 {
-
+					 setGUIFromIPoint(_gvView->getSelectedPoint().get());
 				 }
 
 

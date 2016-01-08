@@ -26,10 +26,13 @@
     <ClInclude Include="IView.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="vPoint.h">
+    <ClInclude Include="gvView.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="gvView.h">
+    <ClInclude Include="..\Common\IPoint.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="vPoint.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -37,5 +40,8 @@
     <EmbeddedResource Include="MainForm.resx">
       <Filter>Resource Files</Filter>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="gvViewClassDiagram.cd" />
   </ItemGroup>
 </Project>

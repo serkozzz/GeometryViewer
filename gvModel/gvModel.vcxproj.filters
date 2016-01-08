@@ -26,5 +26,14 @@
     <ClInclude Include="IgvModel.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="mPoint.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Common\IPoint.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
 </Project>

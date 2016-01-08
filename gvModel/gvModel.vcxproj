@@ -80,7 +80,12 @@
     <ClCompile Include="IgvModel.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\Common\IPoint.h" />
     <ClInclude Include="IgvModel.h" />
+    <ClInclude Include="mPoint.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -6,7 +6,7 @@
 using namespace System::Windows::Forms;
 
 
-using namespace gv::gvView;
+using namespace gv::View;
 
 //[STAThreadAttribute]
 int main(array<System::String ^> ^args)

@@ -13,6 +13,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gvView", "gvView\gvView.vcx
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Starter", "Starter\Starter.vcxproj", "{89663E99-C0BB-403B-84F0-A46B0A9EB4BD}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Common", "Common\Common.vcxproj", "{747D8198-88F4-4330-AC74-BAF362E9BE8E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -43,6 +45,10 @@ Global
 		{89663E99-C0BB-403B-84F0-A46B0A9EB4BD}.Debug|Win32.Build.0 = Debug|Win32
 		{89663E99-C0BB-403B-84F0-A46B0A9EB4BD}.Release|Win32.ActiveCfg = Release|Win32
 		{89663E99-C0BB-403B-84F0-A46B0A9EB4BD}.Release|Win32.Build.0 = Release|Win32
+		{747D8198-88F4-4330-AC74-BAF362E9BE8E}.Debug|Win32.ActiveCfg = Debug|Win32
+		{747D8198-88F4-4330-AC74-BAF362E9BE8E}.Debug|Win32.Build.0 = Debug|Win32
+		{747D8198-88F4-4330-AC74-BAF362E9BE8E}.Release|Win32.ActiveCfg = Release|Win32
+		{747D8198-88F4-4330-AC74-BAF362E9BE8E}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

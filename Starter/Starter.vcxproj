@@ -106,6 +106,9 @@
     <Image Include="app.ico" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Common\Common.vcxproj">
+      <Project>{747d8198-88f4-4330-ac74-baf362e9be8e}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\gvController\gvController.vcxproj">
       <Project>{6fdce07d-3cef-4552-b5b6-5c5d5deb46ef}</Project>
     </ProjectReference>

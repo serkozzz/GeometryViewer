@@ -27,7 +27,6 @@ namespace gv
 			void setPosition(const glm::vec3& newPosition)
 			{
 				_position = newPosition;
-				propertyChanged(IPoint::positionPropertyName);
 			}
 
 			void trySetPosition(const glm::vec3& newPosition)

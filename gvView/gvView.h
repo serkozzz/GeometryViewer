@@ -15,10 +15,10 @@ namespace gv
 
 
 
-			void selectedPointPropertyChanged(std::string propName)
+			void selectedPointPropertyChanged(PointPropChangedArgs arg)
 			{
 				if (selectedPointPropChangedEvent != nullptr)
-					selectedPointPropChangedEvent(propName);
+					selectedPointPropChangedEvent(arg);
 			}
 
 
@@ -67,7 +67,7 @@ namespace gv
 			skb::EventHandler<std::shared_ptr<IPoint> > pointSelectedEvent;
 			skb::EventHandler<std::shared_ptr<IPoint> > pointUnselectedEvent;
 
-			skb::EventHandler<const std::string&> selectedPointPropChangedEvent;
+			skb::EventHandler<PointPropChangedArgs> selectedPointPropChangedEvent;
 
 			void (CALLBACK *testMethod)(int);
 

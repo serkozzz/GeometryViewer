@@ -35,7 +35,7 @@ namespace gv
 			std::map<const skb::EventHandler<const std::shared_ptr<IPoint>& >*, int>* _subscriptions;
 
 			delegate void collectionChanged(std::shared_ptr<IPoint>);
-			delegate void propChanged(const std::string& propName);
+			delegate void propChanged(PointPropChangedArgs args);
 
 			template<typename TDelegateType, typename TArgType>
 			void bindHelperMethod(TDelegateType^ del, skb::EventHandler<TArgType>& eventHandler)
@@ -64,7 +64,7 @@ namespace gv
 				bindHelperMethod<collectionChanged, std::shared_ptr<IPoint>>(pointUnselectedEventDel, _gvView->pointUnselectedEvent);
 
 				propChanged^ propChangedDel =  gcnew propChanged(this, &MainForm::selectedPointPropertyChanged);
-				bindHelperMethod<propChanged, const std::string&>(propChangedDel, _gvView->selectedPointPropChangedEvent);
+				bindHelperMethod<propChanged, PointPropChangedArgs>(propChangedDel, _gvView->selectedPointPropChangedEvent);
 
 				InitializeComponent();
 				//
@@ -523,7 +523,7 @@ namespace gv
 					 resetGUI();
 				 }
 
-				 void selectedPointPropertyChanged(const std::string& propName)
+				 void selectedPointPropertyChanged(PointPropChangedArgs arg)
 				 {
 					 setGUIFromIPoint(_gvView->getSelectedPoint().get());
 				 }

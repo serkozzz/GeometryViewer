@@ -1,9 +1,5 @@
 #pragma once
 
-
-
-#pragma once
-
 #include <string>
 #include "glm/glm.hpp"
 
@@ -36,7 +32,7 @@ namespace gv
 			void setPosition(const glm::vec3& newPosition)
 			{
 				_position = newPosition;
-				propertyChanged(IPoint::positionPropertyName);
+				propertyChanged(PointPropChangedArgs(this, &_position, IPoint::positionPropertyName));
 			}
 
 			void trySetPosition(const glm::vec3& newPosition)
@@ -52,7 +48,7 @@ namespace gv
 			void setName(const std::string& newName)
 			{
 				_name = newName;
-				propertyChanged(IPoint::namePropertyName);
+				propertyChanged(PointPropChangedArgs(this, &_name, IPoint::namePropertyName));
 			}
 
 			void trySetName(const std::string& newName)
@@ -68,7 +64,7 @@ namespace gv
 			void setPrimitive(const PrimitiveType& newPrimitive)
 			{
 				_primitive = newPrimitive;
-				propertyChanged(mPoint::primitivePropertyName);
+				propertyChanged(PointPropChangedArgs(this, &_primitive, IPoint::primitivePropertyName));
 			}
 
 			void trySetPrimitive(const PrimitiveType& newPrimitive)
@@ -76,7 +72,7 @@ namespace gv
 				tryPropertyChanged(skb::TryPropertyChangeArgs(IPoint::primitivePropertyName, &newPrimitive));
 			}
 
-			skb::EventHandler<std::string> propertyChanged;
+			skb::EventHandler<PointPropChangedArgs> propertyChanged;
 			skb::EventHandler<skb::TryPropertyChangeArgs> tryPropertyChanged;
 		};
 

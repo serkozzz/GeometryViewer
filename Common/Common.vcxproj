@@ -11,10 +11,9 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{6FDCE07D-3CEF-4552-B5B6-5C5D5DEB46EF}</ProjectGuid>
+    <ProjectGuid>{747D8198-88F4-4330-AC74-BAF362E9BE8E}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>Controller</RootNamespace>
-    <ProjectName>gvController</ProjectName>
+    <RootNamespace>Common</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -77,23 +76,11 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="IView.h" />
-    <ClInclude Include="ViewController.h" />
-    <ClInclude Include="vPointData.h" />
+    <ClInclude Include="common.h" />
+    <ClInclude Include="IPoint.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ViewController.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Common\Common.vcxproj">
-      <Project>{747d8198-88f4-4330-ac74-baf362e9be8e}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\gvModel\gvModel.vcxproj">
-      <Project>{1cef1409-52c9-4c7b-940c-c4e2022f51ce}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\gvView\gvView.vcxproj">
-      <Project>{05af26d6-6fa9-400a-9d45-e89c99253782}</Project>
-    </ProjectReference>
+    <ClCompile Include="IPont.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -78,14 +78,22 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="IgvModel.cpp" />
+    <ClCompile Include="mPlan.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Common\IPoint.h" />
     <ClInclude Include="IgvModel.h" />
+    <ClInclude Include="IPlan.h" />
+    <ClInclude Include="mPlan.h" />
     <ClInclude Include="mPoint.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Common\Common.vcxproj">
+      <Project>{747d8198-88f4-4330-ac74-baf362e9be8e}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

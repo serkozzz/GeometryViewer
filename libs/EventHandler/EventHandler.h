@@ -76,19 +76,31 @@ namespace skb    //means SerKoz Bicycles
 
 	}
 
+	//template <typename T>
+	//struct PropertyChangedArgs
+	//{
+	//	PropertyChangedArgs(T* sender, T* newValue, const std::string& propName) 
+	//		: sender(sender), newValue(newValue), propName(propName)
+	//	{
+	//	}
+
+	//	T* sender; ///object whose properties is chanded
+	//	T* newValue; 
+	//	std::string propName;
+	//};
+
 	template <typename T>
 	struct PropertyChangedArgs
 	{
-		PropertyChangedArgs(T* sender, T* newValue, const std::string& propName) 
+		PropertyChangedArgs(const T* sender, const void* newValue, const std::string& propName) 
 			: sender(sender), newValue(newValue), propName(propName)
 		{
 		}
 
-		T* sender; ///object whose properties is chanded
-		T* newValue; 
+		const T* sender; ///object whose properties is chanded
+		const void* newValue; 
 		std::string propName;
 	};
-
 
 	struct TryPropertyChangeArgs
 	{

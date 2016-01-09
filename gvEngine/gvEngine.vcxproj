@@ -99,6 +99,11 @@ copy "shaders\" "$(OutputPath)"</Command>
     <ClCompile Include="test.cpp" />
     <ClCompile Include="tutorial02.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Common\Common.vcxproj">
+      <Project>{747d8198-88f4-4330-ac74-baf362e9be8e}</Project>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

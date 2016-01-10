@@ -102,13 +102,14 @@ namespace skb    //means SerKoz Bicycles
 		std::string propName;
 	};
 
-	struct TryPropertyChangeArgs
-	{
-		TryPropertyChangeArgs(const std::string& propName, const void* newValue) 
-			: propName(propName), newValue(newValue)
-		{
-		}
-		const std::string& propName;
-		const void* newValue;
-	};
+	//template <typename T>
+	//struct TryPropertyChangeArgs
+	//{
+	//	TryPropertyChangeArgs(const T* sender, const std::string& propName, const void* newValue) 
+	//		: propName(propName), newValue(newValue)
+	//	{
+	//	}
+	//	const std::string& propName;
+	//	const void* newValue;
+	//};
 }

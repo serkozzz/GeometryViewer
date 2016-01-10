@@ -13,8 +13,8 @@ namespace gv
 		class IPlan
 		{
 		public:
-			skb::EventHandler<std::shared_ptr<IPoint> > pointAdded;
-			skb::EventHandler<std::shared_ptr<IPoint> > pointRemoved;
+			skb::EventHandler<const std::shared_ptr<IPoint>& > pointAdded;
+			skb::EventHandler<const std::shared_ptr<IPoint>& > pointRemoved;
 		};
 
 	}

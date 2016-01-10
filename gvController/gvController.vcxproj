@@ -77,9 +77,7 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="IView.h" />
     <ClInclude Include="ViewController.h" />
-    <ClInclude Include="vPointData.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ViewController.cpp" />

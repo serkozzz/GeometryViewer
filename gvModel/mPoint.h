@@ -18,6 +18,14 @@ namespace gv
 			PrimitiveType _primitive;
 
 		public:
+
+			mPoint(const IPoint* p)
+			{
+				_name = p->getName();
+				_position = p->getPosition();
+				_primitive = p->getPrimitive();
+			}
+
 			mPoint(std::string name, glm::vec3 position, PrimitiveType primitive)
 				: _name(name), _position(position), _primitive(primitive)
 			{
@@ -37,7 +45,7 @@ namespace gv
 
 			void trySetPosition(const glm::vec3& newPosition)
 			{
-				tryPropertyChanged(skb::TryPropertyChangeArgs(IPoint::positionPropertyName, &newPosition));
+				tryPropertyChanged(PointPropChangedArgs(this, &_position, IPoint::positionPropertyName));
 			}
 
 			const std::string& getName() const
@@ -53,7 +61,7 @@ namespace gv
 
 			void trySetName(const std::string& newName)
 			{
-				tryPropertyChanged(skb::TryPropertyChangeArgs(IPoint::namePropertyName, &newName));
+				tryPropertyChanged(PointPropChangedArgs(this, &newName, IPoint::namePropertyName));
 			}
 
 			PrimitiveType getPrimitive() const
@@ -69,11 +77,11 @@ namespace gv
 
 			void trySetPrimitive(const PrimitiveType& newPrimitive)
 			{
-				tryPropertyChanged(skb::TryPropertyChangeArgs(IPoint::primitivePropertyName, &newPrimitive));
+				tryPropertyChanged(PointPropChangedArgs(this, &_primitive, IPoint::primitivePropertyName));
 			}
 
 			skb::EventHandler<PointPropChangedArgs> propertyChanged;
-			skb::EventHandler<skb::TryPropertyChangeArgs> tryPropertyChanged;
+			skb::EventHandler<PointPropChangedArgs> tryPropertyChanged;
 		};
 
 	}

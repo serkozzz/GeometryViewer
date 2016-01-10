@@ -79,13 +79,16 @@
   <ItemGroup>
     <ClCompile Include="IgvModel.cpp" />
     <ClCompile Include="mPlan.cpp" />
+    <ClCompile Include="PlanManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Common\IPoint.h" />
     <ClInclude Include="IgvModel.h" />
     <ClInclude Include="IPlan.h" />
+    <ClInclude Include="Model.h" />
     <ClInclude Include="mPlan.h" />
     <ClInclude Include="mPoint.h" />
+    <ClInclude Include="PlanManager.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />

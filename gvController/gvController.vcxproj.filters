@@ -21,12 +21,6 @@
     <ClInclude Include="ViewController.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="vPointData.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="IView.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ViewController.cpp">

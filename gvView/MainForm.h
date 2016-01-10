@@ -435,8 +435,6 @@ namespace gv
 #pragma region GUI Events
 		private: System::Void btnAddPoint_Click(System::Object^  sender, System::EventArgs^  e) {
 
-					 _gvView->TestCallback(std::make_shared<vPoint>(getvPointFromGUI()));
-
 					 if (_gvView->addPointClick != nullptr)
 					 {
 						 _gvView->addPointClick(std::make_shared<vPoint>(getvPointFromGUI()));

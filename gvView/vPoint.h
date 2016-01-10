@@ -13,6 +13,13 @@ namespace gv
 			PrimitiveType _primitive;
 
 		public:
+			vPoint(const IPoint* p)
+			{
+				_name = p->getName();
+				_position = p->getPosition();
+				_primitive = p->getPrimitive();
+			}
+
 			vPoint(std::string name, glm::vec3 position, PrimitiveType primitive)
 				: _name(name), _position(position), _primitive(primitive)
 			{

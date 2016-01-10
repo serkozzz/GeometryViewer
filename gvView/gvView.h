@@ -68,13 +68,6 @@ namespace gv
 			skb::EventHandler<std::shared_ptr<IPoint> > pointUnselectedEvent;
 
 			skb::EventHandler<PointPropChangedArgs> selectedPointPropChangedEvent;
-
-			void (CALLBACK *testMethod)(int);
-
-			void TestCallback(std::shared_ptr<IPoint> p)
-			{
-				pointAdded(p);
-			}
 		};
 	}
 }

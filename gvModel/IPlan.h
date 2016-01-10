@@ -4,6 +4,8 @@
 #include "IPoint.h"
 #include <memory>
 
+#include <list>
+
 
 namespace gv
 {

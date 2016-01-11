@@ -11,20 +11,19 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{B3DF0CEB-E913-4A0F-8A22-44476D6606DC}</ProjectGuid>
+    <ProjectGuid>{5782F7AB-DDB9-405E-816A-79855F705D3A}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>GeometryViewer</RootNamespace>
-    <ProjectName>gvEngine</ProjectName>
+    <RootNamespace>gv3DController</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v110</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v110</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -40,31 +39,19 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <LinkIncremental>true</LinkIncremental>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <LinkIncremental>false</LinkIncremental>
-  </PropertyGroup>
+  <PropertyGroup />
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <PrecompiledHeader>
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\libs\glfw-3.1.2.bin.WIN32\include\GLFW;..\libs\glm-0.9.7.1;..\libs\glew-1.13.0\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
+      <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>..\libs\glew-1.13.0\lib\Release\Win32;..\libs\glfw-3.1.2.bin.WIN32\lib-vc2012;..\libs</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glfw3.lib;glew32.lib;openGL32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
-    <PostBuildEvent>
-      <Command>copy "..\libs\glew-1.13.0\bin\Release\Win32\glew32.dll" "$(OutputPath)"
-copy "shaders\" "$(OutputPath)"</Command>
-    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -74,37 +61,27 @@ copy "shaders\" "$(OutputPath)"</Command>
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\libs\glfw-3.1.2.bin.WIN32\include\GLFW;..\libs\glm-0.9.7.1;..\libs\glew-1.13.0\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
+      <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalLibraryDirectories>..\libs\glew-1.13.0\lib\Release\Win32;..\libs\glfw-3.1.2.bin.WIN32\lib-vc2012;..\libs</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glfw3.lib;glew32.lib;openGL32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
-    <PostBuildEvent>
-      <Command>copy "..\libs\glew-1.13.0\bin\Release\Win32\glew32.dll" "$(OutputPath)"</Command>
-    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="GeometryData.h" />
-    <ClInclude Include="gvEngineAPI.h" />
-    <ClInclude Include="IInputController.h" />
-    <ClInclude Include="ISceneManager.h" />
-    <ClInclude Include="ISceneNode.h" />
-    <ClInclude Include="shader.hpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="shader.cpp" />
-    <ClCompile Include="test.cpp" />
-    <ClCompile Include="tutorial02.cpp" />
+    <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.vcxproj">
       <Project>{747d8198-88f4-4330-ac74-baf362e9be8e}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\gvEngine\gvEngine.vcxproj">
+      <Project>{b3df0ceb-e913-4a0f-8a22-44476d6606dc}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\gvModel\gvModel.vcxproj">
+      <Project>{1cef1409-52c9-4c7b-940c-c4e2022f51ce}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

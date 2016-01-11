@@ -1,20 +1,25 @@
 #pragma once
 
 
-#include<list>
+#include <list>
 #include <glm/glm.hpp>
 
-
-GVAPI struct Vertex
+namespace gv
 {
-	glm::vec3 position;
-	glm::vec3 normal;
-	glm::vec2 uv;
-};
+	namespace Engine
+	{
+		GVAPI struct Vertex
+		{
+			glm::vec3 position;
+			glm::vec3 normal;
+			glm::vec2 uv;
+		};
 
 
-GVAPI struct GeometryData
-{
-	std::list<Vertex> verticies;
-	std::list<unsigned int> indecies;
-};
+		GVAPI struct GeometryData
+		{
+			std::list<Vertex> verticies;
+			std::list<unsigned int> indecies;
+		};
+	}
+}

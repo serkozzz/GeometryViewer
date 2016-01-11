@@ -15,6 +15,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Starter", "Starter\Starter.
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Common", "Common\Common.vcxproj", "{747D8198-88F4-4330-AC74-BAF362E9BE8E}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gv3DController", "gv3DController\gv3DController.vcxproj", "{5782F7AB-DDB9-405E-816A-79855F705D3A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -49,6 +51,10 @@ Global
 		{747D8198-88F4-4330-AC74-BAF362E9BE8E}.Debug|Win32.Build.0 = Debug|Win32
 		{747D8198-88F4-4330-AC74-BAF362E9BE8E}.Release|Win32.ActiveCfg = Release|Win32
 		{747D8198-88F4-4330-AC74-BAF362E9BE8E}.Release|Win32.Build.0 = Release|Win32
+		{5782F7AB-DDB9-405E-816A-79855F705D3A}.Debug|Win32.ActiveCfg = Debug|Win32
+		{5782F7AB-DDB9-405E-816A-79855F705D3A}.Debug|Win32.Build.0 = Debug|Win32
+		{5782F7AB-DDB9-405E-816A-79855F705D3A}.Release|Win32.ActiveCfg = Release|Win32
+		{5782F7AB-DDB9-405E-816A-79855F705D3A}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

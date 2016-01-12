@@ -1,5 +1,7 @@
 #pragma once 
 
+#include "dllexport.h"
+
 #include <string>
 #include <memory>
 #include "ISceneNode.h"
@@ -13,7 +15,7 @@ namespace gv
 		public:
 			///Exceptions:
 			///if meshName is not unique method throw std::invalid_argument exception 
-			virtual void createMesh(const std::string& meshName, std::shared_ptr<GeometryData> geometryData);
+			virtual void createMesh(const std::string& meshName, const GeometryData* geometryData);
 
 			///Exceptions:
 			///if mesh with MeshName is abscent method throw std::invalid_argument exception 

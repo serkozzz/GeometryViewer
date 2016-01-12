@@ -1,12 +1,8 @@
 #pragma once
 
-#if defined(GVLIBRARY_EXPORT) // внутри DLL
-#   define GVAPI   __declspec(dllexport)
-#else // вне DLL
-#   define GVAPI   __declspec(dllimport)
-#endif  // GVLIBRARY_EXPORT
-
 #include <memory>
+
+#include "dllexport.h"
 
 #include "GeometryData.h"
 #include "IInputController.h"

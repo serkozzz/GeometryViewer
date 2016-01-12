@@ -29,9 +29,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="IgvModel.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="mPoint.h">
       <Filter>Header Files</Filter>
     </ClInclude>

@@ -1,5 +1,5 @@
 #pragma once
-
+#include "dllexport.h"
 
 namespace gv
 {

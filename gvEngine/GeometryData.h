@@ -1,5 +1,5 @@
 #pragma once
-
+#include "dllexport.h"
 
 #include <list>
 #include <glm/glm.hpp>

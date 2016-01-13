@@ -26,7 +26,7 @@ namespace gv
 			Model::Model* _model;
 			Model::PlanManager& _planManager;
 			Engine::ISceneManager* _sceneManager;
-			std::map<std::shared_ptr<IPoint>, std::shared_ptr<Engine::ISceneNode> > _points;
+			std::map<std::shared_ptr<IPoint>, Engine::ISceneNode* > _points;
 
 			const std::string _cubeMeshName;
 			const std::string _sphereMeshName;		

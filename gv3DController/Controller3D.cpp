@@ -1,4 +1,6 @@
 
+#include "glm/glm.hpp"
+#include "glm/gtc/matrix_transform.hpp"
 
 #include "Controller3D.h"
 #include "PrimitiveCreator.h"
@@ -6,6 +8,8 @@
 #include "../gvEngine/ISceneManager.h"
 #include "../gvEngine/gvEngineAPI.h"
 
+
+using namespace gv::Engine;
 
 namespace gv
 {
@@ -33,19 +37,31 @@ namespace gv
 		void Controller3D::pointAdded(const std::shared_ptr<IPoint>& p)
 		{
 			std::string meshName;
-			const Engine::GeometryData* geometryData = nullptr;
+			static int id = 0;
+			const GeometryData* geometryData = nullptr;
 			if (p->getPrimitive() == PrimitiveType::cubePrimitiveType)
 				meshName = _cubeMeshName;
 			else if (p->getPrimitive() == PrimitiveType::spherePrimitiveType)
 				meshName = _sphereMeshName;
 
-			//_sceneManager->createSceneNode("", meshName, 
+			std::string sceneNodeName = "node_" + std::to_string(id) + "_" + p->getName();
+			glm::mat4 transformMatrix(1.0f);
+			glm::translate(transformMatrix, p->getPosition());
+			ISceneNode* sceneNode = _sceneManager->createSceneNode(sceneNodeName, meshName, transformMatrix);
+			if (_points.find(p) != _points.end())
+				throw std::exception("Try add point that has been already added");
+
+			_points[p] = sceneNode;
 		}
 
 
 		void Controller3D::pointRemoved(const std::shared_ptr<IPoint>& p)
 		{
-			
+			if (_points.find(p) == _points.end())
+				throw std::exception("Try remove point that is abscent in the Scene");
+
+			_sceneManager->removeSceneNode(_points[p]);
+			_points.erase(p);
 		}
 #pragma endregion Model Events
 	}

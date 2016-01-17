@@ -17,6 +17,13 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Common", "Common\Common.vcx
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "gv3DController", "gv3DController\gv3DController.vcxproj", "{5782F7AB-DDB9-405E-816A-79855F705D3A}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TestDll", "TestDll\TestDll.vcxproj", "{E78EF895-4546-43EB-A238-744DCC075489}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ConsoleStarter", "ConsoleStarter\ConsoleStarter.vcxproj", "{6641A03A-AAB2-456F-8247-71457DA275C1}"
+	ProjectSection(ProjectDependencies) = postProject
+		{5782F7AB-DDB9-405E-816A-79855F705D3A} = {5782F7AB-DDB9-405E-816A-79855F705D3A}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -55,6 +62,14 @@ Global
 		{5782F7AB-DDB9-405E-816A-79855F705D3A}.Debug|Win32.Build.0 = Debug|Win32
 		{5782F7AB-DDB9-405E-816A-79855F705D3A}.Release|Win32.ActiveCfg = Release|Win32
 		{5782F7AB-DDB9-405E-816A-79855F705D3A}.Release|Win32.Build.0 = Release|Win32
+		{E78EF895-4546-43EB-A238-744DCC075489}.Debug|Win32.ActiveCfg = Debug|Win32
+		{E78EF895-4546-43EB-A238-744DCC075489}.Debug|Win32.Build.0 = Debug|Win32
+		{E78EF895-4546-43EB-A238-744DCC075489}.Release|Win32.ActiveCfg = Release|Win32
+		{E78EF895-4546-43EB-A238-744DCC075489}.Release|Win32.Build.0 = Release|Win32
+		{6641A03A-AAB2-456F-8247-71457DA275C1}.Debug|Win32.ActiveCfg = Debug|Win32
+		{6641A03A-AAB2-456F-8247-71457DA275C1}.Debug|Win32.Build.0 = Debug|Win32
+		{6641A03A-AAB2-456F-8247-71457DA275C1}.Release|Win32.ActiveCfg = Release|Win32
+		{6641A03A-AAB2-456F-8247-71457DA275C1}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

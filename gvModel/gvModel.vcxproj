@@ -77,13 +77,17 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ICamera.cpp" />
     <ClCompile Include="IgvModel.cpp" />
+    <ClCompile Include="mCamera.cpp" />
     <ClCompile Include="mPlan.cpp" />
     <ClCompile Include="PlanManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Common\IPoint.h" />
+    <ClInclude Include="ICamera.h" />
     <ClInclude Include="IPlan.h" />
+    <ClInclude Include="mCamera.h" />
     <ClInclude Include="Model.h" />
     <ClInclude Include="mPlan.h" />
     <ClInclude Include="mPoint.h" />

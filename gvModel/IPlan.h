@@ -1,10 +1,13 @@
 #pragma once
 
+#include <memory>
+#include <list>
+
+
 #include "EventHandler.h"
 #include "IPoint.h"
-#include <memory>
+#include "ICamera.h"
 
-#include <list>
 
 
 namespace gv
@@ -15,6 +18,8 @@ namespace gv
 		class IPlan
 		{
 		public:
+			virtual ICamera* getCamera() = 0;
+
 			skb::EventHandler<const std::shared_ptr<IPoint>& > pointAdded;
 			skb::EventHandler<const std::shared_ptr<IPoint>& > pointRemoved;
 		};

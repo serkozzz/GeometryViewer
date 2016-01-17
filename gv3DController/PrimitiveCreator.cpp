@@ -33,18 +33,14 @@ static gv::Engine::GeometryData* CreateSphere()
 }
 
 
-GeometryData* PrimitiveCreator::_cube = CreateCube();
-GeometryData* PrimitiveCreator::_sphere = CreateSphere();
-
-
 const GeometryData* PrimitiveCreator::getCube()
 {
-	return PrimitiveCreator::_cube;
+	return CreateCube();
 }
 
 const GeometryData* PrimitiveCreator::getSphere()
 {
-	return PrimitiveCreator::_sphere;
+	return CreateSphere();
 }
 
 

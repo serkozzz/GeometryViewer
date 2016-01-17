@@ -5,6 +5,11 @@
 
 
 
+void gvTest1()
+{
+
+}
+
 
 void gvTest()
 {

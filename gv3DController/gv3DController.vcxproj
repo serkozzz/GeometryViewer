@@ -85,6 +85,9 @@
     <ProjectReference Include="..\gvModel\gvModel.vcxproj">
       <Project>{1cef1409-52c9-4c7b-940c-c4e2022f51ce}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\TestDll\TestDll.vcxproj">
+      <Project>{e78ef895-4546-43eb-a238-744dcc075489}</Project>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Controller3D.h" />

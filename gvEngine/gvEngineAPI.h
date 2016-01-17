@@ -9,8 +9,10 @@
 #include "ISceneManager.h"
 
 
-extern "C"
-{
+
+//extern "C"
+//{
+	//GVAPI void gvTest1();
 	namespace gv
 	{
 		namespace Engine
@@ -22,4 +24,4 @@ extern "C"
 			GVAPI int tutorial2();
 		}
 	}
-}
+//}

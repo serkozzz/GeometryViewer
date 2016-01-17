@@ -32,7 +32,7 @@ namespace gv
 
 			}
 
-			const glm::vec3& getPosition() const
+			glm::vec3 getPosition() const
 			{
 				return _position;
 			}
@@ -48,7 +48,7 @@ namespace gv
 				tryPropertyChanged(PointPropChangedArgs(this, &_position, IPoint::positionPropertyName));
 			}
 
-			const std::string& getName() const
+			std::string getName() const
 			{
 				return _name;
 			}

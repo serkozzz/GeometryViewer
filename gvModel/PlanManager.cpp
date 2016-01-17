@@ -1,17 +1,23 @@
 #include "PlanManager.h"
+#include "mPlan.h"
 
 using namespace gv;
 using namespace gv::Model;
 
+PlanManager::PlanManager()
+{
+	_plan = new mPlan();
+}
 
 PlanManager::~PlanManager()
 {
-
+	if (_plan)
+		delete _plan;
 }
 
 IPlan* PlanManager::getPlan()
 {
-	return &_plan;
+	return _plan;
 }
 
 
@@ -19,7 +25,7 @@ void PlanManager::tryAddPoint(const std::shared_ptr<IPoint>& point)
 {
 	mPoint p(point.get());
 	auto pPtr = std::make_shared<mPoint>(p);
-	_plan.AddPoint(pPtr);
+	_plan->AddPoint(pPtr);
 	_subscriptions[pPtr] = 
 		(pPtr->tryPropertyChanged += std::bind(&PlanManager::onTryPointPropChanged, this, std::placeholders::_1));
 }
@@ -27,7 +33,7 @@ void PlanManager::tryAddPoint(const std::shared_ptr<IPoint>& point)
 void PlanManager::tryRemovePoint(const std::shared_ptr<IPoint>& point)
 {
 
-	if (!_plan.isPointExist(point))
+	if (!_plan->isPointExist(point))
 	{
 		throw std::exception("Attemption to delete point that is abscent in the plan");
 	}
@@ -35,17 +41,17 @@ void PlanManager::tryRemovePoint(const std::shared_ptr<IPoint>& point)
 	point->propertyChanged -= _subscriptions[point];
 	_subscriptions.erase(point);
 	auto mp = std::dynamic_pointer_cast<mPoint>(point);
-	_plan.RemovePoint(mp);
+	_plan->RemovePoint(mp);
 }
 
 void PlanManager::onTryPointPropChanged(PointPropChangedArgs args)
 {
 	auto pPtr = std::shared_ptr<const IPoint>(args.sender);
-	if (!_plan.isPointExist(pPtr))
+	if (!_plan->isPointExist(pPtr))
 	{
 		throw std::exception("Attemption to change point property for point that is abscent in the plan");
 	}
-	auto& points = _plan.getPoints();
+	auto& points = _plan->getPoints();
 	auto it = std::find(points.begin(), points.end(), pPtr);
 
 	if (args.propName == IPoint::namePropertyName)

@@ -24,7 +24,7 @@
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v110</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -96,9 +96,12 @@ copy "shaders\" "$(OutputPath)"</Command>
     <ClInclude Include="IInputController.h" />
     <ClInclude Include="ISceneManager.h" />
     <ClInclude Include="ISceneNode.h" />
+    <ClInclude Include="SceneManager.h" />
     <ClInclude Include="shader.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="gvEngineAPI.cpp" />
+    <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="shader.cpp" />
     <ClCompile Include="test.cpp" />
     <ClCompile Include="tutorial02.cpp" />

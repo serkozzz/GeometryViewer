@@ -8,7 +8,7 @@ namespace gv
 {
 	namespace Engine
 	{
-		GVAPI struct Vertex
+		struct Vertex
 		{
 			glm::vec3 position;
 			glm::vec3 normal;
@@ -16,7 +16,7 @@ namespace gv
 		};
 
 
-		GVAPI struct GeometryData
+		struct GeometryData
 		{
 			std::list<Vertex> verticies;
 			std::list<unsigned int> indecies;

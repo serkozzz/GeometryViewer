@@ -3,6 +3,12 @@
 using namespace gv::Model;
 using namespace gv;
 
+ICamera* mPlan::getCamera()
+{
+	return &_camera;
+}
+
+
 void mPlan::AddPoint(const std::shared_ptr<mPoint>& p)
 {
 	_points.push_back(p);

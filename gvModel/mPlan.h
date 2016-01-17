@@ -5,6 +5,7 @@
 
 #include "IPlan.h"
 #include "mPoint.h"
+#include "mCamera.h"
 
 namespace gv
 {
@@ -13,7 +14,10 @@ namespace gv
 		class mPlan : public IPlan
 		{
 			std::list<std::shared_ptr<mPoint> > _points;
+			mCamera _camera;
+
 		public:
+			virtual ICamera* getCamera();
 			void AddPoint(const std::shared_ptr<mPoint>& p);
 			void RemovePoint(const std::shared_ptr<mPoint>& p);
 			const std::list<std::shared_ptr<mPoint> >& getPoints() const;

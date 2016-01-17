@@ -4,6 +4,7 @@
 #include "../gvView/IView.h"
 #include "../gvController/ViewController.h"
 #include "../gvModel/Model.h"
+#include "../gvModel/mPlan.h"
 #include "MockView.h"
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
@@ -35,10 +36,10 @@ namespace UnitTests
 
 		TEST_METHOD(AddElementsTest)
 		{			
-			gv::Model::mPlan& plan = _model ->getPlanManager().getPlanRegerenceForTest();
+			gv::Model::mPlan* plan = _model ->getPlanManager().getPlanRegerenceForTest();
 
 			_view->emulateAddPointClick(vPoint("point1", glm::vec3(0, 1, 2), gv::PrimitiveType::cubePrimitiveType));
-			Assert::AreEqual((int)plan.getPoints().size(), 1);
+			Assert::AreEqual((int)plan->getPoints().size(), 1);
 			Assert::AreEqual((int)_view->_vPoints.size(), 1);
 		}
 

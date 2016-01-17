@@ -27,6 +27,7 @@ int main(array<System::String ^> ^args)
 	MainForm^ f = gcnew MainForm(view);
 	ViewController* viewController = new ViewController(view, model);
 	Controller3D* controller3D = new Controller3D(model);
+	controller3D->create3DView();
 	Application::Run(f);
 	delete controller3D;
 	delete viewController;

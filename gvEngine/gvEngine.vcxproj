@@ -96,6 +96,7 @@ copy "shaders\" "$(OutputPath)"</Command>
     <ClInclude Include="IInputController.h" />
     <ClInclude Include="ISceneManager.h" />
     <ClInclude Include="ISceneNode.h" />
+    <ClInclude Include="RenderCycle.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="shader.hpp" />
   </ItemGroup>
@@ -104,7 +105,7 @@ copy "shaders\" "$(OutputPath)"</Command>
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="shader.cpp" />
     <ClCompile Include="test.cpp" />
-    <ClCompile Include="tutorial02.cpp" />
+    <ClCompile Include="renderCycle.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.vcxproj">

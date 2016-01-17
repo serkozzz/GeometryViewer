@@ -4,9 +4,12 @@
 
 #include "Controller3D.h"
 #include "PrimitiveCreator.h"
+#include "InputController.h"
+
 #include "../gvEngine/ISceneNode.h"
 #include "../gvEngine/ISceneManager.h"
 #include "../gvEngine/gvEngineAPI.h"
+
 
 
 using namespace gv::Engine;
@@ -31,13 +34,28 @@ namespace gv
 			_sceneManager = Engine::getSceneManager();
 
 			_sceneManager->createMesh(_cubeMeshName, PrimitiveCreator::getCube());
+			/////_sceneManager->createMesh(_sphereMeshName, PrimitiveCreator::getSphere());
 
 			auto mCamera = plan->getCamera();
 			cameraPropChangedSubscription =
 				(mCamera->propertyChanged += std::bind(&Controller3D::cameraPropertyChanged, this, std::placeholders::_1));
 
-			/////_sceneManager->createMesh(_sphereMeshName, PrimitiveCreator::getSphere());
+
+			_inputController = new InputController();
+
 		}
+
+		Controller3D::~Controller3D()
+		{
+			if (_inputController)
+				delete _inputController;
+		}
+
+		void Controller3D::create3DView()
+		{
+			Engine::createWindow(800, 600, _inputController);
+		}
+
 
 #pragma region Model Events
 		void Controller3D::pointAdded(const std::shared_ptr<IPoint>& p)

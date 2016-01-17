@@ -91,11 +91,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Controller3D.h" />
+    <ClInclude Include="InputController.h" />
     <ClInclude Include="PrimitiveCreator.h" />
     <ClInclude Include="PrimitivesGeometry.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Controller3D.cpp" />
+    <ClCompile Include="InputController.cpp" />
     <ClCompile Include="PrimitiveCreator.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

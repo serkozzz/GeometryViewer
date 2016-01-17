@@ -25,13 +25,14 @@ using namespace glm;
 #include "shader.hpp"
 
 #include "gvEngineAPI.h"
+#include "IInputController.h"
 
 namespace gv
 {
 	namespace Engine
 	{
 
-		int renderCycle()
+		int renderCycle(IInputController* inputController)
 		{
 			// Initialise GLFW
 			if( !glfwInit() )
@@ -96,6 +97,23 @@ namespace gv
 			glBufferData(GL_ARRAY_BUFFER, sizeof(g_vertex_buffer_data), g_vertex_buffer_data, GL_STATIC_DRAW);
 
 			do{
+				if (glfwGetKey(window, GLFW_KEY_UP ) == GLFW_PRESS){
+					inputController->keyPressed(gvKey::GV_KEY_UP);
+				}
+
+				if (glfwGetKey(window, GLFW_KEY_DOWN ) == GLFW_PRESS){
+					inputController->keyPressed(gvKey::GV_KEY_DOWN);
+				}
+
+				if (glfwGetKey(window, GLFW_KEY_RIGHT ) == GLFW_PRESS){
+					inputController->keyPressed(gvKey::GV_KEY_RIGHT);
+				}
+
+				if (glfwGetKey(window, GLFW_KEY_LEFT ) == GLFW_PRESS){
+					inputController->keyPressed(gvKey::GV_KEY_LEFT);
+				}
+
+
 				OGLmutex.lock();
 				// Clear the screen
 				glClear( GL_COLOR_BUFFER_BIT );
@@ -143,9 +161,9 @@ namespace gv
 
 
 
-		int tutorial2( void )
+		int launchRenderCycle(IInputController* inputController)
 		{
-			std::thread renderCycleThread(renderCycle);
+			std::thread renderCycleThread(renderCycle, inputController);
 			renderCycleThread.detach();
 
 			return 0;

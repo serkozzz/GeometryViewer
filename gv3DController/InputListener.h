@@ -1,13 +1,13 @@
 #pragma once 
 
 
-#include "../gvEngine/IInputController.h"
+#include "../gvEngine/IInputListener.h"
 
 namespace gv
 {
 	namespace Controller3D
 	{
-		class InputController : public IInputController
+		class InputListener : public IInputListener
 		{
 		public:
 			virtual void keyPressed(gvKey key);

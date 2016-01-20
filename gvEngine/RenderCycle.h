@@ -3,10 +3,10 @@
 
 namespace gv
 {
-	class IInputController;
+	class IInputListener;
 
 	namespace Engine
 	{
-		int launchRenderCycle(IInputController* inputController);
+		int launchRenderCycle(IInputListener* InputListener);
 	}
 }

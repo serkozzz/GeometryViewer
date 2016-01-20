@@ -5,23 +5,22 @@
 #include "dllexport.h"
 
 #include "GeometryData.h"
-#include "IInputController.h"
+#include "IInputListener.h"
 #include "ISceneManager.h"
 
 
 
 //extern "C"
 //{
-	//GVAPI void gvTest1();
 	namespace gv
 	{
 		namespace Engine
 		{
-			GVAPI void createWindow(int sizeX, int sizeY, IInputController* inputController);
+			GVAPI void createWindow(int sizeX, int sizeY, IInputListener* InputListener);
 			GVAPI ISceneManager* getSceneManager();
 
 			GVAPI void gvTest();
-			GVAPI int tutorial2();
+			//GVAPI int tutorial2();
 		}
 	}
 //}

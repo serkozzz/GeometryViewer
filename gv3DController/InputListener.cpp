@@ -1,9 +1,9 @@
-#include "InputController.h"
+#include "InputListener.h"
 
 using namespace gv;
 using namespace gv::Controller3D;
 
-void InputController::keyPressed(gvKey key)
+void InputListener::keyPressed(gvKey key)
 {
 	switch(key)
 	{

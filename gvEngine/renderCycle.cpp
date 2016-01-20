@@ -25,14 +25,14 @@ using namespace glm;
 #include "shader.hpp"
 
 #include "gvEngineAPI.h"
-#include "IInputController.h"
+#include "IInputListener.h"
 
 namespace gv
 {
 	namespace Engine
 	{
 
-		int renderCycle(IInputController* inputController)
+		int renderCycle(IInputListener* InputListener)
 		{
 			// Initialise GLFW
 			if( !glfwInit() )
@@ -98,19 +98,19 @@ namespace gv
 
 			do{
 				if (glfwGetKey(window, GLFW_KEY_UP ) == GLFW_PRESS){
-					inputController->keyPressed(gvKey::GV_KEY_UP);
+					InputListener->keyPressed(gvKey::GV_KEY_UP);
 				}
 
 				if (glfwGetKey(window, GLFW_KEY_DOWN ) == GLFW_PRESS){
-					inputController->keyPressed(gvKey::GV_KEY_DOWN);
+					InputListener->keyPressed(gvKey::GV_KEY_DOWN);
 				}
 
 				if (glfwGetKey(window, GLFW_KEY_RIGHT ) == GLFW_PRESS){
-					inputController->keyPressed(gvKey::GV_KEY_RIGHT);
+					InputListener->keyPressed(gvKey::GV_KEY_RIGHT);
 				}
 
 				if (glfwGetKey(window, GLFW_KEY_LEFT ) == GLFW_PRESS){
-					inputController->keyPressed(gvKey::GV_KEY_LEFT);
+					InputListener->keyPressed(gvKey::GV_KEY_LEFT);
 				}
 
 
@@ -161,9 +161,9 @@ namespace gv
 
 
 
-		int launchRenderCycle(IInputController* inputController)
+		int launchRenderCycle(IInputListener* InputListener)
 		{
-			std::thread renderCycleThread(renderCycle, inputController);
+			std::thread renderCycleThread(renderCycle, InputListener);
 			renderCycleThread.detach();
 
 			return 0;

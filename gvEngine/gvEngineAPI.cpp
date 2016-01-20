@@ -2,7 +2,7 @@
 
 #include "gvEngineAPI.h"
 #include "SceneManager.h"
-#include "IInputController.h"
+#include "IInputListener.h"
 #include "RenderCycle.h"
 
 using namespace gv;
@@ -14,7 +14,7 @@ ISceneManager* gv::Engine::getSceneManager()
 	return SceneManager::sharedSceneManager();
 }
 
-void gv::Engine::createWindow(int sizeX, int sizeY, IInputController* inputController)
+void gv::Engine::createWindow(int sizeX, int sizeY, IInputListener* InputListener)
 {
-	launchRenderCycle(inputController);
+	launchRenderCycle(InputListener);
 }

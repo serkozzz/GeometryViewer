@@ -4,7 +4,7 @@
 
 #include "Controller3D.h"
 #include "PrimitiveCreator.h"
-#include "InputController.h"
+#include "InputListener.h"
 
 #include "../gvEngine/ISceneNode.h"
 #include "../gvEngine/ISceneManager.h"
@@ -41,19 +41,19 @@ namespace gv
 				(mCamera->propertyChanged += std::bind(&Controller3D::cameraPropertyChanged, this, std::placeholders::_1));
 
 
-			_inputController = new InputController();
+			_InputListener = new InputListener();
 
 		}
 
 		Controller3D::~Controller3D()
 		{
-			if (_inputController)
-				delete _inputController;
+			if (_InputListener)
+				delete _InputListener;
 		}
 
-		void Controller3D::create3DView()
+		void Controller3D::create3DView(int width, int height)
 		{
-			Engine::createWindow(800, 600, _inputController);
+			Engine::createWindow(width, height, _InputListener);
 		}
 
 

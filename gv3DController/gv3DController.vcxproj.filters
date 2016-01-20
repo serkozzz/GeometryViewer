@@ -27,7 +27,7 @@
     <ClInclude Include="PrimitivesGeometry.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="InputController.h">
+    <ClInclude Include="InputListener.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -38,7 +38,7 @@
     <ClCompile Include="PrimitiveCreator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="InputController.cpp">
+    <ClCompile Include="InputListener.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

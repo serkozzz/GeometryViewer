@@ -19,14 +19,14 @@ namespace gv
 
 	namespace Controller3D
 	{
-		class InputController;
+		class InputListener;
 
 		class Controller3D
 		{
 		private:
 			Model::Model* _model;
 			Model::PlanManager& _planManager;
-			InputController* _inputController;
+			InputListener* _InputListener;
 			Engine::ISceneManager* _sceneManager;
 			std::map<std::shared_ptr<const IPoint>, Engine::ISceneNode* > _points;
 			std::map<std::shared_ptr<const IPoint>, int > _pointsSubscriptions;
@@ -47,7 +47,7 @@ namespace gv
 		public:
 			Controller3D(Model::Model* model);
 			~Controller3D();
-			void create3DView();
+			void create3DView(int width, int height);
 		};
 	}
 }

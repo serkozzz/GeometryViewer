@@ -94,11 +94,14 @@ copy "shaders\" "$(OutputPath)"</Command>
     <ClInclude Include="GeometryData.h" />
     <ClInclude Include="gvEngineAPI.h" />
     <ClInclude Include="IInputController.h" />
+    <ClInclude Include="IInputListener.h" />
+    <ClInclude Include="IRenderer.h" />
     <ClInclude Include="ISceneManager.h" />
     <ClInclude Include="ISceneNode.h" />
     <ClInclude Include="RenderCycle.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="shader.hpp" />
+    <ClInclude Include="ThreadManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="gvEngineAPI.cpp" />

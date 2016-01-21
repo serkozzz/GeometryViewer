@@ -109,6 +109,7 @@ copy "shaders\" "$(OutputPath)"</Command>
     <ClCompile Include="shader.cpp" />
     <ClCompile Include="test.cpp" />
     <ClCompile Include="renderCycle.cpp" />
+    <ClCompile Include="ThreadManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.vcxproj">

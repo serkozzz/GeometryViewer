@@ -97,23 +97,7 @@ namespace gv
 			glBufferData(GL_ARRAY_BUFFER, sizeof(g_vertex_buffer_data), g_vertex_buffer_data, GL_STATIC_DRAW);
 
 			do{
-				if (glfwGetKey(window, GLFW_KEY_UP ) == GLFW_PRESS){
-					InputListener->keyPressed(gvKey::GV_KEY_UP);
-				}
-
-				if (glfwGetKey(window, GLFW_KEY_DOWN ) == GLFW_PRESS){
-					InputListener->keyPressed(gvKey::GV_KEY_DOWN);
-				}
-
-				if (glfwGetKey(window, GLFW_KEY_RIGHT ) == GLFW_PRESS){
-					InputListener->keyPressed(gvKey::GV_KEY_RIGHT);
-				}
-
-				if (glfwGetKey(window, GLFW_KEY_LEFT ) == GLFW_PRESS){
-					InputListener->keyPressed(gvKey::GV_KEY_LEFT);
-				}
-
-
+				
 				OGLmutex.lock();
 				// Clear the screen
 				glClear( GL_COLOR_BUFFER_BIT );

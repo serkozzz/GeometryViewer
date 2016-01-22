@@ -3,7 +3,7 @@
 using namespace gv;
 using namespace gv::Controller3D;
 
-void InputListener::keyPressed(gvKey key)
+void InputListener::keyPressed(gvKey key) const
 {
 	switch(key)
 	{

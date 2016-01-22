@@ -10,7 +10,7 @@ namespace gv
 		class InputListener : public IInputListener
 		{
 		public:
-			virtual void keyPressed(gvKey key);
+			virtual void keyPressed(gvKey key) const;
 		};
 	}
 }

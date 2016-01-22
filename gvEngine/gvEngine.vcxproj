@@ -91,10 +91,13 @@ copy "shaders\" "$(OutputPath)"</Command>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="dllexport.h" />
+    <ClInclude Include="ErrorCollector.h" />
     <ClInclude Include="GeometryData.h" />
     <ClInclude Include="gvEngineAPI.h" />
+    <ClInclude Include="IErrorCollector.h" />
     <ClInclude Include="IInputController.h" />
     <ClInclude Include="IInputListener.h" />
+    <ClInclude Include="InputController.h" />
     <ClInclude Include="IRenderer.h" />
     <ClInclude Include="ISceneManager.h" />
     <ClInclude Include="ISceneNode.h" />
@@ -102,14 +105,18 @@ copy "shaders\" "$(OutputPath)"</Command>
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="shader.hpp" />
     <ClInclude Include="ThreadManager.h" />
+    <ClInclude Include="WindowManager.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ErrorCollector.cpp" />
     <ClCompile Include="gvEngineAPI.cpp" />
+    <ClCompile Include="InputController.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="shader.cpp" />
     <ClCompile Include="test.cpp" />
     <ClCompile Include="renderCycle.cpp" />
     <ClCompile Include="ThreadManager.cpp" />
+    <ClCompile Include="WindowManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.vcxproj">

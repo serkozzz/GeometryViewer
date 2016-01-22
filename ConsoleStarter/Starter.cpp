@@ -10,7 +10,7 @@ using namespace gv::Engine;
 int _tmain(int argc, _TCHAR* argv[])
 {
 	//gvTest();
-		tutorial2();
+		//tutorial2();
 		ISceneManager* manager = getSceneManager();
 		manager->createMesh("", gv::Controller3D::PrimitiveCreator::getCube());
 

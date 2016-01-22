@@ -7,7 +7,7 @@
 #include "GeometryData.h"
 #include "IInputListener.h"
 #include "ISceneManager.h"
-
+#include "IErrorsCollector.h"
 
 
 //extern "C"
@@ -18,7 +18,8 @@
 		{
 			GVAPI void createWindow(int sizeX, int sizeY, IInputListener* InputListener);
 			GVAPI ISceneManager* getSceneManager();
-
+			
+			GVAPI IErrorsCollector* getErrorsCollector();
 			GVAPI void gvTest();
 			//GVAPI int tutorial2();
 		}

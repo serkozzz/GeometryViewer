@@ -57,10 +57,10 @@
     <ClInclude Include="WindowManager.h">
       <Filter>Заголовочные файлы</Filter>
     </ClInclude>
-    <ClInclude Include="ErrorCollector.h">
+    <ClInclude Include="IErrorsCollector.h">
       <Filter>Заголовочные файлы</Filter>
     </ClInclude>
-    <ClInclude Include="IErrorCollector.h">
+    <ClInclude Include="ErrorsCollector.h">
       <Filter>Заголовочные файлы</Filter>
     </ClInclude>
   </ItemGroup>
@@ -89,7 +89,7 @@
     <ClCompile Include="WindowManager.cpp">
       <Filter>Файлы исходного кода</Filter>
     </ClCompile>
-    <ClCompile Include="ErrorCollector.cpp">
+    <ClCompile Include="ErrorsCollector.cpp">
       <Filter>Файлы исходного кода</Filter>
     </ClCompile>
   </ItemGroup>

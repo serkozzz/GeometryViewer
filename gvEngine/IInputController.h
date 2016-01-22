@@ -8,7 +8,7 @@ namespace gv
 		{
 		public:
 			virtual void checkInput() = 0;
-			virtual ~IInputController() = 0;
+			virtual ~IInputController(){}
 		};
 	}
 }

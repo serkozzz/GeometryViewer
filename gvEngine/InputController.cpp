@@ -2,10 +2,10 @@
 
 #include <glfw3.h>
 
+using namespace gv;
 using namespace gv::Engine;
 
-InputController::InputController(const IInputListener* listener) :
-	_listener(listener)
+InputController::InputController(const IInputListener* listener) //: _listener(listener)
 {
 }
 

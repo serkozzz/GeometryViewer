@@ -3,7 +3,7 @@
 #include "IInputController.h"
 #include "IInputListener.h"
 
-class GLFWwindow;
+struct GLFWwindow;
 
 
 namespace gv

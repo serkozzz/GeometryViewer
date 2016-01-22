@@ -89,6 +89,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\libs\EventHandler\UnitTests\EventHandlerTest.cpp" />
+    <ClCompile Include="ErrorsCollectorTest.cpp" />
     <ClCompile Include="MockView.cpp" />
     <ClCompile Include="ModelTest.cpp" />
     <ClCompile Include="stdafx.cpp">
@@ -102,6 +103,9 @@
     </ProjectReference>
     <ProjectReference Include="..\gvController\gvController.vcxproj">
       <Project>{6fdce07d-3cef-4552-b5b6-5c5d5deb46ef}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\gvEngine\gvEngine.vcxproj">
+      <Project>{b3df0ceb-e913-4a0f-8a22-44476d6606dc}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -20,19 +20,63 @@ namespace UnitTests
 		{
 		}
 
-		TEST_METHOD(getLastErrorsTest)
+		TEST_METHOD(ErrorsCollector_getLastErrorsTest)
 		{			
 			auto errorsCollector = ErrorsCollector::sharedErrorsCollector();
-			int errorsNumber = 6;
+			const int errorsNumber = 6;
+			std::string errorMessages[errorsNumber];
 			for(int i = 0; i < errorsNumber; i++)
 			{
-				errorsCollector->addError("error" + std::to_string(i));
+				errorMessages[i] = "error" + std::to_string(i);
+				errorsCollector->addError(errorMessages[i]);
 			}
 
-			auto errors = errorsCollector->getLastErrors(10);
+			auto tenErrorsQuery = errorsCollector->getLastErrors(10);
+			Assert::AreEqual((int)tenErrorsQuery.size(), errorsNumber);
 
-			Assert::AreEqual((int)errors.size(), errorsNumber);
+
+			auto threeErrorsQuery = errorsCollector->getLastErrors(3);
+			auto it = threeErrorsQuery.rbegin();
+			Assert::AreEqual(*it++, errorMessages[errorsNumber - 1]);
+			Assert::AreEqual(*it++, errorMessages[errorsNumber - 2]);
+			Assert::AreEqual(*it++, errorMessages[errorsNumber - 3]);
+
 		}
+
+		TEST_METHOD(ErrorsCollector_getLastErrorTest)
+		{	
+			auto errorsCollector = ErrorsCollector::sharedErrorsCollector();
+			const int errorsNumber = 6;
+			std::string errorMessages[errorsNumber];
+			for(int i = 0; i < errorsNumber; i++)
+			{
+				errorMessages[i] = "error" + std::to_string(i);
+				errorsCollector->addError(errorMessages[i]);
+			}
+
+			Assert::AreEqual(errorsCollector->getLastError(), errorMessages[errorsNumber - 1]);
+		}
+
+		TEST_METHOD(ErrorsCollector_getAllErrorsTest)
+		{	
+			auto errorsCollector = ErrorsCollector::sharedErrorsCollector();
+			const int errorsNumber = 50;
+			std::string errorMessages[errorsNumber];
+			for(int i = 0; i < errorsNumber; i++)
+			{
+				errorMessages[i] = "error" + std::to_string(i);
+				errorsCollector->addError(errorMessages[i]);
+			}
+
+			auto allErrors = errorsCollector->getAllErrors();
+			auto it = allErrors.rbegin();
+			for (int i = 0; i < errorsNumber; i++)
+			{
+				Assert::AreEqual(*it++, errorMessages[errorsNumber - i - 1]);
+			}
+
+		}
+
 
 		TEST_METHOD_CLEANUP(CleanUp)
 		{

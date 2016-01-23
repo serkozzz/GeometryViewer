@@ -35,10 +35,16 @@ std::string ErrorsCollector::getLastError() const
 
 std::list<std::string> ErrorsCollector::getLastErrors(int number) const
 {
-	int resultNumber = (number > (int)_errors.size()) ? number : _errors.size();
-	std::list<std::string>::const_iterator it = _errors.begin();
-	std::advance(it, -resultNumber);
-	auto result =  std::list<std::string>(it, _errors.end());	
+	int resultNumber = (number < (int)_errors.size()) ? number : _errors.size();
+
+	auto result =  std::list<std::string>(resultNumber);	
+	std::list<std::string>::const_reverse_iterator sourceIt = _errors.rbegin();
+	std::list<std::string>::reverse_iterator resultIt = result.rbegin();
+	for(int i = 0; i < resultNumber; i++)
+	{
+		*resultIt = *sourceIt;
+		sourceIt++; resultIt++;
+	}
 	return result;
 }
 

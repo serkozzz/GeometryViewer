@@ -53,7 +53,7 @@ namespace gv
 
 		void Controller3D::create3DView(int width, int height)
 		{
-			Engine::createWindow(width, height, _InputListener);
+			Engine::createView(width, height, _InputListener);
 		}
 
 

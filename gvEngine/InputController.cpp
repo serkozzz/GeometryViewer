@@ -5,7 +5,8 @@
 using namespace gv;
 using namespace gv::Engine;
 
-InputController::InputController(const IInputListener* listener) //: _listener(listener)
+InputController::InputController(GLFWwindow* window, const IInputListener* listener) 
+	: _window(window), _listener(listener)
 {
 }
 

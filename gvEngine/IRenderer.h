@@ -8,7 +8,9 @@ namespace gv
 		{
 		public: 
 			virtual void renderFrame(float TimeFromLastFrameMs) = 0;
-			virtual ~IRenderer() = 0;
+			virtual ~IRenderer()
+			{
+			}
 		};
 	}
 }

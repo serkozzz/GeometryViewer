@@ -12,7 +12,8 @@ namespace gv
 			int _height;
 			GLFWwindow* _window;
 		public:
-			void createWindow(int width, int height);
+			WindowManager();
+			bool createWindow(int width, int height);
 			void destroyWindow();
 			GLFWwindow* getWindow();
 

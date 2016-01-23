@@ -16,7 +16,7 @@
 	{
 		namespace Engine
 		{
-			GVAPI void createWindow(int sizeX, int sizeY, IInputListener* InputListener);
+			GVAPI void createView(int sizeX, int sizeY, IInputListener* InputListener);
 			GVAPI ISceneManager* getSceneManager();
 			
 			GVAPI IErrorsCollector* getErrorsCollector();

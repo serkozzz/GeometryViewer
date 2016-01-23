@@ -102,6 +102,8 @@ copy "shaders\" "$(OutputPath)"</Command>
     <ClInclude Include="ISceneManager.h" />
     <ClInclude Include="ISceneNode.h" />
     <ClInclude Include="RenderCycle.h" />
+    <ClInclude Include="Renderer.h" />
+    <ClInclude Include="RootEngineManager.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="shader.hpp" />
     <ClInclude Include="ThreadManager.h" />
@@ -111,6 +113,8 @@ copy "shaders\" "$(OutputPath)"</Command>
     <ClCompile Include="ErrorsCollector.cpp" />
     <ClCompile Include="gvEngineAPI.cpp" />
     <ClCompile Include="InputController.cpp" />
+    <ClCompile Include="Renderer.cpp" />
+    <ClCompile Include="RootEngineManager.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="shader.cpp" />
     <ClCompile Include="test.cpp" />

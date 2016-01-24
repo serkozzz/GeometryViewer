@@ -1,6 +1,10 @@
 #include "Logger.h"
 #include <iostream>
+#include <sstream>
 #include <fstream>
+#include <chrono>
+#include <iomanip>
+
 
 using namespace sk;
 
@@ -32,7 +36,13 @@ void Logger::setBehavior(std::shared_ptr<IWritingBehavior> newBehavior)
 void Logger::writeMessage(const std::string& message, 
 						  Logger::MessageType messageType /*= Logger::MessageType::Debug*/)
 {
-	std::string header;
+
+	auto now = std::chrono::system_clock::now();
+	std::time_t t = std::chrono::system_clock::to_time_t(now);
+
+	std::stringstream strstrHeader; 
+	strstrHeader << std::put_time(std::localtime(&t), "%Y %b %d %H:%M:%S") << ": ";
+
 	switch(messageType)
 	{
 	case Logger::Debug:
@@ -48,11 +58,11 @@ void Logger::writeMessage(const std::string& message,
 		}
 	case Logger::Error:
 		{
-			header = "ERROR: ";
+			strstrHeader << "ERROR: ";
 			break;
 		}
 	}
-	_writingBehaviour->writeMessage(header, message);
+	_writingBehaviour->writeMessage(strstrHeader.str(), message);
 }
 
 FileWritingBehavior::FileWritingBehavior(const std::string& fileName) : _fileName(fileName)
@@ -62,8 +72,10 @@ FileWritingBehavior::FileWritingBehavior(const std::string& fileName) : _fileNam
 
 void FileWritingBehavior::writeMessage(const std::string& header, const std::string& message)
 {
-	std::ofstream stream(_fileName);
-	stream << header << message << std::endl;
+	std::ofstream stream(_fileName, std::ofstream::app);
+	std::string resultMessage = header + message;
+	stream << resultMessage << std::endl;
+	//stream.close();
 }
 
 void StandardOutStreamWritingBehavior::writeMessage(const std::string& header, const std::string& message)

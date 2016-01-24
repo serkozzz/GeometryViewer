@@ -28,7 +28,7 @@ RootEngineManager* RootEngineManager::sharedRootEngineManager()
 void RootEngineManager::startInSeparatedThread(int sizeX, int sizeY, IInputListener* InputListener)
 {
 	sk::Logger::sharedLogger()->setBehavior(
-		std::shared_ptr<sk::IWritingBehavior>(new sk::FileWritingBehavior("gvEngine.log")));
+		std::shared_ptr<sk::IWritingBehavior>(new sk::FileWritingBehavior("gvEngineLog.log")));
 	_windowManager = new WindowManager();
 	_windowManager->createWindow(sizeX, sizeY);
 	_inputController = new InputController(_windowManager->getWindow(), InputListener);

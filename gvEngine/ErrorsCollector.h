@@ -1,6 +1,8 @@
 #pragma once
-#include "dllexport.h"
 
+#include <mutex>
+
+#include "dllexport.h"
 #include "IErrorsCollector.h"
 
 namespace gv
@@ -13,11 +15,19 @@ namespace gv
 		class ErrorsCollector : public IErrorsCollector
 #endif
 		{
+			State _state;
 			std::list<std::string> _errors;
+			mutable std::mutex _mutex;
+
 			static ErrorsCollector* _errorsCollectorInstance;
 			ErrorsCollector();
 		public:
-			virtual const std::list<std::string>& getAllErrors() const;
+			virtual State getState();
+
+			virtual void resetState();
+
+			virtual std::list<std::string> getAllErrors() const;
+
 			virtual std::string getLastError() const;
 
 			/// if errors number is less then number that specified in args

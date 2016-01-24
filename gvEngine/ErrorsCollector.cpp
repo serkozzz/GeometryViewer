@@ -7,8 +7,7 @@ using namespace gv::Engine;
 
 ErrorsCollector* ErrorsCollector::_errorsCollectorInstance = nullptr;
 
-
-ErrorsCollector::ErrorsCollector()
+ErrorsCollector::ErrorsCollector() : _state(NO_ERROR)
 {
 }
 
@@ -19,14 +18,30 @@ ErrorsCollector* ErrorsCollector::sharedErrorsCollector()
 	return _errorsCollectorInstance;
 }
 
-const std::list<std::string>& ErrorsCollector::getAllErrors() const
+
+ErrorsCollector::State ErrorsCollector::getState()
 {
-	return _errors;
+	return _state;
+}
+
+void ErrorsCollector::resetState()
+{
+	std::lock_guard<std::mutex> lock(_mutex);
+	_state = ErrorsCollector::NO_ERROR;
+}
+
+
+
+std::list<std::string> ErrorsCollector::getAllErrors() const
+{
+	std::lock_guard<std::mutex> lock(_mutex);
+	return std::list<std::string>(_errors.begin(), _errors.end());
 }
 
 
 std::string ErrorsCollector::getLastError() const
 {
+	std::lock_guard<std::mutex> lock(_mutex);
 	if (_errors.empty())
 		return "";
 	return _errors.back();
@@ -35,6 +50,7 @@ std::string ErrorsCollector::getLastError() const
 
 std::list<std::string> ErrorsCollector::getLastErrors(int number) const
 {
+	std::lock_guard<std::mutex> lock(_mutex);
 	int resultNumber = (number < (int)_errors.size()) ? number : _errors.size();
 
 	auto result =  std::list<std::string>(resultNumber);	
@@ -50,5 +66,7 @@ std::list<std::string> ErrorsCollector::getLastErrors(int number) const
 
 void ErrorsCollector::addError(const std::string error)
 {
+	std::lock_guard<std::mutex> lock(_mutex);
+	_state = ErrorsCollector::HAS_ERROR;
 	_errors.push_back(error);
 }

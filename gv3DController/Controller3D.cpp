@@ -53,7 +53,14 @@ namespace gv
 
 		void Controller3D::create3DView(int width, int height)
 		{
+			IErrorsCollector* errorsCollector = Engine::getErrorsCollector();
+			errorsCollector->resetState();
 			Engine::createView(width, height, _InputListener);
+			if (errorsCollector->getState() != IErrorsCollector::NO_ERROR)
+			{
+				//TODO error handling
+				errorsCollector->resetState();
+			}
 		}
 
 

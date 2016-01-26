@@ -10,6 +10,7 @@
 #include "../gvEngine/ISceneManager.h"
 #include "../gvEngine/gvEngineAPI.h"
 
+#include "Logger.h"
 
 
 using namespace gv::Engine;
@@ -43,6 +44,12 @@ namespace gv
 
 			_InputListener = new InputListener();
 
+			sk::Logger::sharedLogger()->setBehavior(
+				std::shared_ptr<sk::IWritingBehavior>(new sk::FileWritingBehavior("controller3D.log")));
+
+			sk::Logger::sharedLogger()->writeMessage("This is controller3D");
+			sk::Logger::sharedLogger()->writeMessage(std::to_string((int)sk::Logger::sharedLogger()));
+			sk::Logger::sharedLogger()->writeMessage("bla-bla");
 		}
 
 		Controller3D::~Controller3D()

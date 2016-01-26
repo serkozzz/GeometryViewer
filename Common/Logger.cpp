@@ -10,6 +10,7 @@ using namespace sk;
 
 //#define DEBUG_LOGGER;
 
+
 Logger* Logger::_loggerInstance = nullptr;
 
 Logger::Logger(std::shared_ptr<IWritingBehavior> behavior) : _writingBehaviour(behavior)

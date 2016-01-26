@@ -2,6 +2,7 @@ Debug
 Release
 TestResults
 ipch
+*.log
 *.obj
 *.exe
 *.sdf

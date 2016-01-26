@@ -38,8 +38,9 @@ void RootEngineManager::startInSeparatedThread(int sizeX, int sizeY, IInputListe
 		std::shared_ptr<IInputController>(_inputController),
 		10,
 		40);
-	sk::Logger::sharedLogger()->writeMessage("Hello", sk::Logger::Special);
-	sk::Logger::sharedLogger()->writeMessage("This is gvEngine", sk::Logger::Special);
+	sk::Logger::sharedLogger()->writeMessage("Hello");
+	sk::Logger::sharedLogger()->writeMessage("This is gvEngine");
+	sk::Logger::sharedLogger()->writeMessage(std::to_string((int)sk::Logger::sharedLogger()));
 	_threadManager->start();
 
 }

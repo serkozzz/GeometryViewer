@@ -22,11 +22,11 @@ int main(array<System::String ^> ^args)
 {
 	sk::Logger::sharedLogger()->setBehavior(
 		std::shared_ptr<sk::IWritingBehavior>(new sk::FileWritingBehavior("geometryViewer.log")));
-		sk::Logger::sharedLogger()->writeMessage("--------------------------------------------"
-			"------------------------------------------------------------------------------");
+	sk::Logger::sharedLogger()->writeMessage("--------------------------------------------"
+		"------------------------------------------------------------------------------");
 	sk::Logger::sharedLogger()->writeMessage("\n\n\n");
 	sk::Logger::sharedLogger()->writeMessage("GeometryViewer application has started");
-
+	sk::Logger::sharedLogger()->writeMessage(std::to_string((int)sk::Logger::sharedLogger()));
 	// Enabling Windows XP visual effects before any controls are created
 	Application::EnableVisualStyles();
 	Application::SetCompatibleTextRenderingDefault(false); 

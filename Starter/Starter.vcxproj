@@ -54,7 +54,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>Use</PrecompiledHeader>
-      <AdditionalIncludeDirectories>..\libs\EventHandler;..\Common;..\libs\glm-0.9.7.1</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\libs\EventHandler;..\Common;..\libs\glm-0.9.7.1;..\libs\Logger</AdditionalIncludeDirectories>
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
     </ClCompile>
     <Link>

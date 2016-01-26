@@ -15,7 +15,8 @@ namespace gv
 	class GVAPI IInputListener
 	{
 	public:
-		virtual void keyPressed(gvKey key) const = 0 ;
+		virtual void keyPressed(gvKey key) const = 0;
+		virtual void cursorPositionChanged(double dx, double dy) const = 0;
 		//TO DO methods that will be invoked from Engive
 	};
 

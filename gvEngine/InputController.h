@@ -14,6 +14,9 @@ namespace gv
 
 		class InputController : public IInputController
 		{
+			const float _cursorInaccuracy;
+			int _windowWidth;
+			int _windowHeight;
 			GLFWwindow*  _window;
 			const IInputListener* _listener;
 		public:

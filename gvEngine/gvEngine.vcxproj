@@ -53,7 +53,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>UNIT_TESTS_BUILD;WIN32;GVLIBRARY_EXPORT;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\libs\glfw-3.1.2.bin.WIN32\include\GLFW;..\libs\glm-0.9.7.1;..\libs\glew-1.13.0\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\libs\glfw-3.1.2.bin.WIN32\include\GLFW;..\libs\glm-0.9.7.1;..\libs\glew-1.13.0\include;..\libs\Logger\;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -90,6 +90,7 @@ copy "shaders\" "$(OutputPath)"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\libs\Logger\Logger.h" />
     <ClInclude Include="dllexport.h" />
     <ClInclude Include="ErrorsCollector.h" />
     <ClInclude Include="GeometryData.h" />
@@ -101,7 +102,6 @@ copy "shaders\" "$(OutputPath)"</Command>
     <ClInclude Include="IRenderer.h" />
     <ClInclude Include="ISceneManager.h" />
     <ClInclude Include="ISceneNode.h" />
-    <ClInclude Include="Logger.h" />
     <ClInclude Include="RenderCycle.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="RootEngineManager.h" />
@@ -111,10 +111,10 @@ copy "shaders\" "$(OutputPath)"</Command>
     <ClInclude Include="WindowManager.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\libs\Logger\Logger.cpp" />
     <ClCompile Include="ErrorsCollector.cpp" />
     <ClCompile Include="gvEngineAPI.cpp" />
     <ClCompile Include="InputController.cpp" />
-    <ClCompile Include="Logger.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="RootEngineManager.cpp" />
     <ClCompile Include="SceneManager.cpp" />

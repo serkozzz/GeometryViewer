@@ -33,3 +33,10 @@ void InputListener::keyPressed(gvKey key) const
 		}
 	}
 }
+
+
+void InputListener::cursorPositionChanged(double dx, double dy) const
+{
+	int a = 10;
+	a++;
+}

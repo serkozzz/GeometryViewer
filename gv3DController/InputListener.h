@@ -11,6 +11,7 @@ namespace gv
 		{
 		public:
 			virtual void keyPressed(gvKey key) const;
+			virtual void cursorPositionChanged(double dx, double dy) const;
 		};
 	}
 }

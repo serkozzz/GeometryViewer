@@ -20,10 +20,7 @@ ISceneManager* gv::Engine::getSceneManager()
 
 void gv::Engine::createView(int sizeX, int sizeY, IInputListener* inputListener)
 {
-	//WindowManager
-
 	RootEngineManager::sharedRootEngineManager()->start(sizeX, sizeY, inputListener);
-	//launchRenderCycle(InputListener);
 }
 
 IErrorsCollector* gv::Engine::getErrorsCollector()

@@ -25,7 +25,7 @@ namespace sk
 		void setBehavior(std::shared_ptr<IWritingBehavior> newBehavior);
 
 		void writeMessage(const std::string& message, 
-			Logger::MessageType messageType = Logger::MessageType::Debug);
+			Logger::MessageType messageType = Logger::MessageType::Special);
 	};
 
 

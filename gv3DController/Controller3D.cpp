@@ -41,15 +41,7 @@ namespace gv
 			cameraPropChangedSubscription =
 				(mCamera->propertyChanged += std::bind(&Controller3D::cameraPropertyChanged, this, std::placeholders::_1));
 
-
 			_InputListener = new InputListener();
-
-			sk::Logger::sharedLogger()->setBehavior(
-				std::shared_ptr<sk::IWritingBehavior>(new sk::FileWritingBehavior("controller3D.log")));
-
-			sk::Logger::sharedLogger()->writeMessage("This is controller3D");
-			sk::Logger::sharedLogger()->writeMessage(std::to_string((int)sk::Logger::sharedLogger()));
-			sk::Logger::sharedLogger()->writeMessage("bla-bla");
 		}
 
 		Controller3D::~Controller3D()

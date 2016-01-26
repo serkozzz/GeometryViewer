@@ -1,10 +1,13 @@
 // WinFormView.cpp : main project file.
 
 #include "stdafx.h"
+
+#include "Logger.h"
 #include "../gvView/MainForm.h"
 #include "../gvController/ViewController.h"
 #include "../gvModel/Model.h"
 #include "../gv3DController/Controller3D.h"
+
 
 using namespace System::Windows::Forms;
 
@@ -17,6 +20,13 @@ using namespace gv::Model;
 //[STAThreadAttribute]
 int main(array<System::String ^> ^args)
 {
+	sk::Logger::sharedLogger()->setBehavior(
+		std::shared_ptr<sk::IWritingBehavior>(new sk::FileWritingBehavior("geometryViewer.log")));
+		sk::Logger::sharedLogger()->writeMessage("--------------------------------------------"
+			"------------------------------------------------------------------------------");
+	sk::Logger::sharedLogger()->writeMessage("\n\n\n");
+	sk::Logger::sharedLogger()->writeMessage("GeometryViewer application has started");
+
 	// Enabling Windows XP visual effects before any controls are created
 	Application::EnableVisualStyles();
 	Application::SetCompatibleTextRenderingDefault(false); 

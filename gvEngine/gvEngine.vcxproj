@@ -91,6 +91,7 @@ copy "shaders\" "$(OutputPath)"</Command>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\libs\Logger\Logger.h" />
+    <ClInclude Include="Camera.h" />
     <ClInclude Include="dllexport.h" />
     <ClInclude Include="ErrorsCollector.h" />
     <ClInclude Include="GeometryData.h" />
@@ -106,18 +107,21 @@ copy "shaders\" "$(OutputPath)"</Command>
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="RootEngineManager.h" />
     <ClInclude Include="SceneManager.h" />
+    <ClInclude Include="SceneNode.h" />
     <ClInclude Include="shader.hpp" />
     <ClInclude Include="ThreadManager.h" />
     <ClInclude Include="WindowManager.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\libs\Logger\Logger.cpp" />
+    <ClCompile Include="Camera.cpp" />
     <ClCompile Include="ErrorsCollector.cpp" />
     <ClCompile Include="gvEngineAPI.cpp" />
     <ClCompile Include="InputController.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="RootEngineManager.cpp" />
     <ClCompile Include="SceneManager.cpp" />
+    <ClCompile Include="SceneNode.cpp" />
     <ClCompile Include="shader.cpp" />
     <ClCompile Include="test.cpp" />
     <ClCompile Include="renderCycle.cpp" />

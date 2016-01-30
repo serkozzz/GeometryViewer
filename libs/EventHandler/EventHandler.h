@@ -24,7 +24,7 @@ namespace skb    //means SerKoz Bicycles
 		bool operator== (std::nullptr_t);
 		bool operator!= (std::nullptr_t);
 
-		void operator () (ArgsType arg);
+		void operator () (ArgsType arg) const;
 	};
 
 	template <typename ArgsType>
@@ -67,7 +67,7 @@ namespace skb    //means SerKoz Bicycles
 	}
 
 	template <typename ArgsType>
-	void EventHandler<ArgsType>::operator () (ArgsType arg)
+	void EventHandler<ArgsType>::operator () (ArgsType arg) const
 	{
 		std::for_each(_handlers.begin(), _handlers.end(), [&] (const std::pair<int, callbackType>& pair) 
 		{ 

@@ -42,6 +42,7 @@ namespace gv
 				(mCamera->propertyChanged += std::bind(&Controller3D::cameraPropertyChanged, this, std::placeholders::_1));
 
 			_InputListener = new InputListener();
+			
 		}
 
 		Controller3D::~Controller3D()

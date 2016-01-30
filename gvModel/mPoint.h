@@ -43,7 +43,7 @@ namespace gv
 				propertyChanged(PointPropChangedArgs(this, &_position, IPoint::positionPropertyName));
 			}
 
-			void trySetPosition(const glm::vec3& newPosition)
+			void trySetPosition(const glm::vec3& newPosition) const
 			{
 				tryPropertyChanged(PointPropChangedArgs(this, &_position, IPoint::positionPropertyName));
 			}
@@ -59,7 +59,7 @@ namespace gv
 				propertyChanged(PointPropChangedArgs(this, &_name, IPoint::namePropertyName));
 			}
 
-			void trySetName(const std::string& newName)
+			void trySetName(const std::string& newName) const
 			{
 				tryPropertyChanged(PointPropChangedArgs(this, &newName, IPoint::namePropertyName));
 			}
@@ -75,7 +75,7 @@ namespace gv
 				propertyChanged(PointPropChangedArgs(this, &_primitive, IPoint::primitivePropertyName));
 			}
 
-			void trySetPrimitive(const PrimitiveType& newPrimitive)
+			void trySetPrimitive(const PrimitiveType& newPrimitive) const
 			{
 				tryPropertyChanged(PointPropChangedArgs(this, &_primitive, IPoint::primitivePropertyName));
 			}

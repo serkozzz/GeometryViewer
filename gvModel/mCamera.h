@@ -12,12 +12,14 @@ namespace gv
 			std::string _name;
 		public:
 			virtual glm::mat4 getTransform() const;
-			virtual void trySetTransform(const glm::mat4& newTransform);
+			virtual void trySetTransform(const glm::mat4& newTransform) const;
+			void setTransform(const glm::mat4& newTransform);
 
 			virtual std::string getName() const;
-			virtual void trySetName(const std::string& newName);
+			virtual void trySetName(const std::string& newName) const;
+			void setName(const std::string& newName);
 
-			skb::EventHandler<CameraPropChangedArgs> tryPropertyChanged;
+			skb::EventHandler<const CameraPropChangedArgs&> tryPropertyChanged;
 		};
 	}
 }

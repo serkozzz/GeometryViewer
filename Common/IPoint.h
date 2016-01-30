@@ -24,13 +24,13 @@ namespace gv
 
 
 		virtual glm::vec3 getPosition() const = 0;
-		virtual void trySetPosition(const glm::vec3& newPosition) = 0;
+		virtual void trySetPosition(const glm::vec3& newPosition) const = 0;
 
 		virtual std::string getName() const = 0;
-		virtual void trySetName(const std::string& newName) = 0;
+		virtual void trySetName(const std::string& newName) const = 0;
 
 		virtual PrimitiveType getPrimitive() const = 0;
-		virtual void trySetPrimitive(const PrimitiveType& newPrimitive) = 0;
+		virtual void trySetPrimitive(const PrimitiveType& newPrimitive) const = 0;
 
 		skb::EventHandler<PointPropChangedArgs> propertyChanged;
 	};

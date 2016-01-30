@@ -36,7 +36,7 @@ namespace gv
 				_position = newPosition;
 			}
 
-			void trySetPosition(const glm::vec3& newPosition)
+			void trySetPosition(const glm::vec3& newPosition) const
 			{
 			}
 
@@ -50,7 +50,7 @@ namespace gv
 				_name = newName;
 			}
 
-			void trySetName(const std::string& newName)
+			void trySetName(const std::string& newName) const
 			{
 			}
 
@@ -64,7 +64,7 @@ namespace gv
 				_primitive = newPrimitive;
 			}
 
-			void trySetPrimitive(const PrimitiveType& newPrimitive)
+			void trySetPrimitive(const PrimitiveType& newPrimitive) const
 			{
 			}
 		};

@@ -20,12 +20,12 @@ namespace gv
 			static const std::string namePropertyName;
 
 			virtual glm::mat4 getTransform() const = 0;
-			virtual void trySetTransform(const glm::mat4& newTransform) = 0;
+			virtual void trySetTransform(const glm::mat4& newTransform) const = 0;
 
 			virtual std::string getName() const = 0;
-			virtual void trySetName(const std::string& newName) = 0;
+			virtual void trySetName(const std::string& newName) const = 0;
 
-			skb::EventHandler<CameraPropChangedArgs> propertyChanged;
+			skb::EventHandler<const CameraPropChangedArgs&> propertyChanged;
 		};
 	}
 }

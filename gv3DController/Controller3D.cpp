@@ -9,6 +9,7 @@
 #include "../gvEngine/ISceneNode.h"
 #include "../gvEngine/ISceneManager.h"
 #include "../gvEngine/gvEngineAPI.h"
+#include "../gvEngine/Camera.h"
 
 #include "Logger.h"
 
@@ -41,7 +42,7 @@ namespace gv
 			cameraPropChangedSubscription =
 				(mCamera->propertyChanged += std::bind(&Controller3D::cameraPropertyChanged, this, std::placeholders::_1));
 
-			_InputListener = new InputListener();
+			_InputListener = new InputListener(mCamera);
 			
 		}
 
@@ -80,7 +81,7 @@ namespace gv
 			glm::translate(transformMatrix, p->getPosition());
 			ISceneNode* sceneNode = _sceneManager->createSceneNode(sceneNodeName, meshName, transformMatrix);
 			if (_points.find(p) != _points.end())
-				throw std::exception("Try add point that has been already added");
+				throw std::exception("Try to add point that has been already added");
 
 			_points[p] = sceneNode;
 			_pointsSubscriptions[p] = 
@@ -91,7 +92,7 @@ namespace gv
 		void Controller3D::pointRemoved(const std::shared_ptr<IPoint>& p)
 		{
 			if (_points.find(p) == _points.end())
-				throw std::exception("Try remove point that is abscent in the Scene");
+				throw std::exception("Try to remove point that is abscent in the Scene");
 
 			p->propertyChanged -= _pointsSubscriptions[p];
 			_sceneManager->removeSceneNode(_points[p]);
@@ -105,7 +106,7 @@ namespace gv
 
 			auto it = _points.find(pPtr);
 			if (it == _points.end())
-				throw std::exception("Attemption to change point property for point that is abscent in the plan");
+				throw std::exception("Attempt to change point property for point that is abscent in the plan");
 
 			//if (args.propName == IPoint::namePropertyName)
 			//{
@@ -133,7 +134,12 @@ namespace gv
 
 		void Controller3D::cameraPropertyChanged(const Model::CameraPropChangedArgs& args)
 		{
-			//TODO change 3d camera
+			if (args.propName == Model::ICamera::transformPropertyName)
+			{
+				auto transform = static_cast<const glm::mat4*>(args.newValue);
+				Engine::Camera* camera3d = _sceneManager->get3DCamera();
+				camera3d->setTransformMatrix(*transform);
+			}
 		}
 
 #pragma endregion Model Events

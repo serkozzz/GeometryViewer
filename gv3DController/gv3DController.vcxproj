@@ -90,12 +90,16 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CameraMovingRealizationAngles.h" />
+    <ClInclude Include="CameraMovingRealizationMatrix.h" />
     <ClInclude Include="Controller3D.h" />
+    <ClInclude Include="ICameraMovingRealization.h" />
     <ClInclude Include="InputListener.h" />
     <ClInclude Include="PrimitiveCreator.h" />
     <ClInclude Include="PrimitivesGeometry.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="CameraMovingRealizationAngles.cpp" />
     <ClCompile Include="Controller3D.cpp" />
     <ClCompile Include="InputListener.cpp" />
     <ClCompile Include="PrimitiveCreator.cpp" />

@@ -30,6 +30,15 @@
     <ClInclude Include="InputListener.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ICameraMovingRealization.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraMovingRealizationAngles.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraMovingRealizationMatrix.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Controller3D.cpp">
@@ -39,6 +48,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="InputListener.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraMovingRealizationAngles.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

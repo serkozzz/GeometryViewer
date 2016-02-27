@@ -9,6 +9,11 @@ ICamera* mPlan::getCamera()
 }
 
 
+mCamera* mPlan::getmCamera()
+{
+	return &_camera;
+}
+
 void mPlan::AddPoint(const std::shared_ptr<mPoint>& p)
 {
 	_points.push_back(p);

@@ -5,7 +5,7 @@
 
 
 #include "IPlan.h"
-
+#include "CameraMover.h"
 
 namespace gv
 {
@@ -16,7 +16,7 @@ namespace gv
 		class PlanManager
 		{
 			mPlan* _plan;
-
+			std::shared_ptr<CameraMover> _cameraMover;
 			std::map<std::shared_ptr<IPoint>, int> _subscriptions;
 
 			void onTryPointPropChanged(PointPropChangedArgs args);

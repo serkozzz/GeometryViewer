@@ -7,7 +7,8 @@
 #include "InputController.h"
 #include "ThreadManager.h"
 #include "Logger.h"
-
+#include "Camera.h"
+#include "SceneManager.h"
 
 using namespace gv;
 using namespace gv::Engine;
@@ -32,6 +33,8 @@ void RootEngineManager::startInSeparatedThread(int sizeX, int sizeY, IInputListe
 	sk::Logger::sharedLogger()->writeMessage(std::to_string((int)sk::Logger::sharedLogger()));
 	_windowManager = new WindowManager();
 	_windowManager->createWindow(sizeX, sizeY);
+	Camera camera3d("mainCamera", ((float)sizeX) / sizeY);
+	SceneManager::sharedSceneManager()->setCurrentCamera(std::make_shared<Camera>(camera3d));
 	_inputController = new InputController(_windowManager->getWindow(), InputListener);
 	_renderer = new Renderer(_windowManager);
 	_threadManager = new ThreadManager(

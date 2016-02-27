@@ -11,6 +11,7 @@ namespace gv
 {
 	namespace Engine
 	{
+		class GVAPI Camera;
 		class GVAPI ISceneManager
 		{
 		public:
@@ -33,6 +34,8 @@ namespace gv
 			///Exceptions:
 			///if node with nodeName is abscent in the scene method throw std::invalid_argument exception 
 			virtual void removeSceneNode(const std::string& nodeName) = 0;
+
+			virtual Camera* get3DCamera() const = 0;
 		};
 	}
 }

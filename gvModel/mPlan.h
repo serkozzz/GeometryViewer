@@ -18,6 +18,8 @@ namespace gv
 
 		public:
 			virtual ICamera* getCamera();
+			mCamera* getmCamera();
+
 			void AddPoint(const std::shared_ptr<mPoint>& p);
 			void RemovePoint(const std::shared_ptr<mPoint>& p);
 			const std::list<std::shared_ptr<mPoint> >& getPoints() const;

@@ -20,12 +20,17 @@ void CameraMover::cameraTryPropertyChanged(const CameraPropChangedArgs& arg)
 {
 	if (arg.propName == ICamera::namePropertyName)
 	{
-		const glm::mat4* transform = static_cast<const glm::mat4*>(arg.newValue);
-		_camera->setTransform(*transform);
+		const std::string* name = static_cast<const std::string*>(arg.newValue);
+		_camera->setName(*name);
 	}
 	else if (arg.propName == ICamera::transformPropertyName)
 	{
-		const std::string* name = static_cast<const std::string*>(arg.newValue);
-		_camera->setName(*name);
+		const glm::mat4* transform = static_cast<const glm::mat4*>(arg.newValue);
+		_camera->setTransform(*transform);
+	}
+	else if (arg.propName == ICamera::positionPropertyName)
+	{
+		const glm::vec3* newPosition = static_cast<const glm::vec3*>(arg.newValue);
+		_camera->setPosition(*newPosition);
 	}
 }

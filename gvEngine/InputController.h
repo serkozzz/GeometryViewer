@@ -19,6 +19,7 @@ namespace gv
 			int _windowHeight;
 			GLFWwindow*  _window;
 			const IInputListener* _listener;
+			double _cursorX, _cursorY;
 		public:
 			InputController(GLFWwindow* _window, const IInputListener* listener);
 			virtual void checkInput();

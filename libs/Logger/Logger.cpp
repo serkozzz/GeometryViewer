@@ -34,7 +34,7 @@ void Logger::setBehavior(std::shared_ptr<IWritingBehavior> newBehavior)
 
 
 void Logger::writeMessage(const std::string& message, 
-						  Logger::MessageType messageType /*= Logger::MessageType::Debug*/)
+						  Logger::MessageType messageType /*= Logger::MessageType::Special*/)
 {
 
 	auto now = std::chrono::system_clock::now();

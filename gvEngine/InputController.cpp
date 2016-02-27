@@ -11,6 +11,7 @@ InputController::InputController(GLFWwindow* window, const IInputListener* liste
 	: _window(window), _listener(listener), _cursorInaccuracy(0.00001)
 {
 	glfwGetWindowSize(_window, &_windowWidth, &_windowHeight);
+	glfwGetCursorPos(_window, &_cursorX, &_cursorY);
 }
 
 InputController::~InputController()
@@ -37,8 +38,12 @@ void InputController::checkInput()
 
 	double xpos, ypos;
 	glfwGetCursorPos(_window, &xpos, &ypos);
-	double dx = _windowWidth / 2 - xpos;
-	double dy = _windowHeight / 2 - ypos;
+	double dx = _cursorX - xpos;
+	double dy = _cursorY - ypos;
 	if (fabs(dx) > _cursorInaccuracy || fabs(dy) > _cursorInaccuracy)
+	{
 		_listener->cursorPositionChanged(dx, dy);
+		_cursorX = xpos;
+		_cursorY = ypos;
+	}
 }

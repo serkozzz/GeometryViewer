@@ -16,7 +16,7 @@ namespace gv
 
 			glm::vec3 getDirection() const;
 			glm::vec3 getRight() const;
-			//glm::mat4 getCameraTransform() const;
+			glm::mat4 getCameraTransform() const;
 		public:
 			InputListener(Model::ICamera* camera);
 			virtual void keyPressed(gvKey key) const;

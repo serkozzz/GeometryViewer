@@ -7,6 +7,7 @@ using namespace gv::Model;
 PlanManager::PlanManager()
 {
 	_plan = new mPlan();
+	_cameraMover.reset(new CameraMover(_plan->getmCamera()));
 }
 
 PlanManager::~PlanManager()

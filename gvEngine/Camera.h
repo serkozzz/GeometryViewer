@@ -1,12 +1,12 @@
 #pragma once
-
+#include "dllexport.h"
 #include "SceneNode.h"
 
 namespace gv
 {
 	namespace Engine
 	{
-		class Camera : public SceneNode
+		class GVAPI Camera : public SceneNode
 		{
 			float _fov;
 			float _aspect;

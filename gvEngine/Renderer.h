@@ -1,6 +1,7 @@
 #pragma once
 
 #include "IRenderer.h"
+#include "Camera.h"
 
 namespace gv
 {

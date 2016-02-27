@@ -7,6 +7,7 @@ SceneManager* SceneManager::_sharedSceneManager = nullptr;
 
 SceneManager::SceneManager()
 {
+
 }
 
 SceneManager* SceneManager::sharedSceneManager()
@@ -42,4 +43,16 @@ void SceneManager::removeSceneNode(ISceneNode* node)
 void SceneManager::removeSceneNode(const std::string& nodeName)
 {
 
+}
+
+
+Camera* SceneManager::get3DCamera() const
+{
+	return _camera3D.get();
+}
+
+
+void SceneManager::setCurrentCamera(std::shared_ptr<Camera> camera3D)
+{
+	_camera3D = camera3D;
 }

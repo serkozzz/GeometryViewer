@@ -3,11 +3,13 @@
 
 #include <GL/glew.h>
 #include <glfw3.h>
+#include <glm/gtc/matrix_transform.hpp>
 
 #include "Renderer.h"
 #include "shader.hpp"
 #include "ErrorsCollector.h"
 #include "WindowManager.h"
+#include "SceneManager.h"
 
 using namespace gv::Engine;
 GLuint VertexArrayID;
@@ -48,6 +50,17 @@ void Renderer::renderFrame(float TimeFromLastFrameMs)
 	// Clear the screen
 	glClear( GL_COLOR_BUFFER_BIT );
 
+	//transform
+	const Camera* camera3d = SceneManager::sharedSceneManager()->get3DCamera();
+	glm::mat4 VPmatrix = camera3d->getViewProjectMatrix();
+	//glm::mat4 VPmatrix = glm::mat4(1.0f);
+
+	glm::mat4 modelMatrix = glm::translate(glm::mat4(1.0f), glm::vec3(0, 0, -10.0f));
+	auto MVP = VPmatrix * modelMatrix;
+
+	GLuint matrixID = glGetUniformLocation(programID, "MVP");
+	glUniformMatrix4fv(matrixID, 1, GL_FALSE, &MVP[0][0]);
+	
 	// Use our shader
 	glUseProgram(programID);
 

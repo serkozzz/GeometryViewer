@@ -133,6 +133,10 @@ copy "shaders\" "$(OutputPath)"</Command>
       <Project>{747d8198-88f4-4330-ac74-baf362e9be8e}</Project>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram1.cd" />
+    <None Include="ClassDiagram11.cd" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

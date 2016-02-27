@@ -43,7 +43,7 @@ namespace gv
 				(mCamera->propertyChanged += std::bind(&Controller3D::cameraPropertyChanged, this, std::placeholders::_1));
 
 			_InputListener = new InputListener(mCamera);
-			
+
 		}
 
 		Controller3D::~Controller3D()
@@ -139,6 +139,12 @@ namespace gv
 				auto transform = static_cast<const glm::mat4*>(args.newValue);
 				Engine::Camera* camera3d = _sceneManager->get3DCamera();
 				camera3d->setTransformMatrix(*transform);
+			}
+			if (args.propName == Model::ICamera::positionPropertyName)
+			{
+				auto pos = static_cast<const glm::vec3*>(args.newValue);
+				Engine::Camera* camera3d = _sceneManager->get3DCamera();
+				camera3d->setPosition(*pos);
 			}
 		}
 

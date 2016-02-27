@@ -38,7 +38,7 @@ glm::vec3 SceneNode::getPosition() const
 
 void SceneNode::setPosition(const glm::vec3& position)
 {
-	throw std::exception("NotImplementedException");
+	_transformMatrix[3] = glm::vec4(position, 1.0f);
 }
 
 glm::vec3 SceneNode::getScale() const

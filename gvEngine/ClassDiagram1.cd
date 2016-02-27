@@ -1,0 +1,158 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="sk::IWritingBehavior" Collapsed="true">
+    <Position X="4.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAQAAAA=</HashCode>
+      <FileName>D:\Programming\C++\GeometryViewer\libs\Logger\Logger.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="sk::Logger" Collapsed="true">
+    <Position X="10.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAgAAAAAAKAAAAAAAAAAAMAAAAAAAAABAAAAAAAAAA=</HashCode>
+      <FileName>D:\Programming\C++\GeometryViewer\libs\Logger\Logger.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="sk::FileWritingBehavior" Collapsed="true">
+    <Position X="3.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAIAAEAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>D:\Programming\C++\GeometryViewer\libs\Logger\Logger.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="sk::StandardOutStreamWritingBehavior" Collapsed="true">
+    <Position X="5.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>D:\Programming\C++\GeometryViewer\libs\Logger\Logger.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="gv::Engine::Camera" Collapsed="true">
+    <Position X="0.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAQAAAgEIAAAAAAAAAAAAAAACAAgIAAAAQAAACA=</HashCode>
+      <FileName>Camera.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="gv::Engine::ErrorsCollector" Collapsed="true">
+    <Position X="3.5" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>errorscollector.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="gv::Engine::IErrorsCollector" Collapsed="true">
+    <Position X="3.5" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ierrorscollector.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="gv::Engine::IInputController" Collapsed="true">
+    <Position X="6.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>IInputController.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="gv::Engine::InputController" Collapsed="true">
+    <Position X="6.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ICAAAAAAAgACAAAAAAAAAACAAAAABAIAAAAAAAAAAQA=</HashCode>
+      <FileName>InputController.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="gv::Engine::IRenderer" Collapsed="true">
+    <Position X="0.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAgAAAAABAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>IRenderer.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="gv::Engine::ISceneManager" Collapsed="true">
+    <Position X="3.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAABAAAAABQAAEAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ISceneManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="gv::Engine::ISceneNode" Collapsed="true">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAAAAAAAAAAAABAAAACCAAAgAAACAAAEIAAAAAA=</HashCode>
+      <FileName>ISceneNode.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="gv::Engine::WindowManager" Collapsed="true">
+    <Position X="10.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QIAAAAAAAgCAAACAQAAAAAAAABAAQAgAAAAAAAAAAAA=</HashCode>
+      <FileName>WindowManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="gv::Engine::Renderer" Collapsed="true">
+    <Position X="0.5" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAgAAAAAAAAAAAAAAAAAABAAAAAAAAAAACAAAAAAQA=</HashCode>
+      <FileName>Renderer.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="gv::Engine::ThreadManager" Collapsed="true">
+    <Position X="9" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgEAEAAAAAAAAAgAAAAAAAAEBAAAAAAAAAAABAAAAA=</HashCode>
+      <FileName>ThreadManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="gv::Engine::RootEngineManager" Collapsed="true">
+    <Position X="12.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAAAAQAAIAAAAgAAAAIAAAGAAAAAAAAAAAQAAAAQA=</HashCode>
+      <FileName>RootEngineManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="gv::Engine::SceneManager" Collapsed="true">
+    <Position X="3.5" Y="4.75" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAABAAAAABQAAEAAAAAQAAAAAAAAAAAAAAAAIAAAQ=</HashCode>
+      <FileName>SceneManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="gv::Engine::SceneNode" Collapsed="true">
+    <Position X="0.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAAJAAAAAAAAAAAABAAAACCAAAgAAACAAAEIAAAAAA=</HashCode>
+      <FileName>SceneNode.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="gv::IInputListener" Collapsed="true">
+    <Position X="9" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAEAAAAAAAAA=</HashCode>
+      <FileName>iinputlistener.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="gv::Engine::Vertex" Collapsed="true">
+    <Position X="10.75" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAIAgAAAAAAAAAAAAAAAAAAgA=</HashCode>
+      <FileName>GeometryData.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="gv::Engine::GeometryData" Collapsed="true">
+    <Position X="9" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAEAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GeometryData.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Enum Name="gv::gvKey" Collapsed="true">
+    <Position X="9" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAECAAAIAAAAAAACAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>iinputlistener.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

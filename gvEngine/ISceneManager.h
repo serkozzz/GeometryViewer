@@ -25,6 +25,7 @@ namespace gv
 
 			///Exceptions:
 			///if mesh is abscent or nodeName is not unique method throw std::invalid_argument exception 
+			virtual ISceneNode* createSceneNode(const std::string& nodeName, const std::string& meshName) = 0;
 			virtual ISceneNode* createSceneNode(const std::string& nodeName, const std::string& meshName, const glm::mat4& transform) = 0;
 
 			///Exceptions:

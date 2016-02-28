@@ -8,6 +8,18 @@ SceneNode::SceneNode(const std::string& name) : _name(name)
 
 }
 
+SceneNode::SceneNode(const std::string& name, const std::string& meshName) : _name(name), _meshName(meshName)
+{
+
+}
+
+
+SceneNode::SceneNode(const std::string& name, const std::string& meshName, const glm::mat4& transform) 
+	:_name(name), _meshName(meshName), _transformMatrix(transform)
+{
+
+}
+
 
 std::string SceneNode::getName() const
 {

@@ -103,6 +103,8 @@ copy "shaders\" "$(OutputPath)"</Command>
     <ClInclude Include="IRenderer.h" />
     <ClInclude Include="ISceneManager.h" />
     <ClInclude Include="ISceneNode.h" />
+    <ClInclude Include="Mesh.h" />
+    <ClInclude Include="MeshManager.h" />
     <ClInclude Include="RenderCycle.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="RootEngineManager.h" />
@@ -110,6 +112,7 @@ copy "shaders\" "$(OutputPath)"</Command>
     <ClInclude Include="SceneNode.h" />
     <ClInclude Include="shader.hpp" />
     <ClInclude Include="ThreadManager.h" />
+    <ClInclude Include="VideoMemoryManager.h" />
     <ClInclude Include="WindowManager.h" />
   </ItemGroup>
   <ItemGroup>
@@ -118,6 +121,7 @@ copy "shaders\" "$(OutputPath)"</Command>
     <ClCompile Include="ErrorsCollector.cpp" />
     <ClCompile Include="gvEngineAPI.cpp" />
     <ClCompile Include="InputController.cpp" />
+    <ClCompile Include="MeshManager.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="RootEngineManager.cpp" />
     <ClCompile Include="SceneManager.cpp" />
@@ -126,6 +130,7 @@ copy "shaders\" "$(OutputPath)"</Command>
     <ClCompile Include="test.cpp" />
     <ClCompile Include="renderCycle.cpp" />
     <ClCompile Include="ThreadManager.cpp" />
+    <ClCompile Include="VideoMemoryManager.cpp" />
     <ClCompile Include="WindowManager.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -136,6 +141,8 @@ copy "shaders\" "$(OutputPath)"</Command>
   <ItemGroup>
     <None Include="ClassDiagram1.cd" />
     <None Include="ClassDiagram11.cd" />
+    <None Include="shaders\SimpleFragmentShader.fragmentshader" />
+    <None Include="shaders\SimpleVertexShader.vertexshader" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -14,6 +14,7 @@
 using namespace gv::Engine;
 GLuint VertexArrayID;
 GLuint vertexbuffer;
+GLuint elementbuffer;
 GLuint programID;
 std::mutex OGLmutex;
 
@@ -27,13 +28,10 @@ Renderer::Renderer(WindowManager* windowManager)
 		glfwTerminate();
 	}
 
-	glGenVertexArrays(1, &VertexArrayID);
-	glBindVertexArray(VertexArrayID);
-
 	// Create and compile our GLSL program from the shaders
 	programID = LoadShaders( "SimpleVertexShader.vertexshader", "SimpleFragmentShader.fragmentshader" );
 
-	static const GLfloat g_vertex_buffer_data[] = { 
+	const GLfloat g_vertex_buffer_data[] = { 
 		-1.0f, -1.0f, 0.0f,
 		1.0f, -1.0f, 0.0f,
 		0.0f,  1.0f, 0.0f,
@@ -42,6 +40,40 @@ Renderer::Renderer(WindowManager* windowManager)
 	glGenBuffers(1, &vertexbuffer);
 	glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(g_vertex_buffer_data), g_vertex_buffer_data, GL_STATIC_DRAW);
+
+
+
+	const int  g_indecies_data[] = { 
+		0, 1, 2
+	};
+
+	glGenBuffers(1, &elementbuffer);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elementbuffer);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(g_indecies_data), g_indecies_data, GL_STATIC_DRAW);
+
+
+	////VAO
+	glGenVertexArrays(1, &VertexArrayID);
+	glBindVertexArray(VertexArrayID);
+
+	// 1-st attribute buffer : vertices
+	glEnableVertexAttribArray(0);
+	glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
+	glVertexAttribPointer(
+		0,                  // attribute 0. No particular reason for 0, but must match the layout in the shader.
+		3,                  // size
+		GL_FLOAT,           // type
+		GL_FALSE,           // normalized?
+		0,                  // stride
+		(void*)0            // array buffer offset
+		);
+
+
+	//glDisableVertexAttribArray(0);
+
+	glBindVertexArray(0);
+
+
 }
 
 void Renderer::renderFrame(float TimeFromLastFrameMs)
@@ -60,26 +92,25 @@ void Renderer::renderFrame(float TimeFromLastFrameMs)
 
 	GLuint matrixID = glGetUniformLocation(programID, "MVP");
 	glUniformMatrix4fv(matrixID, 1, GL_FALSE, &MVP[0][0]);
-	
+
 	// Use our shader
 	glUseProgram(programID);
 
-	// 1rst attribute buffer : vertices
-	glEnableVertexAttribArray(0);
-	glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
-	glVertexAttribPointer(
-		0,                  // attribute 0. No particular reason for 0, but must match the layout in the shader.
-		3,                  // size
-		GL_FLOAT,           // type
-		GL_FALSE,           // normalized?
-		0,                  // stride
-		(void*)0            // array buffer offset
+
+	glBindVertexArray(VertexArrayID);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elementbuffer);
+
+	// Draw the triangles !
+	glDrawElements(
+		GL_TRIANGLES,      // mode
+		3,    // count
+		GL_UNSIGNED_INT,   // type
+		(void*)0           // element array buffer offset
 		);
 
-	// Draw the triangle !
-	glDrawArrays(GL_TRIANGLES, 0, 3); // 3 indices starting at 0 -> 1 triangle
+	glBindVertexArray(0);
 
-	glDisableVertexAttribArray(0);
+
 
 	// Swap buffers
 	glfwSwapBuffers(_windowManager->getWindow());

@@ -13,6 +13,7 @@ namespace gv
 			virtual std::string getName() const = 0;
 
 			virtual void setMesh(const std::string& meshName) = 0;
+			virtual const std::string& getMesh() = 0;
 
 			virtual glm::mat4 getTransformMatrix() const = 0;
 			virtual void setTransformMatrix(const glm::mat4& transform) = 0;

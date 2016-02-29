@@ -26,12 +26,19 @@ namespace gv
 			struct VideoMemoryDataDescriptor
 			{
 				int startPos;
-				int vertexesCount;
+				int vertexesNumber;
 			};
 
 			static VideoMemoryManager* sharedVideoMemoryManager();
+			
+			void bindVAO();
+			void unbindVAO();
+			void bindIBO();
+			void unbindIBO();
+
 			GLuint getVAOId();
-			void addData(const GeometryData* geometryData);
+			GLuint getIBOId();
+			VideoMemoryDataDescriptor addData(const GeometryData* geometryData);
 
 
 		};

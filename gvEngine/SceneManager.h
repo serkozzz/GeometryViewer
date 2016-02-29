@@ -10,13 +10,11 @@ namespace gv
 {
 	namespace Engine
 	{
-		class MeshManager;
 		class SceneNode;
 
 		class GVAPI SceneManager : public ISceneManager
 		{
 			static SceneManager* _sharedSceneManager;
-			std::shared_ptr<MeshManager> _meshManager;
 			std::map<std::string, std::shared_ptr<SceneNode> > _nodes;
 			std::shared_ptr<Camera> _camera3D;
 			SceneManager();
@@ -33,6 +31,9 @@ namespace gv
 
 			virtual Camera* get3DCamera() const;
 			virtual void setCurrentCamera(std::shared_ptr<Camera> Camera3D);
+
+			const std::map<std::string, std::shared_ptr<SceneNode> >& getNodes();
+
 		};
 	}
 }

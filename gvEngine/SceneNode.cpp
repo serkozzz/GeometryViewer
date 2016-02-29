@@ -32,6 +32,12 @@ void SceneNode::setMesh(const std::string& meshName)
 	throw std::exception("NotImplementedException");
 }
 
+
+const std::string& SceneNode::getMesh()
+{
+	return _meshName;
+}
+
 glm::mat4 SceneNode::getTransformMatrix() const
 {
 	return _transformMatrix;

@@ -9,7 +9,6 @@ SceneManager* SceneManager::_sharedSceneManager = nullptr;
 
 SceneManager::SceneManager()
 {
-	_meshManager.reset(new MeshManager());
 }
 
 SceneManager* SceneManager::sharedSceneManager()
@@ -24,12 +23,11 @@ SceneManager* SceneManager::sharedSceneManager()
 
 void SceneManager::createMesh(const std::string& meshName, const GeometryData* geometryData)
 {
-	_meshManager->createMesh( meshName, geometryData);
+	MeshManager::sharedMeshManager()->createMesh( meshName, geometryData);
 }
 
 void SceneManager::removeMesh(const std::string& meshName)
 {
-
 }
 
 ISceneNode* SceneManager::createSceneNode(const std::string& nodeName, const std::string& meshName, const glm::mat4& transform)
@@ -40,7 +38,7 @@ ISceneNode* SceneManager::createSceneNode(const std::string& nodeName, const std
 		throw std::exception(message.c_str());
 	}
 
-	std::shared_ptr<Mesh> mesh = _meshManager->getMesh(meshName);
+	std::shared_ptr<Mesh> mesh = MeshManager::sharedMeshManager()->getMesh(meshName);
 	if (mesh == nullptr)
 	{
 		std::string message = "Mesh with name = " + meshName + " is not exist";
@@ -77,4 +75,10 @@ Camera* SceneManager::get3DCamera() const
 void SceneManager::setCurrentCamera(std::shared_ptr<Camera> camera3D)
 {
 	_camera3D = camera3D;
+}
+
+
+const std::map<std::string, std::shared_ptr<SceneNode> >& SceneManager::getNodes()
+{
+	return _nodes;
 }

@@ -9,7 +9,9 @@ using namespace gv::Engine;
 VideoMemoryManager* VideoMemoryManager::_videoMemoryManagerInstance = nullptr;
 
 VideoMemoryManager::VideoMemoryManager() 
-{}
+{
+	initialize();
+}
 
 
 VideoMemoryManager* VideoMemoryManager::sharedVideoMemoryManager()
@@ -74,13 +76,7 @@ void VideoMemoryManager::initialize()
 }
 
 
-GLuint VideoMemoryManager::getVAOId()
-{
-	return _VAOId;
-}
-
-
-void VideoMemoryManager::addData(const GeometryData* geometryData)
+VideoMemoryManager::VideoMemoryDataDescriptor VideoMemoryManager::addData(const GeometryData* geometryData)
 {
 	size_t vertexexNumber = geometryData->verticies.size();
 
@@ -132,4 +128,35 @@ void VideoMemoryManager::addData(const GeometryData* geometryData)
 	delete[] positionsBufferData;
 	delete[] normalsBufferData;
 	delete[] uvBufferData;
+
+	VideoMemoryDataDescriptor dataDecriptor;
+	dataDecriptor.startPos = 0;
+	dataDecriptor.vertexesNumber = vertexexNumber;
+
+	return dataDecriptor;
+}
+
+
+void VideoMemoryManager::bindVAO()
+{
+	glBindVertexArray(_VAOId);
+
+}
+
+
+void VideoMemoryManager::unbindVAO()
+{
+	glBindVertexArray(0);
+}
+
+
+void VideoMemoryManager::bindIBO()
+{
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _IBOId);
+}
+
+
+void VideoMemoryManager::unbindIBO()
+{
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }

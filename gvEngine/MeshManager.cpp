@@ -2,8 +2,24 @@
 
 
 #include "MeshManager.h"
+#include "VideoMemoryManager.h"
 
 using namespace gv::Engine;
+
+MeshManager* MeshManager::_meshManagerInstance = nullptr;
+
+
+MeshManager::MeshManager()
+{
+
+}
+
+MeshManager* MeshManager::sharedMeshManager()
+{
+	if (_meshManagerInstance == nullptr)
+		_meshManagerInstance = new MeshManager();
+	return _meshManagerInstance;
+}
 
 
 void MeshManager::createMesh(const std::string& meshName, const GeometryData* geometryData)
@@ -15,6 +31,12 @@ void MeshManager::createMesh(const std::string& meshName, const GeometryData* ge
 	}
 
 
+	auto& videoMemoryDataDescription = VideoMemoryManager::sharedVideoMemoryManager()->addData(geometryData);
+	Mesh mesh;
+	mesh.name = meshName;
+	mesh.IBOoffset = videoMemoryDataDescription.startPos;
+	mesh.pointsNumber = videoMemoryDataDescription.vertexesNumber;
+	_meshes[meshName] = mesh;
 }
 
 

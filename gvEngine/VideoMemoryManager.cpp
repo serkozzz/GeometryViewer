@@ -3,6 +3,7 @@
 
 #include "VideoMemoryManager.h"
 #include "GeometryData.h"
+#include "ErrorsCollector.h"
 
 using namespace gv::Engine;
 

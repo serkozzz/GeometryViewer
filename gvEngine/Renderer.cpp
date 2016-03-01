@@ -24,13 +24,6 @@ std::mutex OGLmutex;
 Renderer::Renderer(WindowManager* windowManager)
 	: _windowManager(windowManager)
 {
-	// Initialize GLEW
-	glewExperimental = true; // Needed for core profile
-	if (glewInit() != GLEW_OK) {
-		ErrorsCollector::sharedErrorsCollector()->addError("Failed to initialize GLEW");
-		glfwTerminate();
-	}
-
 	// Create and compile our GLSL program from the shaders
 	programID = LoadShaders( "SimpleVertexShader.vertexshader", "SimpleFragmentShader.fragmentshader" );
 

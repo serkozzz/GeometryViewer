@@ -1,6 +1,7 @@
 #include <thread>
 #include <memory>
 
+#include "OpenGLInitializer.h"
 #include "RootEngineManager.h"
 #include "WindowManager.h"
 #include "Renderer.h"
@@ -9,6 +10,7 @@
 #include "Logger.h"
 #include "Camera.h"
 #include "SceneManager.h"
+#include "VideoMemoryManager.h"
 
 using namespace gv;
 using namespace gv::Engine;
@@ -31,8 +33,10 @@ void RootEngineManager::startInSeparatedThread(int sizeX, int sizeY, IInputListe
 	sk::Logger::sharedLogger()->setBehavior(
 		std::shared_ptr<sk::IWritingBehavior>(new sk::FileWritingBehavior("gvEngine.log")));
 	sk::Logger::sharedLogger()->writeMessage(std::to_string((int)sk::Logger::sharedLogger()));
+	OpenGLInitializer::initialize();
 	_windowManager = new WindowManager();
 	_windowManager->createWindow(sizeX, sizeY);
+
 	Camera camera3d("mainCamera", ((float)sizeX) / sizeY);
 	SceneManager::sharedSceneManager()->setCurrentCamera(std::make_shared<Camera>(camera3d));
 	_inputController = new InputController(_windowManager->getWindow(), InputListener);

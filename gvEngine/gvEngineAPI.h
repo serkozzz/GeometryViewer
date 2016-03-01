@@ -16,6 +16,9 @@
 	{
 		namespace Engine
 		{
+
+			//TODO move logic of engine initialization and start render cycle from createView
+			//users can create scene, add meshes without View
 			GVAPI void createView(int sizeX, int sizeY, IInputListener* InputListener);
 			GVAPI ISceneManager* getSceneManager();
 			

@@ -105,6 +105,7 @@ copy "shaders\" "$(OutputPath)"</Command>
     <ClInclude Include="ISceneNode.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="MeshManager.h" />
+    <ClInclude Include="openGLInitializer.h" />
     <ClInclude Include="RenderCycle.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="RootEngineManager.h" />
@@ -122,6 +123,7 @@ copy "shaders\" "$(OutputPath)"</Command>
     <ClCompile Include="gvEngineAPI.cpp" />
     <ClCompile Include="InputController.cpp" />
     <ClCompile Include="MeshManager.cpp" />
+    <ClCompile Include="OpenGLInitializer.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="RootEngineManager.cpp" />
     <ClCompile Include="SceneManager.cpp" />
@@ -140,7 +142,6 @@ copy "shaders\" "$(OutputPath)"</Command>
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram1.cd" />
-    <None Include="ClassDiagram11.cd" />
     <None Include="shaders\SimpleFragmentShader.fragmentshader" />
     <None Include="shaders\SimpleVertexShader.vertexshader" />
   </ItemGroup>

@@ -11,7 +11,7 @@ using namespace gv::Controller3D;
 
 static GeometryData* CreateCube()
 {
-	GeometryData* result = new GeometryData();
+	static GeometryData* result = new GeometryData();
 	for(int i = 0; i < cube_n_points; i++)
 	{
 		Vertex vertex;
@@ -27,20 +27,54 @@ static GeometryData* CreateCube()
 	return result;
 }
 
+
+static GeometryData* CreateTriangle()
+{
+	//test triangle
+	static GeometryData* triangle = new GeometryData();
+	triangle->verticies.push_back(gv::Engine::Vertex(
+		glm::vec3(-1.0f, -1.0f, 0.0f),  
+		glm::vec3(0.0f, 0.0f, 1.0f),
+		glm::vec2(0.0f, 0.0f)));
+
+	triangle->verticies.push_back(gv::Engine::Vertex(
+		glm::vec3(1.0f, -1.0f, 0.0f),  
+		glm::vec3(0.0f, 0.0f, 1.0f),
+		glm::vec2(0.0f, 0.0f)));
+
+	triangle->verticies.push_back(gv::Engine::Vertex(
+		glm::vec3(0.0f,  1.0f, 0.0f),  
+		glm::vec3(0.0f, 0.0f, 1.0f),
+		glm::vec2(0.0f, 0.0f)));
+
+
+	triangle->indecies.push_back(0);
+	triangle->indecies.push_back(1);
+	triangle->indecies.push_back(2);
+	return triangle;
+}
+
 static gv::Engine::GeometryData* CreateSphere()
 {
 	throw std::exception("NotImplementedException");
 }
 
 
-const GeometryData* PrimitiveCreator::getCube()
+std::shared_ptr<const GeometryData> PrimitiveCreator::getCube()
 {
-	return CreateCube();
+	return std::shared_ptr<const GeometryData>(CreateCube());
 }
 
-const GeometryData* PrimitiveCreator::getSphere()
+std::shared_ptr<const GeometryData> PrimitiveCreator::getSphere()
 {
-	return CreateSphere();
+	return std::shared_ptr<const GeometryData>(CreateSphere());
 }
+
+
+std::shared_ptr<const GeometryData> PrimitiveCreator::getTriangle()
+{
+	return std::shared_ptr<const GeometryData>(CreateTriangle());
+}
+
 
 

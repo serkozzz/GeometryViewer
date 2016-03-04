@@ -78,6 +78,9 @@ Renderer::Renderer(WindowManager* windowManager)
 void Renderer::renderFrame(float TimeFromLastFrameMs)
 {
 	auto videoMemoryManager = VideoMemoryManager::sharedVideoMemoryManager();
+	//TODO may be move it to the Thread manager?
+	videoMemoryManager->checkQueue();
+
 	auto sceneManager = SceneManager::sharedSceneManager();
 	auto meshManager = MeshManager::sharedMeshManager();
 
@@ -153,8 +156,5 @@ void Renderer::renderFrame(float TimeFromLastFrameMs)
 
 Renderer::~Renderer()
 {
-	// Cleanup VBO
-	glDeleteBuffers(1, &vertexbuffer);
-	glDeleteVertexArrays(1, &VertexArrayID);
 	glDeleteProgram(programID);
 }

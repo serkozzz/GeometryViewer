@@ -17,7 +17,7 @@ namespace gv
 			static MeshManager* _meshManagerInstance;
 			MeshManager();
 		public:
-			void createMesh(const std::string& meshName, const GeometryData* geometryData);
+			void createMesh(const std::string& meshName, std::shared_ptr<const GeometryData> geometryData);
 			std::shared_ptr<Mesh> getMesh(std::string name);
 			static MeshManager* sharedMeshManager();
 		};

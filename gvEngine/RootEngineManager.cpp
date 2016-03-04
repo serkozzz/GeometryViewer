@@ -18,6 +18,7 @@ using namespace gv::Engine;
 RootEngineManager* RootEngineManager::_rootEngineManagerInstance = nullptr;
 
 RootEngineManager::RootEngineManager()
+	: _isInitialized(false)
 {
 }
 
@@ -33,9 +34,13 @@ void RootEngineManager::startInSeparatedThread(int sizeX, int sizeY, IInputListe
 	sk::Logger::sharedLogger()->setBehavior(
 		std::shared_ptr<sk::IWritingBehavior>(new sk::FileWritingBehavior("gvEngine.log")));
 	sk::Logger::sharedLogger()->writeMessage(std::to_string((int)sk::Logger::sharedLogger()));
-	OpenGLInitializer::initialize();
+
 	_windowManager = new WindowManager();
 	_windowManager->createWindow(sizeX, sizeY);
+	//TODO in current realization OpenGLInitializer::initialize() must be called after _windowManager->createWindow
+	//It is bad dependecy
+	OpenGLInitializer::initialize();
+	VideoMemoryManager::sharedVideoMemoryManager()->initialize();
 
 	Camera camera3d("mainCamera", ((float)sizeX) / sizeY);
 	SceneManager::sharedSceneManager()->setCurrentCamera(std::make_shared<Camera>(camera3d));
@@ -46,9 +51,8 @@ void RootEngineManager::startInSeparatedThread(int sizeX, int sizeY, IInputListe
 		std::shared_ptr<IInputController>(_inputController),
 		10,
 		40);
+	_isInitialized = true;
 	_threadManager->start();
-
-
 }
 
 
@@ -61,4 +65,10 @@ void RootEngineManager::start(int sizeX, int sizeY, IInputListener* inputListene
 		sizeY,
 		inputListener);
 	newThread.detach();
+
+	while(!_isInitialized)
+	{
+		std::this_thread::sleep_for(std::chrono::milliseconds(100));
+	}
+	return;
 }

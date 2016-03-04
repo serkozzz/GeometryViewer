@@ -11,7 +11,6 @@ VideoMemoryManager* VideoMemoryManager::_videoMemoryManagerInstance = nullptr;
 
 VideoMemoryManager::VideoMemoryManager() 
 {
-	initialize();
 }
 
 
@@ -74,11 +73,79 @@ void VideoMemoryManager::initialize()
 	//glDisableVertexAttribArray(0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
+
+
+	glBindBuffer(GL_ARRAY_BUFFER, _vertexBufferId);
+}
+
+void VideoMemoryManager::bindVAO()
+{
+	glBindVertexArray(_VAOId);
+
 }
 
 
-VideoMemoryManager::VideoMemoryDataDescriptor VideoMemoryManager::addData(const GeometryData* geometryData)
+void VideoMemoryManager::unbindVAO()
 {
+	glBindVertexArray(0);
+}
+
+
+void VideoMemoryManager::bindIBO()
+{
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _IBOId);
+}
+
+
+void VideoMemoryManager::unbindIBO()
+{
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+}
+
+void VideoMemoryManager::deleteVideoMemoryManager()
+{
+	if (_videoMemoryManagerInstance)
+		delete _videoMemoryManagerInstance;
+}
+
+
+VideoMemoryManager::~VideoMemoryManager()
+{
+	// Cleanup VBO
+	glDeleteBuffers(1, &_vertexBufferId);
+	glDeleteBuffers(1, &_normalsBufferId);
+	glDeleteBuffers(1, &_texCoordsBufferId);
+	glDeleteBuffers(1, &_IBOId);
+
+	////VAO
+	glDeleteVertexArrays(1, &_VAOId);
+}
+
+
+void VideoMemoryManager::addData(std::shared_ptr<const GeometryData> geometryData, 
+								 std::function<void(VideoMemoryDescriptor& descriptor)> callback)
+{
+	std::lock_guard<std::mutex> lock(_mutex);
+	dataAdditionQueue.push(DataAdditionQuery(geometryData, callback));
+}
+
+
+void VideoMemoryManager::checkQueue()
+{
+	std::lock_guard<std::mutex> lock(_mutex);
+	while(!dataAdditionQueue.empty())
+	{
+		auto& query = dataAdditionQueue.front();
+		auto videoMemoryDecroptor = pushDataToVideoMemory(query.geometryData.get());
+		query.callback(videoMemoryDecroptor);
+		dataAdditionQueue.pop();
+	}
+}
+
+
+VideoMemoryManager::VideoMemoryDescriptor VideoMemoryManager::pushDataToVideoMemory(const GeometryData* geometryData)
+{
+	glBindBuffer(GL_ARRAY_BUFFER, _vertexBufferId);
 	size_t vertexexNumber = geometryData->verticies.size();
 
 	//weak place(maybe) - unnecessary copying
@@ -130,34 +197,9 @@ VideoMemoryManager::VideoMemoryDataDescriptor VideoMemoryManager::addData(const 
 	delete[] normalsBufferData;
 	delete[] uvBufferData;
 
-	VideoMemoryDataDescriptor dataDecriptor;
+	VideoMemoryDescriptor dataDecriptor;
 	dataDecriptor.startPos = 0;
 	dataDecriptor.vertexesNumber = vertexexNumber;
 
 	return dataDecriptor;
-}
-
-
-void VideoMemoryManager::bindVAO()
-{
-	glBindVertexArray(_VAOId);
-
-}
-
-
-void VideoMemoryManager::unbindVAO()
-{
-	glBindVertexArray(0);
-}
-
-
-void VideoMemoryManager::bindIBO()
-{
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _IBOId);
-}
-
-
-void VideoMemoryManager::unbindIBO()
-{
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }

@@ -18,9 +18,11 @@ namespace gv
 			InputController* _inputController;
 			Renderer* _renderer;
 			ThreadManager* _threadManager;
+			bool _isInitialized;
 			void startInSeparatedThread(int sizeX, int sizeY, IInputListener* InputListener);
 		public: 
 			static RootEngineManager* sharedRootEngineManager();
+
 			void start(int sizeX, int sizeY, IInputListener* InputListener);
 		};
 	}

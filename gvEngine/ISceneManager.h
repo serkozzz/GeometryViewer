@@ -15,9 +15,13 @@ namespace gv
 		class GVAPI ISceneManager
 		{
 		public:
-			///Exceptions:
-			///if meshName is not unique method throw std::invalid_argument exception 
-			virtual void createMesh(const std::string& meshName, const GeometryData* geometryData) = 0;
+
+			/*
+			Attention!!! geometryData must be valid after "createMesh" call. Not delete this!!!
+			Exceptions:
+			if meshName is not unique method throw std::invalid_argument exception 
+			*/
+			virtual void createMesh(const std::string& meshName, std::shared_ptr<const GeometryData> geometryData) = 0;
 
 			///Exceptions:
 			///if mesh with MeshName is abscent method throw std::invalid_argument exception 

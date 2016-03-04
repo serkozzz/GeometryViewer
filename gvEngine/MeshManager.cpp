@@ -22,7 +22,7 @@ MeshManager* MeshManager::sharedMeshManager()
 }
 
 
-void MeshManager::createMesh(const std::string& meshName, const GeometryData* geometryData)
+void MeshManager::createMesh(const std::string& meshName, std::shared_ptr<const GeometryData> geometryData)
 {
 	if (_meshes.find(meshName) != _meshes.end())
 	{
@@ -30,13 +30,14 @@ void MeshManager::createMesh(const std::string& meshName, const GeometryData* ge
 		throw std::exception(message.c_str());
 	}
 
-
-	auto& videoMemoryDataDescription = VideoMemoryManager::sharedVideoMemoryManager()->addData(geometryData);
-	Mesh mesh;
+	Mesh& mesh = _meshes[meshName]; // it creates new mesh and give me ref to this mesh
 	mesh.name = meshName;
-	mesh.IBOoffset = videoMemoryDataDescription.startPos;
-	mesh.pointsNumber = videoMemoryDataDescription.vertexesNumber;
-	_meshes[meshName] = mesh;
+	VideoMemoryManager::sharedVideoMemoryManager()->addData(geometryData, 
+		[&] (VideoMemoryManager::VideoMemoryDescriptor& descriptor) 
+	{
+		mesh.IBOoffset = descriptor.startPos;
+		mesh.pointsNumber = descriptor.vertexesNumber;
+	});
 }
 
 

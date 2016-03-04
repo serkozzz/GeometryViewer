@@ -35,7 +35,7 @@ namespace gv
 
 			_sceneManager = Engine::getSceneManager();
 
-			_sceneManager->createMesh(_cubeMeshName, PrimitiveCreator::getCube());
+			//_sceneManager->createMesh(_cubeMeshName, PrimitiveCreator::getCube());
 			/////_sceneManager->createMesh(_sphereMeshName, PrimitiveCreator::getSphere());
 
 			auto mCamera = plan->getCamera();
@@ -62,6 +62,20 @@ namespace gv
 				//TODO error handling
 				errorsCollector->resetState();
 			}
+
+
+			_sceneManager = Engine::getSceneManager();
+
+			_sceneManager->createMesh(_cubeMeshName, PrimitiveCreator::getCube());
+			/////_sceneManager->createMesh(_sphereMeshName, PrimitiveCreator::getSphere());
+
+
+			//test triangle
+			_sceneManager->createMesh("triangle", PrimitiveCreator::getTriangle());
+			
+			auto transform = glm::translate(glm::mat4(1.0), glm::vec3(0, 0, -10));
+			_sceneManager->createSceneNode("triangleNode", "triangle", 
+				transform);
 		}
 
 

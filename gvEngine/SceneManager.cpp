@@ -21,7 +21,7 @@ SceneManager* SceneManager::sharedSceneManager()
 }
 
 
-void SceneManager::createMesh(const std::string& meshName, const GeometryData* geometryData)
+void SceneManager::createMesh(const std::string& meshName, std::shared_ptr<const GeometryData> geometryData)
 {
 	MeshManager::sharedMeshManager()->createMesh( meshName, geometryData);
 }

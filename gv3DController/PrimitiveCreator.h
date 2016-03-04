@@ -1,5 +1,6 @@
 #pragma once 
 
+#include <memory>
 #include "../gvEngine/GeometryData.h"
 
 namespace gv
@@ -13,8 +14,9 @@ namespace gv
 			static gv::Engine::GeometryData* _sphere;
 
 		public:
-			static const gv::Engine::GeometryData* getCube();
-			static const gv::Engine::GeometryData* getSphere();
+			static std::shared_ptr<const gv::Engine::GeometryData> getCube();
+			static std::shared_ptr<const gv::Engine::GeometryData> getSphere();
+			static std::shared_ptr<const gv::Engine::GeometryData> getTriangle();
 		};
 	}
 }

@@ -46,36 +46,33 @@ void VideoMemoryManager::initialize()
 		(void*)0            // array buffer offset
 		);
 
-	// 2-st attribute buffer : normals
-	glEnableVertexAttribArray(1);
-	glBindBuffer(GL_ARRAY_BUFFER, _normalsBufferId);
-	glVertexAttribPointer(
-		1,                  // attribute 1. 
-		3,                  // size
-		GL_FLOAT,           // type
-		GL_FALSE,           // normalized?
-		0,                  // stride
-		(void*)0            // array buffer offset
-		);
+	//// 2-st attribute buffer : normals
+	//glEnableVertexAttribArray(1);
+	//glBindBuffer(GL_ARRAY_BUFFER, _normalsBufferId);
+	//glVertexAttribPointer(
+	//	1,                  // attribute 1. 
+	//	3,                  // size
+	//	GL_FLOAT,           // type
+	//	GL_FALSE,           // normalized?
+	//	0,                  // stride
+	//	(void*)0            // array buffer offset
+	//	);
 
-	// 3-st attribute buffer : textCoords
-	glEnableVertexAttribArray(1);
-	glBindBuffer(GL_ARRAY_BUFFER, _texCoordsBufferId);
-	glVertexAttribPointer(
-		2,                  // attribute 2.
-		2,                  // size
-		GL_FLOAT,           // type
-		GL_FALSE,           // normalized?
-		0,                  // stride
-		(void*)0            // array buffer offset
-		);
+	//// 3-st attribute buffer : textCoords
+	//glEnableVertexAttribArray(2);
+	//glBindBuffer(GL_ARRAY_BUFFER, _texCoordsBufferId);
+	//glVertexAttribPointer(
+	//	2,                  // attribute 2.
+	//	2,                  // size
+	//	GL_FLOAT,           // type
+	//	GL_FALSE,           // normalized?
+	//	0,                  // stride
+	//	(void*)0            // array buffer offset
+	//	);
 
 	//glDisableVertexAttribArray(0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
-
-
-	glBindBuffer(GL_ARRAY_BUFFER, _vertexBufferId);
 }
 
 void VideoMemoryManager::bindVAO()
@@ -145,7 +142,6 @@ void VideoMemoryManager::checkQueue()
 
 VideoMemoryManager::VideoMemoryDescriptor VideoMemoryManager::pushDataToVideoMemory(const GeometryData* geometryData)
 {
-	glBindBuffer(GL_ARRAY_BUFFER, _vertexBufferId);
 	size_t vertexexNumber = geometryData->verticies.size();
 
 	//weak place(maybe) - unnecessary copying
@@ -182,20 +178,22 @@ VideoMemoryManager::VideoMemoryDescriptor VideoMemoryManager::pushDataToVideoMem
 	glBufferData(GL_ARRAY_BUFFER, vertexexNumber * 3, normalsBufferData, GL_STATIC_DRAW);
 	glBindBuffer(GL_ARRAY_BUFFER, _texCoordsBufferId);
 	glBufferData(GL_ARRAY_BUFFER, vertexexNumber * 2, uvBufferData, GL_STATIC_DRAW);
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	//glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 
 	//weak place - unnecessary copying
-	unsigned int* indexies = new unsigned int[geometryData->indecies.size()];
+	int indexesNumber = geometryData->indecies.size(); 
+	unsigned int* indexies = new unsigned int[indexesNumber];
 	std::copy(geometryData->indecies.begin(), geometryData->indecies.end(), indexies);
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _IBOId);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indexies), indexies, GL_STATIC_DRAW);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indexesNumber, indexies, GL_STATIC_DRAW);
 
 
 	delete[] positionsBufferData;
 	delete[] normalsBufferData;
 	delete[] uvBufferData;
+	delete[] indexies;
 
 	VideoMemoryDescriptor dataDecriptor;
 	dataDecriptor.startPos = 0;

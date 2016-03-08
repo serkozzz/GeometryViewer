@@ -95,6 +95,9 @@ void Renderer::renderFrame(float TimeFromLastFrameMs)
 	glm::mat4 VPmatrix = camera3d->getViewProjectMatrix();
 	//glm::mat4 VPmatrix = glm::mat4(1.0f);
 
+	
+	
+	
 	const auto& nodes = sceneManager->getNodes();
 	for (auto& node : nodes)
 	{
@@ -126,13 +129,13 @@ void Renderer::renderFrame(float TimeFromLastFrameMs)
 			mesh->pointsNumber,    // count
 			GL_UNSIGNED_INT,   // type
 			(void*)mesh->IBOoffset          // element array buffer offset
-			);
+ 			);
 
 		videoMemoryManager->unbindVAO();
 		videoMemoryManager->unbindIBO();
 	}
 
-
+//----------------------------------------
 	//glBindVertexArray(VertexArrayID);
 	//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elementbuffer);
 

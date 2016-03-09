@@ -46,29 +46,29 @@ void VideoMemoryManager::initialize()
 		(void*)0            // array buffer offset
 		);
 
-	//// 2-st attribute buffer : normals
-	//glEnableVertexAttribArray(1);
-	//glBindBuffer(GL_ARRAY_BUFFER, _normalsBufferId);
-	//glVertexAttribPointer(
-	//	1,                  // attribute 1. 
-	//	3,                  // size
-	//	GL_FLOAT,           // type
-	//	GL_FALSE,           // normalized?
-	//	0,                  // stride
-	//	(void*)0            // array buffer offset
-	//	);
+	// 2-st attribute buffer : normals
+	glEnableVertexAttribArray(1);
+	glBindBuffer(GL_ARRAY_BUFFER, _normalsBufferId);
+	glVertexAttribPointer(
+		1,                  // attribute 1. 
+		3,                  // size
+		GL_FLOAT,           // type
+		GL_FALSE,           // normalized?
+		0,                  // stride
+		(void*)0            // array buffer offset
+		);
 
-	//// 3-st attribute buffer : textCoords
-	//glEnableVertexAttribArray(2);
-	//glBindBuffer(GL_ARRAY_BUFFER, _texCoordsBufferId);
-	//glVertexAttribPointer(
-	//	2,                  // attribute 2.
-	//	2,                  // size
-	//	GL_FLOAT,           // type
-	//	GL_FALSE,           // normalized?
-	//	0,                  // stride
-	//	(void*)0            // array buffer offset
-	//	);
+	// 3-st attribute buffer : textCoords
+	glEnableVertexAttribArray(2);
+	glBindBuffer(GL_ARRAY_BUFFER, _texCoordsBufferId);
+	glVertexAttribPointer(
+		2,                  // attribute 2.
+		2,                  // size
+		GL_FLOAT,           // type
+		GL_FALSE,           // normalized?
+		0,                  // stride
+		(void*)0            // array buffer offset
+		);
 
 	//glDisableVertexAttribArray(0);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
@@ -173,11 +173,11 @@ VideoMemoryManager::VideoMemoryDescriptor VideoMemoryManager::pushDataToVideoMem
 
 	//TODO: remade, use "sub" commands
 	glBindBuffer(GL_ARRAY_BUFFER, _vertexBufferId);
-	glBufferData(GL_ARRAY_BUFFER, vertexexNumber * 3, positionsBufferData, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, vertexexNumber * 3 * sizeof(float), positionsBufferData, GL_STATIC_DRAW);
 	glBindBuffer(GL_ARRAY_BUFFER, _normalsBufferId);
-	glBufferData(GL_ARRAY_BUFFER, vertexexNumber * 3, normalsBufferData, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, vertexexNumber * 3 * sizeof(float), normalsBufferData, GL_STATIC_DRAW);
 	glBindBuffer(GL_ARRAY_BUFFER, _texCoordsBufferId);
-	glBufferData(GL_ARRAY_BUFFER, vertexexNumber * 2, uvBufferData, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, vertexexNumber * 2 * sizeof(float), uvBufferData, GL_STATIC_DRAW);
 	//glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 
@@ -187,7 +187,7 @@ VideoMemoryManager::VideoMemoryDescriptor VideoMemoryManager::pushDataToVideoMem
 	std::copy(geometryData->indecies.begin(), geometryData->indecies.end(), indexies);
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _IBOId);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indexesNumber, indexies, GL_STATIC_DRAW);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indexesNumber * sizeof(unsigned int), indexies, GL_STATIC_DRAW);
 
 
 	delete[] positionsBufferData;

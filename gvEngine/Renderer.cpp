@@ -26,6 +26,11 @@ Renderer::Renderer(WindowManager* windowManager)
 {
 	// Create and compile our GLSL program from the shaders
 	programID = LoadShaders( "SimpleVertexShader.vertexshader", "SimpleFragmentShader.fragmentshader" );
+
+	// ¬ключить тест глубины
+	glEnable(GL_DEPTH_TEST);
+	// ‘рагмент будет выводитьс€ только в том, случае, если он находитс€ ближе к камере, чем предыдущий
+	glDepthFunc(GL_LESS);
 }
 
 void Renderer::renderFrame(float TimeFromLastFrameMs)
@@ -41,14 +46,14 @@ void Renderer::renderFrame(float TimeFromLastFrameMs)
 
 	OGLmutex.lock();
 	// Clear the screen
-	glClear( GL_COLOR_BUFFER_BIT );
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	//transform
 	const Camera* camera3d = sceneManager->get3DCamera();
 	glm::mat4 VPmatrix = camera3d->getViewProjectMatrix();
 	//glm::mat4 VPmatrix = glm::mat4(1.0f);
 
-		
+
 	const auto& nodes = sceneManager->getNodes();
 	for (auto& node : nodes)
 	{
@@ -80,7 +85,7 @@ void Renderer::renderFrame(float TimeFromLastFrameMs)
 			mesh->pointsNumber,    // count
 			GL_UNSIGNED_INT,   // type
 			(void*)(mesh->iboOffsetInBytes)          // element array buffer offset
- 			);
+			);
 
 		videoMemoryManager->unbindVAO();
 		videoMemoryManager->unbindIBO();

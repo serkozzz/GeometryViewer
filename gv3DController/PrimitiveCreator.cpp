@@ -19,7 +19,7 @@ static GeometryData* CreateCube()
 		vertex.normal = cube_normals[i];
 		result->verticies.push_back(vertex);
 	}
-	result->indecies.insert(result->indecies.begin(), cube_indecies, (&cube_indecies[cube_n_indecies]) + 1);
+	result->indecies.insert(result->indecies.begin(), cube_indecies, (&cube_indecies[cube_n_indecies]));
 	//std::for_each(cube_indecies, &(cube_indecies[cube_n_indecies]) + 1, [result] (int index) 
 	//{
 	//	result->indecies.push_back(index);

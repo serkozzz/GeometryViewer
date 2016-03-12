@@ -35,6 +35,7 @@ void RootEngineManager::startInSeparatedThread(int sizeX, int sizeY, IInputListe
 		std::shared_ptr<sk::IWritingBehavior>(new sk::FileWritingBehavior("gvEngine.log")));
 	sk::Logger::sharedLogger()->writeMessage(std::to_string((int)sk::Logger::sharedLogger()));
 
+
 	_windowManager = new WindowManager();
 	_windowManager->createWindow(sizeX, sizeY);
 	//TODO in current realization OpenGLInitializer::initialize() must be called after _windowManager->createWindow

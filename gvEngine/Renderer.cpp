@@ -79,7 +79,7 @@ void Renderer::renderFrame(float TimeFromLastFrameMs)
 			GL_TRIANGLES,      // mode
 			mesh->pointsNumber,    // count
 			GL_UNSIGNED_INT,   // type
-			(void*)(mesh->IBOoffset)          // element array buffer offset
+			(void*)(mesh->iboOffsetInBytes)          // element array buffer offset
  			);
 
 		videoMemoryManager->unbindVAO();

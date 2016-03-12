@@ -3,6 +3,7 @@
 #include <memory>
 #include <queue>
 #include <mutex>
+#include <set>
 
 #include <GL/glew.h>
 #include <functional>
@@ -20,7 +21,7 @@ namespace gv
 
 			struct VideoMemoryDescriptor
 			{
-				int startPos;
+				int bufferOffsetInBytes;
 				int vertexesNumber;
 			};
 
@@ -30,16 +31,26 @@ namespace gv
 			VideoMemoryManager();
 			~VideoMemoryManager();
 
-			GLuint _VAOId;
-			GLuint _IBOId;
-			GLuint _vertexBufferId;
+			GLuint _vaoId;
+			GLuint _iboId;
+			GLuint _positionsBufferId;
 			GLuint _texCoordsBufferId;
 			GLuint _normalsBufferId;
+
+
+			int _vertexesCount;
+			int _indexesCount;
 
 			mutable std::mutex _mutex;
 
 
 			VideoMemoryDescriptor pushDataToVideoMemory(const GeometryData* data);
+			
+			/*returns id of created VAO
+			*/
+			GLuint createVAO(int positionsBufferOffset,
+				int normalsBufferOffset,
+				int textCoordsBufferOffset);
 
 			struct DataAdditionQuery
 			{

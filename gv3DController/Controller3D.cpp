@@ -66,7 +66,7 @@ namespace gv
 
 			_sceneManager = Engine::getSceneManager();
 
-			//_sceneManager->createMesh(_cubeMeshName, PrimitiveCreator::getCube());
+			_sceneManager->createMesh(_cubeMeshName, PrimitiveCreator::getCube());
 			/////_sceneManager->createMesh(_sphereMeshName, PrimitiveCreator::getSphere());
 
 

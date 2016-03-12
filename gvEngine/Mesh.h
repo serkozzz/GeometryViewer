@@ -10,7 +10,7 @@ namespace gv
 		{
 			std::string name;
 			int pointsNumber;
-			int IBOoffset;
+			int iboOffsetInBytes;
 		};
 	}
 }

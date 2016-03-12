@@ -7,10 +7,20 @@
 
 using namespace gv::Engine;
 
+static const int vertexesBufferSize = 1 * 1024 * 1024; //1 mb
+static const int indexesBufferSize = 1 * 1024 * 1024; //1 mb
+
+static const int SIZE_OF_POSITION_ATTR = 3 * sizeof(float);
+static const int SIZE_OF_NORMAL_ATTR = 3 * sizeof(float);
+static const int SIZE_OF_TEXTCOORDS_ATTR = 2 * sizeof(float);
+static const int SIZE_OF_INDEX = 1 * sizeof(unsigned int);
+
 VideoMemoryManager* VideoMemoryManager::_videoMemoryManagerInstance = nullptr;
 
 VideoMemoryManager::VideoMemoryManager() 
 {
+	_vertexesCount = 0;
+	_indexesCount = 0;
 }
 
 
@@ -24,26 +34,48 @@ VideoMemoryManager* VideoMemoryManager::sharedVideoMemoryManager()
 
 void VideoMemoryManager::initialize()
 {
-	glGenBuffers(1, &_vertexBufferId);
+	glGenBuffers(1, &_positionsBufferId);
 	glGenBuffers(1, &_normalsBufferId);
 	glGenBuffers(1, &_texCoordsBufferId);
 
-	glGenBuffers(1, &_IBOId);
+	glGenBuffers(1, &_iboId);
 
-	////VAO
-	glGenVertexArrays(1, &_VAOId);
-	glBindVertexArray(_VAOId);
+
+
+	glBindBuffer(GL_ARRAY_BUFFER, _positionsBufferId);
+	glBufferData(GL_ARRAY_BUFFER, vertexesBufferSize, nullptr, GL_STATIC_DRAW);
+	glBindBuffer(GL_ARRAY_BUFFER, _normalsBufferId);
+	glBufferData(GL_ARRAY_BUFFER, vertexesBufferSize, nullptr, GL_STATIC_DRAW);
+	glBindBuffer(GL_ARRAY_BUFFER, _texCoordsBufferId);
+	glBufferData(GL_ARRAY_BUFFER, vertexesBufferSize, nullptr, GL_STATIC_DRAW);
+
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _iboId);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indexesBufferSize, nullptr, GL_STATIC_DRAW);
+
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+	_vaoId = createVAO(0, 0, 0);
+}
+
+
+GLuint VideoMemoryManager::createVAO(int positionsBufferOffset,
+									 int normalsBufferOffset,
+									 int textCoordsBufferOffset)
+{
+	GLuint vaoId;
+	glGenVertexArrays(1, &vaoId);
+	glBindVertexArray(vaoId);
 
 	// 1-st attribute buffer : vertices
 	glEnableVertexAttribArray(0);
-	glBindBuffer(GL_ARRAY_BUFFER, _vertexBufferId);
+	glBindBuffer(GL_ARRAY_BUFFER, _positionsBufferId);
 	glVertexAttribPointer(
 		0,                  // attribute 0. No particular reason for 0, but must match the layout in the shader.
 		3,                  // size
 		GL_FLOAT,           // type
 		GL_FALSE,           // normalized?
 		0,                  // stride
-		(void*)0            // array buffer offset
+		(void*)positionsBufferOffset            // array buffer offset
 		);
 
 	// 2-st attribute buffer : normals
@@ -55,7 +87,7 @@ void VideoMemoryManager::initialize()
 		GL_FLOAT,           // type
 		GL_FALSE,           // normalized?
 		0,                  // stride
-		(void*)0            // array buffer offset
+		(void*)normalsBufferOffset            // array buffer offset
 		);
 
 	// 3-st attribute buffer : textCoords
@@ -67,18 +99,20 @@ void VideoMemoryManager::initialize()
 		GL_FLOAT,           // type
 		GL_FALSE,           // normalized?
 		0,                  // stride
-		(void*)0            // array buffer offset
+		(void*)textCoordsBufferOffset            // array buffer offset
 		);
 
 	//glDisableVertexAttribArray(0);
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
+
+	return vaoId;
 }
+
+
 
 void VideoMemoryManager::bindVAO()
 {
-	glBindVertexArray(_VAOId);
-
+	glBindVertexArray(_vaoId);
 }
 
 
@@ -90,7 +124,7 @@ void VideoMemoryManager::unbindVAO()
 
 void VideoMemoryManager::bindIBO()
 {
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _IBOId);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _iboId);
 }
 
 
@@ -109,13 +143,14 @@ void VideoMemoryManager::deleteVideoMemoryManager()
 VideoMemoryManager::~VideoMemoryManager()
 {
 	// Cleanup VBO
-	glDeleteBuffers(1, &_vertexBufferId);
+	glDeleteBuffers(1, &_positionsBufferId);
 	glDeleteBuffers(1, &_normalsBufferId);
 	glDeleteBuffers(1, &_texCoordsBufferId);
-	glDeleteBuffers(1, &_IBOId);
+	glDeleteBuffers(1, &_iboId);
 
 	////VAO
-	glDeleteVertexArrays(1, &_VAOId);
+	//for(GLuint vaoId : _vaoIdSet)
+	glDeleteVertexArrays(1, &_vaoId);
 }
 
 
@@ -142,12 +177,12 @@ void VideoMemoryManager::checkQueue()
 
 VideoMemoryManager::VideoMemoryDescriptor VideoMemoryManager::pushDataToVideoMemory(const GeometryData* geometryData)
 {
-	size_t vertexexNumber = geometryData->verticies.size();
+	size_t vertexesNumber = geometryData->verticies.size();
 
 	//weak place(maybe) - unnecessary copying
-	float* positionsBufferData = new float[vertexexNumber * 3];
-	float* normalsBufferData = new float[vertexexNumber * 3];
-	float* uvBufferData = new float[vertexexNumber * 2];
+	float* positionsBufferData = new float[vertexesNumber * 3];
+	float* normalsBufferData = new float[vertexesNumber * 3];
+	float* uvBufferData = new float[vertexesNumber * 2];
 
 	{
 		auto it = geometryData->verticies.begin();
@@ -171,33 +206,51 @@ VideoMemoryManager::VideoMemoryDescriptor VideoMemoryManager::pushDataToVideoMem
 		}
 	}
 
-	//TODO: remade, use "sub" commands
-	glBindBuffer(GL_ARRAY_BUFFER, _vertexBufferId);
-	glBufferData(GL_ARRAY_BUFFER, vertexexNumber * 3 * sizeof(float), positionsBufferData, GL_STATIC_DRAW);
+	int positionsDataSize = vertexesNumber * SIZE_OF_POSITION_ATTR;
+	int normalsDataSize = vertexesNumber * SIZE_OF_NORMAL_ATTR;
+	int texCoordsDataSize = vertexesNumber * SIZE_OF_TEXTCOORDS_ATTR;
+
+	int positionBufferOffset = _vertexesCount * SIZE_OF_POSITION_ATTR;
+	int normalsBufferOffset = _vertexesCount * SIZE_OF_NORMAL_ATTR;
+	int textCoordsBufferOffset = _vertexesCount * SIZE_OF_TEXTCOORDS_ATTR;
+
+	glBindBuffer(GL_ARRAY_BUFFER, _positionsBufferId);
+	glBufferSubData(GL_ARRAY_BUFFER, positionBufferOffset, positionsDataSize, positionsBufferData);
 	glBindBuffer(GL_ARRAY_BUFFER, _normalsBufferId);
-	glBufferData(GL_ARRAY_BUFFER, vertexexNumber * 3 * sizeof(float), normalsBufferData, GL_STATIC_DRAW);
+	glBufferSubData(GL_ARRAY_BUFFER, normalsBufferOffset, normalsDataSize, normalsBufferData);
 	glBindBuffer(GL_ARRAY_BUFFER, _texCoordsBufferId);
-	glBufferData(GL_ARRAY_BUFFER, vertexexNumber * 2 * sizeof(float), uvBufferData, GL_STATIC_DRAW);
-	//glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBufferSubData(GL_ARRAY_BUFFER, normalsBufferOffset, texCoordsDataSize, uvBufferData);
+
 
 
 	//weak place - unnecessary copying
 	int indexesNumber = geometryData->indecies.size(); 
 	unsigned int* indexies = new unsigned int[indexesNumber];
-	std::copy(geometryData->indecies.begin(), geometryData->indecies.end(), indexies);
+	int count = 0;
+	for (unsigned int index : geometryData->indecies)
+	{
+		indexies[count] = index + _vertexesCount;
+		count++;
+	}
+	//std::copy(geometryData->indecies.begin(), geometryData->indecies.end(), indexies);
+	int indexesDataSize = indexesNumber * SIZE_OF_INDEX;
 
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _IBOId);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, indexesNumber * sizeof(unsigned int), indexies, GL_STATIC_DRAW);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _iboId);
+	glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, _indexesCount * SIZE_OF_INDEX, indexesDataSize, indexies);
 
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
 
 	delete[] positionsBufferData;
 	delete[] normalsBufferData;
 	delete[] uvBufferData;
 	delete[] indexies;
 
-	VideoMemoryDescriptor dataDecriptor;
-	dataDecriptor.startPos = 0;
-	dataDecriptor.vertexesNumber = vertexexNumber;
+	VideoMemoryDescriptor dataDescriptor;
+	dataDescriptor.bufferOffsetInBytes = _indexesCount * SIZE_OF_INDEX;
+	dataDescriptor.vertexesNumber = indexesNumber;
 
-	return dataDecriptor;
+	_vertexesCount += vertexesNumber;
+	_indexesCount += indexesNumber;
+
+	return dataDescriptor;
 }

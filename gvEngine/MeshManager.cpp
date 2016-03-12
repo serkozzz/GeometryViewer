@@ -35,7 +35,7 @@ void MeshManager::createMesh(const std::string& meshName, std::shared_ptr<const 
 	VideoMemoryManager::sharedVideoMemoryManager()->addData(geometryData, 
 		[&] (VideoMemoryManager::VideoMemoryDescriptor& descriptor) 
 	{
-		mesh.IBOoffset = descriptor.startPos;
+		mesh.iboOffsetInBytes = descriptor.bufferOffsetInBytes;
 		mesh.pointsNumber = descriptor.vertexesNumber;
 	});
 }

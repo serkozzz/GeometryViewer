@@ -1,7 +1,7 @@
 #include <algorithm>
 
 #include "ErrorsCollector.h"
-
+#include "Logger.h"
 
 using namespace gv::Engine;
 
@@ -69,4 +69,5 @@ void ErrorsCollector::addError(const std::string error)
 	std::lock_guard<std::mutex> lock(_mutex);
 	_state = ErrorsCollector::HAS_ERROR;
 	_errors.push_back(error);
+	sk::Logger::sharedLogger()->writeMessage(error, sk::Logger::MessageType::Error);
 }

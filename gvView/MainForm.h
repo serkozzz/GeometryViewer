@@ -32,6 +32,7 @@ namespace gv
 
 
 			gvView* _gvView;
+			int _pointsCount;
 			std::map<const skb::EventHandler<const std::shared_ptr<IPoint>& >*, int>* _subscriptions;
 
 			delegate void collectionChanged(std::shared_ptr<IPoint>);
@@ -46,7 +47,7 @@ namespace gv
 
 
 		public:
-			MainForm(gvView* gvView) : _gvView(gvView)
+			MainForm(gvView* gvView) : _gvView(gvView), _pointsCount(0)
 			{
 				_subscriptions = new std::map<const skb::EventHandler<const std::shared_ptr<IPoint>& >*, int>();
 
@@ -70,6 +71,7 @@ namespace gv
 				//
 				//TODO: Add the constructor code here
 				//
+				resetGUI(std::string("point") + std::to_string(_pointsCount));
 			}
 
 
@@ -404,10 +406,15 @@ namespace gv
 				cbPrimitiv->Text = getStrFromPrimitiveType(point->getPrimitive());
 			}
 
+			void resetGUI(std::string& nameForNewPoint)
+			{
+				gv::View::vPoint point(nameForNewPoint, glm::vec3(0, 0, 0), PrimitiveType::cubePrimitiveType);
+				setGUIFromIPoint(&point);
+			}
+
 			void resetGUI()
 			{
-				gv::View::vPoint point("", glm::vec3(0, 0, 0), PrimitiveType::cubePrimitiveType);
-				setGUIFromIPoint(&point);
+				resetGUI(std::string(""));
 			}
 
 			System::String^ getStrFromPrimitiveType(PrimitiveType primitive)
@@ -439,6 +446,8 @@ namespace gv
 					 {
 						 _gvView->addPointClick(std::make_shared<vPoint>(getvPointFromGUI()));
 					 }
+					 _pointsCount++;
+					 resetGUI(std::string("point") + std::to_string(_pointsCount));
 				 }
 
 		private: System::Void btnRemovePoint_Click(System::Object^  sender, System::EventArgs^  e) {
@@ -478,23 +487,33 @@ namespace gv
 				 }
 
 		private: System::Void tbX_Leave(System::Object^  sender, System::EventArgs^  e) {
-					 _gvView->getSelectedPoint()->trySetPosition(getvPointFromGUI().getPosition());
+
+					 if (auto selectedPoint = _gvView->getSelectedPoint()) 
+						 selectedPoint->trySetPosition(getvPointFromGUI().getPosition());
 				 }
 
 		private: System::Void tbY_Leave(System::Object^  sender, System::EventArgs^  e) {
-					 _gvView->getSelectedPoint()->trySetPosition(getvPointFromGUI().getPosition());
+
+					 if (auto selectedPoint = _gvView->getSelectedPoint()) 
+						 selectedPoint->trySetPosition(getvPointFromGUI().getPosition());
 				 }
 
 		private: System::Void tbZ_Leave(System::Object^  sender, System::EventArgs^  e) {
-					 _gvView->getSelectedPoint()->trySetPosition(getvPointFromGUI().getPosition());
+
+					 if (auto selectedPoint = _gvView->getSelectedPoint()) 
+						 selectedPoint->trySetPosition(getvPointFromGUI().getPosition());
 				 }
 
 		private: System::Void tbName_Leave(System::Object^  sender, System::EventArgs^  e) {
-					 _gvView->getSelectedPoint()->trySetName(getvPointFromGUI().getName());
+
+					 if (auto selectedPoint = _gvView->getSelectedPoint()) 
+						 selectedPoint->trySetName(getvPointFromGUI().getName());
 				 }
 
 		private: System::Void cbPrimitiv_SelectedValueChanged(System::Object^  sender, System::EventArgs^  e) {
-					 _gvView->getSelectedPoint()->trySetPrimitive(getvPointFromGUI().getPrimitive());
+
+					 if (auto selectedPoint = _gvView->getSelectedPoint()) 
+						 selectedPoint->trySetPrimitive(getvPointFromGUI().getPrimitive());
 				 }
 
 #pragma endregion GUI Events

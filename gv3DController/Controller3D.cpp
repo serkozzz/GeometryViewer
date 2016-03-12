@@ -92,7 +92,7 @@ namespace gv
 
 			std::string sceneNodeName = "node_" + std::to_string(id) + "_" + p->getName();
 			glm::mat4 transformMatrix(1.0f);
-			glm::translate(transformMatrix, p->getPosition());
+			transformMatrix = glm::translate(transformMatrix, p->getPosition());
 			ISceneNode* sceneNode = _sceneManager->createSceneNode(sceneNodeName, meshName, transformMatrix);
 			if (_points.find(p) != _points.end())
 				throw std::exception("Try to add point that has been already added");

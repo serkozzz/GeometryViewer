@@ -64,7 +64,7 @@ void Renderer::renderFrame(float TimeFromLastFrameMs)
 	glm::vec3 lightPosition = glm::vec3(0, 10, 0);
 
 
-	glUniform3f(lightPosId, 0.0f, 10.0f, 10.0f);
+	glUniform3f(lightPosId, lightPosition.x, lightPosition.y, lightPosition.z);
 	glUniform3f(lightColorId, 0.0f, 1.0f, 10.0f);
 	glUniform1f(lightPowerId, 10.0f);
 

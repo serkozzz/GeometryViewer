@@ -40,8 +40,9 @@ void ThreadManager::start()
 		{
 			nextRenderDate += _renderLoopInterval;
 			auto elapsedTime = std::chrono::system_clock::now() - lastRenderDate;
+			auto elapsedTimeMs = std::chrono::duration_cast<std::chrono::milliseconds>(elapsedTime);
 			lastRenderDate = std::chrono::system_clock::now();
-			_renderer->renderFrame(elapsedTime.count());
+			_renderer->renderFrame(elapsedTimeMs.count());
 		}
 
 	}

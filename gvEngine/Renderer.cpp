@@ -33,7 +33,7 @@ Renderer::Renderer(WindowManager* windowManager)
 	glDepthFunc(GL_LESS);
 }
 
-void Renderer::renderFrame(float TimeFromLastFrameMs)
+void Renderer::renderFrame(float timeFromLastFrameMs)
 {
 	auto videoMemoryManager = VideoMemoryManager::sharedVideoMemoryManager();
 	//TODO may be move it to the Thread manager?
@@ -48,6 +48,7 @@ void Renderer::renderFrame(float TimeFromLastFrameMs)
 	GLuint lightPosId = glGetUniformLocation(programID, "LightPosition_worldspace");
 	GLuint lightPowerId = glGetUniformLocation(programID, "LightPower");
 	GLuint lightColorId = glGetUniformLocation(programID, "LightColor");
+	GLuint ambientIntensityId = glGetUniformLocation(programID, "AmbientIntensity");
 
 
 
@@ -61,12 +62,17 @@ void Renderer::renderFrame(float TimeFromLastFrameMs)
 	glm::mat4 VPmatrix = camera3d->getViewProjectMatrix();
 	//glm::mat4 VPmatrix = glm::mat4(1.0f);
 
-	glm::vec3 lightPosition = glm::vec3(0, 10, 0);
+	static float timeCount = 0;
+	timeCount += timeFromLastFrameMs;
 
+	glm::vec3 lightPosition = glm::vec3(0, 10, 10);
+	//lightPosition.y = sin(timeCount / 1000 ) * 10;
+	//lightPosition.x = cos(timeCount / 1000 ) * 10;
 
 	glUniform3f(lightPosId, lightPosition.x, lightPosition.y, lightPosition.z);
-	glUniform3f(lightColorId, 0.0f, 1.0f, 10.0f);
+	glUniform3f(lightColorId, 1.0f, 1.0f, 1.0f);
 	glUniform1f(lightPowerId, 10.0f);
+	glUniform1f(ambientIntensityId, 0.2f);
 
 	glUniformMatrix4fv(vMatrixId, 1, GL_FALSE, &VMatrix[0][0]);
 

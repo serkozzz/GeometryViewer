@@ -15,7 +15,7 @@ namespace gv
 			WindowManager* _windowManager;
 		public: 
 			Renderer(WindowManager* windowManager);
-			virtual void renderFrame(float TimeFromLastFrameMs);
+			virtual void renderFrame(float timeFromLastFrameMs);
 			virtual ~Renderer();
 		};
 	}

@@ -9,6 +9,8 @@ in vec3 LightDirection_cameraspace;
 uniform float LightPower;
 uniform vec3 LightColor;
 
+uniform float AmbientIntensity;
+
 // Ouput data
 out vec3 color;
 
@@ -22,7 +24,10 @@ void main()
 	float cosTheta = clamp( dot( n,l ), 0,1 ); 
 
 	float distance = LightDirection_cameraspace.length();
+    vec3 materialColor = vec3(1, 1, 0);
+
 	// Output color = red 
-	color = vec3(1, 1, 0) * LightColor * LightPower * cosTheta / (distance * distance);
+	color = materialColor * vec3(AmbientIntensity, AmbientIntensity, AmbientIntensity) +
+        materialColor * LightColor * LightPower * cosTheta / (distance * distance);
 
 }

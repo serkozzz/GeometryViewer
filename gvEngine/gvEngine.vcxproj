@@ -65,6 +65,10 @@
       <Command>copy "..\libs\glew-1.13.0\bin\Release\Win32\glew32.dll" "$(OutputPath)"
 copy "shaders\" "$(OutputPath)"</Command>
     </PostBuildEvent>
+    <PreBuildEvent>
+      <Command>
+      </Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -86,7 +90,8 @@ copy "shaders\" "$(OutputPath)"</Command>
       <AdditionalDependencies>glfw3.lib;glew32.lib;openGL32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>copy "..\libs\glew-1.13.0\bin\Release\Win32\glew32.dll" "$(OutputPath)"</Command>
+      <Command>copy "..\libs\glew-1.13.0\bin\Release\Win32\glew32.dll" "$(OutputPath)"
+copy "shaders\" "$(OutputPath)"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -142,8 +147,13 @@ copy "shaders\" "$(OutputPath)"</Command>
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram1.cd" />
-    <None Include="shaders\SimpleFragmentShader.fragmentshader" />
-    <None Include="shaders\SimpleVertexShader.vertexshader" />
+    <Text Include="shaders\SimpleFragmentShader.fragmentshader">
+      <FileType>Document</FileType>
+      <DeploymentContent>true</DeploymentContent>
+    </Text>
+    <None Include="shaders\SimpleVertexShader.vertexshader">
+      <DeploymentContent>true</DeploymentContent>
+    </None>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

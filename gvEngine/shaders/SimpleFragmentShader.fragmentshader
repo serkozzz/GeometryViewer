@@ -1,12 +1,28 @@
 #version 330 core
 
+in vec2 UV;
+in vec3 Position_worldspace;
+in vec3 Normal_cameraspace;
+in vec3 EyeDirection_cameraspace;
+in vec3 LightDirection_cameraspace;
+
+uniform float LightPower;
+uniform vec3 LightColor;
+
 // Ouput data
 out vec3 color;
 
 void main()
 {
+	// Нормаль фрагмента в пространстве камеры
+	vec3 n = normalize( Normal_cameraspace );
+	// Направление света(от фрагмента к источнику света
+	vec3 l = normalize( LightDirection_cameraspace );
 
+	float cosTheta = clamp( dot( n,l ), 0,1 ); 
+
+	float distance = LightDirection_cameraspace.length();
 	// Output color = red 
-	color = vec3(1,0,0);
+	color = vec3(1, 1, 0) * LightColor * LightPower * cosTheta / (distance * distance);
 
 }

@@ -42,7 +42,14 @@ void Renderer::renderFrame(float TimeFromLastFrameMs)
 	auto sceneManager = SceneManager::sharedSceneManager();
 	auto meshManager = MeshManager::sharedMeshManager();
 
-	GLuint matrixID = glGetUniformLocation(programID, "MVP");
+	GLuint mvpMatrixId = glGetUniformLocation(programID, "MVP");
+	GLuint mMatrixId = glGetUniformLocation(programID, "M");
+	GLuint vMatrixId = glGetUniformLocation(programID, "V");
+	GLuint lightPosId = glGetUniformLocation(programID, "LightPosition_worldspace");
+	GLuint lightPowerId = glGetUniformLocation(programID, "LightPower");
+	GLuint lightColorId = glGetUniformLocation(programID, "LightColor");
+
+
 
 	OGLmutex.lock();
 	// Clear the screen
@@ -50,9 +57,18 @@ void Renderer::renderFrame(float TimeFromLastFrameMs)
 
 	//transform
 	const Camera* camera3d = sceneManager->get3DCamera();
+	glm::mat4 VMatrix = camera3d->getViewMatrix();
 	glm::mat4 VPmatrix = camera3d->getViewProjectMatrix();
 	//glm::mat4 VPmatrix = glm::mat4(1.0f);
 
+	glm::vec3 lightPosition = glm::vec3(0, 10, 0);
+
+
+	glUniform3f(lightPosId, 0.0f, 10.0f, 10.0f);
+	glUniform3f(lightColorId, 0.0f, 1.0f, 10.0f);
+	glUniform1f(lightPowerId, 10.0f);
+
+	glUniformMatrix4fv(vMatrixId, 1, GL_FALSE, &VMatrix[0][0]);
 
 	const auto& nodes = sceneManager->getNodes();
 	for (auto& node : nodes)
@@ -66,12 +82,11 @@ void Renderer::renderFrame(float TimeFromLastFrameMs)
 			throw std::exception("Scene node references to unexisted mesh. Mesh name = "); 
 		}
 
-
 		glm::mat4& modelMatrix = node.second->getTransformMatrix();
 		auto MVP = VPmatrix * modelMatrix;
 
-
-		glUniformMatrix4fv(matrixID, 1, GL_FALSE, &MVP[0][0]);
+		glUniformMatrix4fv(mvpMatrixId, 1, GL_FALSE, &MVP[0][0]);
+		glUniformMatrix4fv(mMatrixId, 1, GL_FALSE, &modelMatrix[0][0]);
 
 		// Use our shader
 		glUseProgram(programID);

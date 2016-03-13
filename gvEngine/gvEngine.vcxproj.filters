@@ -151,12 +151,14 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="ClassDiagram1.cd" />
     <None Include="shaders\SimpleVertexShader.vertexshader">
       <Filter>shaders</Filter>
     </None>
-    <None Include="shaders\SimpleFragmentShader.fragmentshader">
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="shaders\SimpleFragmentShader.fragmentshader">
       <Filter>shaders</Filter>
-    </None>
-    <None Include="ClassDiagram1.cd" />
+    </Text>
   </ItemGroup>
 </Project>

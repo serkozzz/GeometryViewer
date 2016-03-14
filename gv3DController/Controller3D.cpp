@@ -69,13 +69,24 @@ namespace gv
 			_sceneManager->createMesh(_cubeMeshName, PrimitiveCreator::getCube());
 			/////_sceneManager->createMesh(_sphereMeshName, PrimitiveCreator::getSphere());
 
+			_sceneManager->createMesh("gv_axis", PrimitiveCreator::getXYRectangle(glm::vec2(0, 0), glm::vec2(100000, 0.1)));
+
 
 			//test triangle
 			_sceneManager->createMesh("triangle", PrimitiveCreator::getTriangle());
-			
-			auto transform = glm::translate(glm::mat4(1.0), glm::vec3(0, 0, -10));
+
+			auto transform = glm::translate(glm::mat4(1.0), glm::vec3(0, 0, 0));
 			_sceneManager->createSceneNode("triangleNode", "triangle", 
 				transform);
+
+			_sceneManager->createSceneNode("gv_XAxis", "gv_axis", 
+				glm::mat4(1.0));
+
+			_sceneManager->createSceneNode("gv_YAxis", "gv_axis", 
+				glm::rotate(glm::mat4(1.0), glm::pi<float>() / 2, glm::vec3(0.0f, 0.0f, 1.0f)));
+
+			_sceneManager->createSceneNode("gv_ZAxis", "gv_axis", 
+				glm::rotate(glm::mat4(1.0), glm::pi<float>() / 2, glm::vec3(0.0f, 1.0f, 0.0f)));
 		}
 
 

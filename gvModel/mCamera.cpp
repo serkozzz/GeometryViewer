@@ -7,7 +7,6 @@ using namespace gv::Model;
 mCamera::mCamera()
 {
 	_transform = glm::mat4(1.0f);
-	_transform[2].z = -1;
 }
 
 

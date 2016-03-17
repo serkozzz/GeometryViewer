@@ -10,7 +10,7 @@ namespace gv
 		{
 		public:
 			virtual void setCamera(gv::Model::ICamera* camera) = 0;
-			virtual void moveCamera(float forward, float right) = 0;
+			virtual void moveCamera(float right, float forward) = 0;
 			virtual void rotateCamera(float dx, float dy) = 0;
 		};
 	}

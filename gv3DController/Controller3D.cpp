@@ -86,7 +86,7 @@ namespace gv
 				glm::rotate(glm::mat4(1.0), glm::pi<float>() / 2, glm::vec3(0.0f, 0.0f, 1.0f)));
 
 			_sceneManager->createSceneNode("gv_ZAxis", "gv_axis", 
-				glm::rotate(glm::mat4(1.0), glm::pi<float>() / 2, glm::vec3(0.0f, 1.0f, 0.0f)));
+				glm::rotate(glm::mat4(1.0), -glm::pi<float>() / 2, glm::vec3(0.0f, 1.0f, 0.0f)));
 
 			auto mCamera = _planManager.getPlan()->getCamera();
 			_sceneManager->get3DCamera()->setTransformMatrix(mCamera->getTransform());

@@ -1,13 +1,17 @@
 #include "InputListener.h"
 #include "Logger.h"
 #include "CameraMovingRealizationAngles.h"
+#include "CameraMovingRealizationMatrix.h"
+
 
 using namespace gv;
 using namespace gv::Controller3D;
 
 InputListener::InputListener(Model::ICamera* camera)
 {
-	_cameraMovingRealization.reset(new CameraMovingRealizationAngles());
+	_cameraMovingRealization.reset(new CameraMovingRealizationMatrix());
+	//_cameraMovingRealization.reset(new CameraMovingRealizationAngles());
+
 	_cameraMovingRealization->setCamera(camera);
 }
 
@@ -40,7 +44,7 @@ void InputListener::keyPressed(gvKey key) const
 	}
 
 	movement *= 0.1;
-	_cameraMovingRealization->moveCamera(movement.x, -movement.y);
+	_cameraMovingRealization->moveCamera(movement.x, movement.y);
 }
 
 
@@ -49,9 +53,8 @@ void InputListener::cursorPositionChanged(double dx, double dy) const
 	//horizontalAngle += mouseSpeed * deltaTime * float(1024/2 - xpos );
 	//verticalAngle   += mouseSpeed * deltaTime * float( 768/2 - ypos );
 
-	_cameraMovingRealization->rotateCamera(dx * 0.01 *(-1), dy * 0.01 *(-1));
-	
-	
+	_cameraMovingRealization->rotateCamera(dx * 0.01, dy * 0.01);
+
 	//sk::Logger::sharedLogger()->writeMessage("hAngle = " + std::to_string(_horizontalAngle) + "; vAngle = " + std::to_string(_verticalAngle));
 
 }

@@ -100,6 +100,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CameraMovingRealizationAngles.cpp" />
+    <ClCompile Include="CameraMovingRealizationMatrix.cpp" />
     <ClCompile Include="Controller3D.cpp" />
     <ClCompile Include="InputListener.cpp" />
     <ClCompile Include="PrimitiveCreator.cpp" />

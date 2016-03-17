@@ -7,7 +7,7 @@ using namespace gv::Controller3D;
 void CameraMovingRealizationAngles::setCamera(gv::Model::ICamera* camera)
 {
 	_camera = camera;
-	_horizontalAngle = glm::pi<float>();
+	_horizontalAngle =  glm::pi<float>();
 	_verticalAngle = 0;
 }
 
@@ -45,7 +45,7 @@ glm::mat4 CameraMovingRealizationAngles::getCameraTransform() const
 
 	glm::mat4 cameraTransform(glm::vec4(right, 0.0f),
 		glm::vec4(up, 0.0f),
-		glm::vec4(direction, 0.0f), 
+		glm::vec4(-direction, 0.0f), 
 		currentCameraTransform[3]);
 	return cameraTransform;
 }

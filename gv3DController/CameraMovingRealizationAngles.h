@@ -18,7 +18,7 @@ namespace gv
 			glm::mat4 getCameraTransform() const;
 		public:
 			virtual void setCamera(Model::ICamera* camera);
-			virtual void moveCamera(float forward, float right);
+			virtual void moveCamera(float right, float forward);
 			virtual void rotateCamera(float dx, float dy);
 		};
 	}

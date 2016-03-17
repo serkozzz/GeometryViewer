@@ -9,17 +9,25 @@ using namespace gv::Engine;
 using namespace gv::Controller3D;
 
 
-static GeometryData* CreateCube()
+
+
+
+
+static GeometryData* createGeometryData(int pointsNumber, 
+										int indexiesNumber,
+										const glm::vec3* points, 
+										const glm::vec3* normals, 
+										const unsigned int* indexes)
 {
-	static GeometryData* result = new GeometryData();
-	for(int i = 0; i < cube_n_points; i++)
+	GeometryData* result = new GeometryData();
+	for(int i = 0; i < pointsNumber; i++)
 	{
 		Vertex vertex;
-		vertex.position = cube_points[i];
-		vertex.normal = cube_normals[i];
+		vertex.position = points[i];
+		vertex.normal = normals[i];
 		result->verticies.push_back(vertex);
 	}
-	result->indecies.insert(result->indecies.begin(), cube_indecies, (&cube_indecies[cube_n_indecies]));
+	result->indecies.insert(result->indecies.begin(), indexes, (&indexes[indexiesNumber]));
 	//std::for_each(cube_indecies, &(cube_indecies[cube_n_indecies]) + 1, [result] (int index) 
 	//{
 	//	result->indecies.push_back(index);
@@ -90,6 +98,92 @@ static GeometryData* CreateRectangle(glm::vec2 leftBottom, glm::vec2 rightUp)
 	return rectangle;
 }
 
+std::shared_ptr<const GeometryData> PrimitiveCreator::getBox(glm::vec2 leftBottom, glm::vec2 rightUp, float zExtrudion)
+{
+	static const int box_n_points = 24;
+	static const int box_n_indexies = 36;
+
+	glm::vec3 box_points[box_n_points] = {
+		glm::vec3( leftBottom.x, leftBottom.y, 0),
+		glm::vec3( leftBottom.x, rightUp.y, 0),
+		glm::vec3( rightUp.x, rightUp.y, 0),
+		glm::vec3( rightUp.x, leftBottom.y, 0),
+		glm::vec3( rightUp.x, leftBottom.y, zExtrudion),
+		glm::vec3( leftBottom.x, leftBottom.y, zExtrudion),
+		glm::vec3( leftBottom.x, rightUp.y, zExtrudion),
+		glm::vec3( rightUp.x, rightUp.y, zExtrudion),
+		glm::vec3( leftBottom.x, leftBottom.y, 0),
+		glm::vec3( rightUp.x, leftBottom.y, 0),
+		glm::vec3( leftBottom.x, leftBottom.y, 0),
+		glm::vec3( leftBottom.x, leftBottom.y, zExtrudion),
+		glm::vec3( leftBottom.x, rightUp.y, 0),
+		glm::vec3( rightUp.x, leftBottom.y, 0),
+		glm::vec3( rightUp.x, rightUp.y, 0),
+		glm::vec3( rightUp.x, leftBottom.y, zExtrudion),
+		glm::vec3( leftBottom.x, rightUp.y, 0),
+		glm::vec3( leftBottom.x, rightUp.y, zExtrudion),
+		glm::vec3( rightUp.x, rightUp.y, zExtrudion),
+		glm::vec3( rightUp.x, rightUp.y, 0),
+		glm::vec3( leftBottom.x, leftBottom.y, zExtrudion),
+		glm::vec3( rightUp.x, leftBottom.y, zExtrudion),
+		glm::vec3( rightUp.x, rightUp.y, zExtrudion),
+		glm::vec3( leftBottom.x, rightUp.y, zExtrudion) 
+	};
+
+
+	static glm::vec3 box_normals[box_n_points] = {
+		glm::vec3(  0.0,  0.0, -1.0),
+		glm::vec3(  0.0,  0.0, -1.0),
+		glm::vec3(  0.0,  0.0, -1.0),
+		glm::vec3(  0.0,  0.0, -1.0),
+		glm::vec3(  0.0, -1.0,  0.0),
+		glm::vec3(  0.0, -1.0,  0.0),
+		glm::vec3( -1.0,  0.0,  0.0),
+		glm::vec3(  1.0,  0.0,  0.0),
+		glm::vec3(  0.0, -1.0,  0.0),
+		glm::vec3(  0.0, -1.0,  0.0),
+		glm::vec3( -1.0,  0.0,  0.0),
+		glm::vec3( -1.0,  0.0,  0.0),
+		glm::vec3( -1.0,  0.0,  0.0),
+		glm::vec3(  1.0,  0.0,  0.0),
+		glm::vec3(  1.0,  0.0,  0.0),
+		glm::vec3(  1.0,  0.0,  0.0),
+		glm::vec3(  0.0,  1.0,  0.0),
+		glm::vec3(  0.0,  1.0,  0.0),
+		glm::vec3(  0.0,  1.0,  0.0),
+		glm::vec3(  0.0,  1.0,  0.0),
+		glm::vec3(  0.0,  0.0,  1.0),
+		glm::vec3(  0.0,  0.0,  1.0),
+		glm::vec3(  0.0,  0.0,  1.0),
+		glm::vec3(  0.0,  0.0,  1.0) 
+	};
+
+
+	static unsigned int box_indecies[box_n_indexies] = {
+		0,  1,  2,
+		2,  3,  0,
+		8,  9,  4,
+		4,  5,  8,
+		10, 11,  6,
+		6, 12, 10,
+		13, 14,  7,
+		7, 15, 13,
+		16, 17, 18,
+		18, 19, 16,
+		20, 21, 22,
+		22, 23, 20 
+	};
+
+	return std::shared_ptr<const GeometryData>(createGeometryData(
+		box_n_points, 
+		box_n_indexies,
+		box_points,
+		box_normals,
+		box_indecies));
+}
+
+
+
 
 static gv::Engine::GeometryData* CreateSphere()
 {
@@ -99,7 +193,11 @@ static gv::Engine::GeometryData* CreateSphere()
 
 std::shared_ptr<const GeometryData> PrimitiveCreator::getCube()
 {
-	return std::shared_ptr<const GeometryData>(CreateCube());
+	return std::shared_ptr<const GeometryData>(createGeometryData(cube_n_points, 
+		cube_n_indecies,
+		cube_points,
+		cube_normals,
+		cube_indecies));
 }
 
 std::shared_ptr<const GeometryData> PrimitiveCreator::getSphere()

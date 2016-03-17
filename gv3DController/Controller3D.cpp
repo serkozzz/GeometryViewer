@@ -43,7 +43,6 @@ namespace gv
 				(mCamera->propertyChanged += std::bind(&Controller3D::cameraPropertyChanged, this, std::placeholders::_1));
 
 			_InputListener = new InputListener(mCamera);
-
 		}
 
 		Controller3D::~Controller3D()
@@ -69,8 +68,9 @@ namespace gv
 			_sceneManager->createMesh(_cubeMeshName, PrimitiveCreator::getCube());
 			/////_sceneManager->createMesh(_sphereMeshName, PrimitiveCreator::getSphere());
 
-			_sceneManager->createMesh("gv_axis", PrimitiveCreator::getXYRectangle(glm::vec2(0, 0), glm::vec2(100000, 0.1)));
-
+			
+			_sceneManager->createMesh("gv_axis", PrimitiveCreator::getBox(glm::vec2(-0.05, -0.05), glm::vec2(100, 0.05), 0.1));
+			//_sceneManager->createMesh("gv_axis", PrimitiveCreator::getXYRectangle(glm::vec2(0, 0), glm::vec2(100000, 0.1)));
 
 			//test triangle
 			_sceneManager->createMesh("triangle", PrimitiveCreator::getTriangle());
@@ -87,6 +87,9 @@ namespace gv
 
 			_sceneManager->createSceneNode("gv_ZAxis", "gv_axis", 
 				glm::rotate(glm::mat4(1.0), glm::pi<float>() / 2, glm::vec3(0.0f, 1.0f, 0.0f)));
+
+			auto mCamera = _planManager.getPlan()->getCamera();
+			_sceneManager->get3DCamera()->setTransformMatrix(mCamera->getTransform());
 		}
 
 

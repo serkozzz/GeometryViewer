@@ -50,6 +50,8 @@ void InputListener::cursorPositionChanged(double dx, double dy) const
 	//verticalAngle   += mouseSpeed * deltaTime * float( 768/2 - ypos );
 
 	_cameraMovingRealization->rotateCamera(dx * 0.01 *(-1), dy * 0.01 *(-1));
+	
+	
 	//sk::Logger::sharedLogger()->writeMessage("hAngle = " + std::to_string(_horizontalAngle) + "; vAngle = " + std::to_string(_verticalAngle));
 
 }

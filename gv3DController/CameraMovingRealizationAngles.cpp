@@ -1,3 +1,5 @@
+#include "glm/gtc/constants.hpp"
+
 #include "CameraMovingRealizationAngles.h"
 
 using namespace gv::Controller3D;
@@ -5,7 +7,7 @@ using namespace gv::Controller3D;
 void CameraMovingRealizationAngles::setCamera(gv::Model::ICamera* camera)
 {
 	_camera = camera;
-	_horizontalAngle = 0;
+	_horizontalAngle = glm::pi<float>();
 	_verticalAngle = 0;
 }
 
@@ -26,6 +28,7 @@ void CameraMovingRealizationAngles::rotateCamera(float dx, float dy)
 {
 	_horizontalAngle += dx;
 	_verticalAngle += dy;
+
 	_camera->trySetTransform(getCameraTransform());
 }
 

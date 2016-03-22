@@ -30,6 +30,8 @@ namespace gv
 			void pointAdded(const std::shared_ptr<IPoint>& p);
 			void pointRemoved(const std::shared_ptr<IPoint>& p);
 
+			void cameraPropertyChanged(gv::Model::CameraPropChangedArgs args);
+
 			int pointAddedSubscription;
 			int pointRemovedSubscription;
 

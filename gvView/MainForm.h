@@ -33,17 +33,19 @@ namespace gv
 
 			gvView* _gvView;
 			int _pointsCount;
-			std::map<const skb::EventHandler<const std::shared_ptr<IPoint>& >*, int>* _subscriptions;
+		private: System::Windows::Forms::ListBox^  listboxCameraMatrix;
+				 std::map<const skb::EventHandler<const std::shared_ptr<IPoint>& >*, int>* _subscriptions;
 
-			delegate void collectionChanged(std::shared_ptr<IPoint>);
-			delegate void propChanged(PointPropChangedArgs args);
+				 delegate void collectionChanged(std::shared_ptr<IPoint>);
+				 delegate void propChanged(PointPropChangedArgs args);
+				 delegate void cameraChanged(float [16]);
 
-			template<typename TDelegateType, typename TArgType>
-			void bindHelperMethod(TDelegateType^ del, skb::EventHandler<TArgType>& eventHandler)
-			{
-				IntPtr funcPointer = Marshal::GetFunctionPointerForDelegate(del);
-				eventHandler += static_cast<void (CALLBACK *)(TArgType)>(funcPointer.ToPointer());
-			}
+				 template<typename TDelegateType, typename TArgType>
+				 void bindHelperMethod(TDelegateType^ del, skb::EventHandler<TArgType>& eventHandler)
+				 {
+					 IntPtr funcPointer = Marshal::GetFunctionPointerForDelegate(del);
+					 eventHandler += static_cast<void (CALLBACK *)(TArgType)>(funcPointer.ToPointer());
+				 }
 
 
 		public:
@@ -66,6 +68,9 @@ namespace gv
 
 				propChanged^ propChangedDel =  gcnew propChanged(this, &MainForm::selectedPointPropertyChanged);
 				bindHelperMethod<propChanged, PointPropChangedArgs>(propChangedDel, _gvView->selectedPointPropChangedEvent);
+
+				cameraChanged^ cameraMatrixChangedDel =  gcnew cameraChanged(this, &MainForm::cameraMatrixChanged);
+				bindHelperMethod<cameraChanged, float[16]>(cameraMatrixChangedDel, _gvView->cameraMatrixChangedEvent);
 
 				InitializeComponent();
 				//
@@ -146,6 +151,7 @@ namespace gv
 				this->loadPlanToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 				this->savePlanToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 				this->btnChangePointSize = (gcnew System::Windows::Forms::Button());
+				this->listboxCameraMatrix = (gcnew System::Windows::Forms::ListBox());
 				this->panel1->SuspendLayout();
 				this->panel2->SuspendLayout();
 				this->menuStrip1->SuspendLayout();
@@ -354,11 +360,20 @@ namespace gv
 				this->btnChangePointSize->UseVisualStyleBackColor = true;
 				this->btnChangePointSize->Click += gcnew System::EventHandler(this, &MainForm::btnChangePointSize_Click);
 				// 
+				// listboxCameraMatrix
+				// 
+				this->listboxCameraMatrix->FormattingEnabled = true;
+				this->listboxCameraMatrix->Location = System::Drawing::Point(391, 146);
+				this->listboxCameraMatrix->Name = L"listboxCameraMatrix";
+				this->listboxCameraMatrix->Size = System::Drawing::Size(120, 95);
+				this->listboxCameraMatrix->TabIndex = 9;
+				// 
 				// MainForm
 				// 
 				this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 				this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-				this->ClientSize = System::Drawing::Size(578, 171);
+				this->ClientSize = System::Drawing::Size(578, 325);
+				this->Controls->Add(this->listboxCameraMatrix);
 				this->Controls->Add(this->btnChangePointSize);
 				this->Controls->Add(this->tbPointsSize);
 				this->Controls->Add(this->label4);
@@ -545,6 +560,14 @@ namespace gv
 					 setGUIFromIPoint(_gvView->getSelectedPoint().get());
 				 }
 
+				 void cameraMatrixChanged(float newMatrix[16])
+				 {
+					 //String^ row0 = System::Convert::ToString(newMatrix[0]) + ", " 
+						// + System::Convert::ToString(newMatrix[4]) + ", " 
+						// + System::Convert::ToString(newMatrix[8]) + ", " 
+						// + System::Convert::ToString(newMatrix[12]); 
+					 listboxCameraMatrix->Text = "sdfasf";
+				 }
 
 #pragma endregion Model Events
 

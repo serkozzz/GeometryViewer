@@ -16,8 +16,11 @@ void CameraMovingRealizationMatrix::setCamera(gv::Model::ICamera* camera)
 
 void CameraMovingRealizationMatrix::moveCamera(float right, float forward)
 {
-	glm::vec4 directionVec = _camera->getTransform() * glm::vec4(0.0f, 0.0f, -1.0f, 0.0f);
-	glm::vec4 rightVec = _camera->getTransform() * glm::vec4(1.0f, 0.0f, 0.0f, 0.0f);
+	//_camera->trySetPosition(glm::vec3(0, 0, -1));
+	//return;
+	glm::vec4 directionVec = -_camera->getTransform()[2];// * glm::vec4(0.0f, 0.0f, -1.0f, 0.0f);
+
+	glm::vec4 rightVec = _camera->getTransform()[0]; //* glm::vec4(1.0f, 0.0f, 0.0f, 0.0f);
 
 	glm::vec4 movement = directionVec * forward + rightVec * right;
 
@@ -31,6 +34,8 @@ void CameraMovingRealizationMatrix::moveCamera(float right, float forward)
 	//	+ std::to_string(rightVec.y) + ", "
 	//	+ std::to_string(rightVec.z) + ", ");
 	//_camera->trySetTransform(glm::translate(_camera->getTransform(), glm::vec3(movement)));
+
+
 	_camera->trySetPosition(_camera->getPosition() + glm::vec3(movement));
 }
 
@@ -38,14 +43,37 @@ void CameraMovingRealizationMatrix::moveCamera(float right, float forward)
 
 void CameraMovingRealizationMatrix::rotateCamera(float dx, float dy)
 {
-	glm::mat4 resultTransform;
+	glm::mat4 resultTransform = _camera->getTransform();
+
+	glm::vec4 position(resultTransform[3]);
+	resultTransform[3] = glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
 
 	//Oy - dx rotation
-	glm::mat4 upRotation = glm::rotate(_camera->getTransform(), dx, glm::vec3(0.0, 1.0, 0.0));
+	//glm::mat4 upRotation = glm::rotate(glm::mat4(1.0f), dx, glm::vec3(0.0, 1.0, 0.0));
 
-	//Ox - dy rotation
-	glm::vec4 rightVec = _camera->getTransform() * glm::vec4(1.0f, 0.0f, 0.0f, 0.0f);
-	glm::mat4 rightRotation = glm::rotate(_camera->getTransform(), dy, glm::vec3(rightVec));
+	resultTransform =  glm::rotate(resultTransform, dx, glm::vec3(0.0, 1.0, 0.0));
 
-	_camera->trySetTransform(rightRotation);
+	//glm::vec3 up(resultTransform[1]);
+	//glm::vec3 dir(-resultTransform[2]);
+	//glm::vec3 right = glm::normalize(glm::cross(dir, up));
+
+	//resultTransform =  glm::rotate(resultTransform, dy, right);
+
+
+	glm::vec3 x(resultTransform[0]);
+	glm::vec3 y(resultTransform[1]);
+	glm::vec3 z(resultTransform[2]);
+
+	x = glm::normalize(x);
+	y = glm::normalize(y);
+	z = glm::normalize(glm::cross(x, y));
+
+	x = glm::normalize(glm::cross(y, z));
+	y = glm::normalize(glm::cross(z, x));
+
+	resultTransform[0] = glm::vec4(x, 0);
+	resultTransform[1] = glm::vec4(y, 0);
+	resultTransform[2] = glm::vec4(z, 0);
+	resultTransform[3] = position;
+	_camera->trySetTransform(resultTransform);
 }

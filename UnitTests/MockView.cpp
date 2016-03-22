@@ -35,6 +35,11 @@ namespace UnitTests
 
 	}
 
+	void MockView::cameraMatrixChanged(float newMatrix[16])
+	{
+
+	}
+
 	//void onTryPointPropChanged(gv::PointPropChangedArgs args)
 	//{
 	//	auto pPtr = std::shared_ptr<const IPoint>(args.sender);

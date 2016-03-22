@@ -89,7 +89,9 @@ void Renderer::renderFrame(float timeFromLastFrameMs)
 		}
 
 		glm::mat4& modelMatrix = node.second->getTransformMatrix();
+		
 		auto MVP = VPmatrix * modelMatrix;
+		//auto MVP = camera3d->getProjectMatrix() * glm::translate(glm::mat4(1.0f), glm::vec3(-1, -1, -15))  * modelMatrix;
 
 		glUniformMatrix4fv(mvpMatrixId, 1, GL_FALSE, &MVP[0][0]);
 		glUniformMatrix4fv(mMatrixId, 1, GL_FALSE, &modelMatrix[0][0]);

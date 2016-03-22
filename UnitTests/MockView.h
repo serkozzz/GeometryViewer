@@ -22,6 +22,8 @@ namespace UnitTests
 
 		virtual void pointUnSelected(const std::shared_ptr<gv::IPoint>& p);
 
+		virtual void cameraMatrixChanged(float newMatrix[16]);
+
 		void emulateAddPointClick(const gv::View::vPoint& point);
 		void emulateRemovePointClick(const gv::View::vPoint& point);
 

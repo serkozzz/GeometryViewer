@@ -62,10 +62,17 @@ namespace gv
 					pointUnselectedEvent(p);
 			}
 
+			void cameraMatrixChanged(float newMatrix[16])
+			{
+				cameraMatrixChangedEvent(newMatrix);
+			}
+
 			skb::EventHandler<std::shared_ptr<IPoint> > pointAddedEvent;
 			skb::EventHandler<std::shared_ptr<IPoint> > pointRemovedEvent;
 			skb::EventHandler<std::shared_ptr<IPoint> > pointSelectedEvent;
 			skb::EventHandler<std::shared_ptr<IPoint> > pointUnselectedEvent;
+
+			skb::EventHandler<float [16]> cameraMatrixChangedEvent;
 
 			skb::EventHandler<PointPropChangedArgs> selectedPointPropChangedEvent;
 		};

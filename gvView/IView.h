@@ -33,6 +33,7 @@ namespace gv
 			virtual void pointRemoved(const std::shared_ptr<IPoint>& p) = 0;
 			virtual void pointSelected(const std::shared_ptr<IPoint>& p) = 0;
 			virtual void pointUnSelected(const std::shared_ptr<IPoint>& p) = 0;
+			virtual void cameraMatrixChanged(float newMatrix[16]) = 0;
 		};
 	}
 }

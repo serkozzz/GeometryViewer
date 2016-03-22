@@ -30,6 +30,9 @@ ViewController::ViewController(View::IView* view, Model::Model* model) : _view(v
 	pointRemovedSubscription = 
 		(plan->pointRemoved += std::bind(&ViewController::pointRemoved, this, std::placeholders::_1));
 
+	plan->getCamera()->propertyChanged	+= std::bind(&ViewController::cameraPropertyChanged, this, 
+		std::placeholders::_1);
+
 }
 
 
@@ -82,4 +85,19 @@ void ViewController::pointRemoved(const std::shared_ptr<IPoint>& p)
 {
 	_view->pointRemoved(p);
 }
+
+void ViewController::cameraPropertyChanged(gv::Model::CameraPropChangedArgs args)
+{
+	gv::Model::ICamera* camera = _planManager.getPlan()->getCamera();
+	float matrix[16];
+	for(int i = 0; i < 4; i++)
+	{
+		matrix[i*4] = camera->getTransform()[i][0];
+		matrix[i*4 + 1] = camera->getTransform()[i][1];
+		matrix[i*4 + 2] = camera->getTransform()[i][2];
+		matrix[i*4 + 3] = camera->getTransform()[i][3];
+	}
+	_view->cameraMatrixChanged(matrix);
+}
+
 #pragma endregion Model Events

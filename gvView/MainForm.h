@@ -39,6 +39,7 @@ namespace gv
 				 delegate void collectionChanged(std::shared_ptr<IPoint>);
 				 delegate void propChanged(PointPropChangedArgs args);
 				 delegate void cameraChanged(float [16]);
+				 delegate void setCameraMatrixDelegate(System::Collections::ArrayList^ matrix);
 
 				 template<typename TDelegateType, typename TArgType>
 				 void bindHelperMethod(TDelegateType^ del, skb::EventHandler<TArgType>& eventHandler)
@@ -48,30 +49,39 @@ namespace gv
 				 }
 
 
+
+				 collectionChanged^ pointAddedEventDel;
+				 collectionChanged^ pointRemovedEventDel;
+				 collectionChanged^ pointSelectedEventDel;
+				 collectionChanged^ pointUnselectedEventDel;
+				 propChanged^ propChangedDel;
+				 cameraChanged^ cameraMatrixChangedDel;
+				 setCameraMatrixDelegate^ setCameraMatrixDel;
 		public:
 			MainForm(gvView* gvView) : _gvView(gvView), _pointsCount(0)
 			{
 				_subscriptions = new std::map<const skb::EventHandler<const std::shared_ptr<IPoint>& >*, int>();
 
 				//May be I must save delagates reference as class member
-				collectionChanged^ pointAddedEventDel =  gcnew collectionChanged(this, &MainForm::pointAddedEvent);
+				pointAddedEventDel =  gcnew collectionChanged(this, &MainForm::pointAddedEvent);
 				bindHelperMethod<collectionChanged, std::shared_ptr<IPoint>>(pointAddedEventDel, _gvView->pointAddedEvent);
 
-				collectionChanged^ pointRemovedEventDel =  gcnew collectionChanged(this, &MainForm::pointRemovedEvent);
+				pointRemovedEventDel =  gcnew collectionChanged(this, &MainForm::pointRemovedEvent);
 				bindHelperMethod<collectionChanged, std::shared_ptr<IPoint>>(pointRemovedEventDel, _gvView->pointRemovedEvent);
 
-				collectionChanged^ pointSelectedEventDel =  gcnew collectionChanged(this, &MainForm::pointSelectedEvent);
+				pointSelectedEventDel =  gcnew collectionChanged(this, &MainForm::pointSelectedEvent);
 				bindHelperMethod<collectionChanged, std::shared_ptr<IPoint>>(pointSelectedEventDel, _gvView->pointSelectedEvent);
 
-				collectionChanged^ pointUnselectedEventDel =  gcnew collectionChanged(this, &MainForm::pointUnselectedEvent);
+				pointUnselectedEventDel =  gcnew collectionChanged(this, &MainForm::pointUnselectedEvent);
 				bindHelperMethod<collectionChanged, std::shared_ptr<IPoint>>(pointUnselectedEventDel, _gvView->pointUnselectedEvent);
 
-				propChanged^ propChangedDel =  gcnew propChanged(this, &MainForm::selectedPointPropertyChanged);
+				propChangedDel =  gcnew propChanged(this, &MainForm::selectedPointPropertyChanged);
 				bindHelperMethod<propChanged, PointPropChangedArgs>(propChangedDel, _gvView->selectedPointPropChangedEvent);
 
-				cameraChanged^ cameraMatrixChangedDel =  gcnew cameraChanged(this, &MainForm::cameraMatrixChanged);
+				cameraMatrixChangedDel =  gcnew cameraChanged(this, &MainForm::cameraMatrixChanged);
 				bindHelperMethod<cameraChanged, float[16]>(cameraMatrixChangedDel, _gvView->cameraMatrixChangedEvent);
 
+				setCameraMatrixDel = gcnew setCameraMatrixDelegate(this, &MainForm::setCameraMatrix);
 				InitializeComponent();
 				//
 				//TODO: Add the constructor code here
@@ -363,9 +373,11 @@ namespace gv
 				// listboxCameraMatrix
 				// 
 				this->listboxCameraMatrix->FormattingEnabled = true;
-				this->listboxCameraMatrix->Location = System::Drawing::Point(391, 146);
+				this->listboxCameraMatrix->Items->AddRange(gcnew cli::array< System::Object^  >(4) {L"1, 0, 0, 0", L"0, 1, 0, 0", L"0, 0, 1, 0", 
+					L"0, 0, 0, 1"});
+				this->listboxCameraMatrix->Location = System::Drawing::Point(299, 157);
 				this->listboxCameraMatrix->Name = L"listboxCameraMatrix";
-				this->listboxCameraMatrix->Size = System::Drawing::Size(120, 95);
+				this->listboxCameraMatrix->Size = System::Drawing::Size(267, 95);
 				this->listboxCameraMatrix->TabIndex = 9;
 				// 
 				// MainForm
@@ -560,13 +572,34 @@ namespace gv
 					 setGUIFromIPoint(_gvView->getSelectedPoint().get());
 				 }
 
+
+
+				 void setCameraMatrix(System::Collections::ArrayList^ newMatrix)
+				 {
+
+					 for (int i = 0; i < 4; i++)
+					 {
+						 String^ row = System::Convert::ToString(newMatrix[0 + i]) + ", " 
+							 + System::Convert::ToString(newMatrix[4 + i]) + ", " 
+							 + System::Convert::ToString(newMatrix[8 + i]) + ", " 
+							 + System::Convert::ToString(newMatrix[12 + i]); 
+
+						 listboxCameraMatrix->Items[i] = row;
+					 }
+
+				 }
+
 				 void cameraMatrixChanged(float newMatrix[16])
 				 {
-					 //String^ row0 = System::Convert::ToString(newMatrix[0]) + ", " 
-						// + System::Convert::ToString(newMatrix[4]) + ", " 
-						// + System::Convert::ToString(newMatrix[8]) + ", " 
-						// + System::Convert::ToString(newMatrix[12]); 
-					 listboxCameraMatrix->Text = "sdfasf";
+					 if(InvokeRequired)
+					 {
+						 System::Collections::ArrayList^ matrixlist = gcnew System::Collections::ArrayList(16);
+						 for (int i = 0; i < 16; i++)
+						 {
+							 matrixlist->Add(newMatrix[i]);
+						 }
+						 Invoke(setCameraMatrixDel, matrixlist);
+					 }
 				 }
 
 #pragma endregion Model Events

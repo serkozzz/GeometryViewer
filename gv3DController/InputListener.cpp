@@ -44,6 +44,7 @@ void InputListener::keyPressed(gvKey key) const
 	}
 
 	movement *= 0.1;
+	//_cameraMovingRealization->rotateCamera(movement.x, movement.y);
 	_cameraMovingRealization->moveCamera(movement.x, movement.y);
 }
 

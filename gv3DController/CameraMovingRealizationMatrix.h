@@ -14,6 +14,8 @@ namespace gv
 			virtual void setCamera(Model::ICamera* camera);
 			virtual void moveCamera(float forward, float right);
 			virtual void rotateCamera(float dx, float dy);
+
+			void normalizeOrthoForMatrix(glm::mat4& matrix);
 		};
 	}
 }

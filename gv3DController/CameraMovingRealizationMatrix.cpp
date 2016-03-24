@@ -33,9 +33,8 @@ void CameraMovingRealizationMatrix::moveCamera(float right, float forward)
 	//	+ std::to_string(rightVec.x) + ", "
 	//	+ std::to_string(rightVec.y) + ", "
 	//	+ std::to_string(rightVec.z) + ", ");
+
 	//_camera->trySetTransform(glm::translate(_camera->getTransform(), glm::vec3(movement)));
-
-
 	_camera->trySetPosition(_camera->getPosition() + glm::vec3(movement));
 }
 
@@ -49,20 +48,25 @@ void CameraMovingRealizationMatrix::rotateCamera(float dx, float dy)
 	resultTransform[3] = glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
 
 	//Oy - dx rotation
-	//glm::mat4 upRotation = glm::rotate(glm::mat4(1.0f), dx, glm::vec3(0.0, 1.0, 0.0));
+	glm::mat4 oyRotation =  glm::rotate(glm::mat4(1.0f), dx, glm::vec3(0.0, 1.0, 0.0));
+	resultTransform = oyRotation * resultTransform;
 
-	resultTransform =  glm::rotate(resultTransform, dx, glm::vec3(0.0, 1.0, 0.0));
+	//Ox - dy rotation
+	glm::vec3 right(resultTransform[0]);
+	glm::mat4 oxRotation = glm::rotate(glm::mat4(1.0f), dy, right);
+	resultTransform = oxRotation * resultTransform;
 
-	//glm::vec3 up(resultTransform[1]);
-	//glm::vec3 dir(-resultTransform[2]);
-	//glm::vec3 right = glm::normalize(glm::cross(dir, up));
+	normalizeOrthoForMatrix(resultTransform);
 
-	//resultTransform =  glm::rotate(resultTransform, dy, right);
+	resultTransform[3] = position;
+	_camera->trySetTransform(resultTransform);
+}
 
-
-	glm::vec3 x(resultTransform[0]);
-	glm::vec3 y(resultTransform[1]);
-	glm::vec3 z(resultTransform[2]);
+void CameraMovingRealizationMatrix::normalizeOrthoForMatrix(glm::mat4& matrix)
+{
+	glm::vec3 x(matrix[0]);
+	glm::vec3 y(matrix[1]);
+	glm::vec3 z(matrix[2]);
 
 	x = glm::normalize(x);
 	y = glm::normalize(y);
@@ -71,9 +75,7 @@ void CameraMovingRealizationMatrix::rotateCamera(float dx, float dy)
 	x = glm::normalize(glm::cross(y, z));
 	y = glm::normalize(glm::cross(z, x));
 
-	resultTransform[0] = glm::vec4(x, 0);
-	resultTransform[1] = glm::vec4(y, 0);
-	resultTransform[2] = glm::vec4(z, 0);
-	resultTransform[3] = position;
-	_camera->trySetTransform(resultTransform);
+	matrix[0] = glm::vec4(x, 0);
+	matrix[1] = glm::vec4(y, 0);
+	matrix[2] = glm::vec4(z, 0);
 }

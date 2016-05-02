@@ -6,6 +6,7 @@
 
 #include "gvView.h"
 #include "vPoint.h"
+#include "PointViewModel.h"
 
 namespace gv
 {
@@ -29,11 +30,17 @@ namespace gv
 
 		private:
 
-
+			PointViewModel^ pointVM;
+			
+			BindingList<PointViewModel^>^ pointsVM;
 
 			gvView* _gvView;
 			int _pointsCount;
-		private: System::Windows::Forms::ListBox^  listboxCameraMatrix;
+		private: System::Windows::Forms::TextBox^  tbTest;
+		private: System::Windows::Forms::Button^  btnTest;
+		private: System::Windows::Forms::DataGridView^  dtGrdVPoints;
+
+
 				 std::map<const skb::EventHandler<const std::shared_ptr<IPoint>& >*, int>* _subscriptions;
 
 				 delegate void collectionChanged(std::shared_ptr<IPoint>);
@@ -87,6 +94,25 @@ namespace gv
 				//TODO: Add the constructor code here
 				//
 				resetGUI(std::string("point") + std::to_string(_pointsCount));
+
+
+				pointVM = gcnew PointViewModel();
+
+
+				Binding^ binding = gcnew Binding("Text",
+					pointVM,
+					"A",
+					true,
+					DataSourceUpdateMode::OnPropertyChanged);
+
+				tbTest->DataBindings->Add(binding);
+
+				pointsVM = gcnew BindingList<PointViewModel^>();
+
+				dtGrdVPoints->DataSource = pointsVM;
+
+				pointsVM->Add(pointVM);
+				pointsVM->Add(gcnew PointViewModel());
 			}
 
 
@@ -102,6 +128,11 @@ namespace gv
 					delete components;
 				}
 			}
+
+		private: System::Windows::Forms::ListBox^  listboxCameraMatrix;
+
+		private: System::Windows::Forms::Label^  label5;
+
 		private: System::Windows::Forms::Panel^  panel1;
 		private: System::Windows::Forms::Button^  btnAddPoint;
 		private: System::Windows::Forms::Button^  btnRemovePoint;
@@ -162,9 +193,14 @@ namespace gv
 				this->savePlanToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 				this->btnChangePointSize = (gcnew System::Windows::Forms::Button());
 				this->listboxCameraMatrix = (gcnew System::Windows::Forms::ListBox());
+				this->label5 = (gcnew System::Windows::Forms::Label());
+				this->tbTest = (gcnew System::Windows::Forms::TextBox());
+				this->btnTest = (gcnew System::Windows::Forms::Button());
+				this->dtGrdVPoints = (gcnew System::Windows::Forms::DataGridView());
 				this->panel1->SuspendLayout();
 				this->panel2->SuspendLayout();
 				this->menuStrip1->SuspendLayout();
+				(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->dtGrdVPoints))->BeginInit();
 				this->SuspendLayout();
 				// 
 				// panel1
@@ -180,14 +216,14 @@ namespace gv
 				this->panel1->Controls->Add(this->btnAddPoint);
 				this->panel1->Location = System::Drawing::Point(12, 23);
 				this->panel1->Name = L"panel1";
-				this->panel1->Size = System::Drawing::Size(554, 90);
+				this->panel1->Size = System::Drawing::Size(702, 90);
 				this->panel1->TabIndex = 0;
 				// 
 				// label3
 				// 
 				this->label3->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Right));
 				this->label3->AutoSize = true;
-				this->label3->Location = System::Drawing::Point(376, 20);
+				this->label3->Location = System::Drawing::Point(524, 20);
 				this->label3->Name = L"label3";
 				this->label3->Size = System::Drawing::Size(27, 13);
 				this->label3->TabIndex = 10;
@@ -199,7 +235,7 @@ namespace gv
 					| System::Windows::Forms::AnchorStyles::Right));
 				this->cbPrimitiv->FormattingEnabled = true;
 				this->cbPrimitiv->Items->AddRange(gcnew cli::array< System::Object^  >(2) {L"cube", L"sphere"});
-				this->cbPrimitiv->Location = System::Drawing::Point(350, 36);
+				this->cbPrimitiv->Location = System::Drawing::Point(498, 36);
 				this->cbPrimitiv->Name = L"cbPrimitiv";
 				this->cbPrimitiv->Size = System::Drawing::Size(91, 21);
 				this->cbPrimitiv->TabIndex = 9;
@@ -214,7 +250,7 @@ namespace gv
 				this->panel2->Controls->Add(this->tbX);
 				this->panel2->Controls->Add(this->tbY);
 				this->panel2->Controls->Add(this->label2);
-				this->panel2->Location = System::Drawing::Point(134, 20);
+				this->panel2->Location = System::Drawing::Point(282, 20);
 				this->panel2->Name = L"panel2";
 				this->panel2->Size = System::Drawing::Size(210, 48);
 				this->panel2->TabIndex = 8;
@@ -270,7 +306,7 @@ namespace gv
 					| System::Windows::Forms::AnchorStyles::Right));
 				this->tbName->Location = System::Drawing::Point(12, 36);
 				this->tbName->Name = L"tbName";
-				this->tbName->Size = System::Drawing::Size(116, 20);
+				this->tbName->Size = System::Drawing::Size(264, 20);
 				this->tbName->TabIndex = 3;
 				this->tbName->Leave += gcnew System::EventHandler(this, &MainForm::tbName_Leave);
 				// 
@@ -288,7 +324,7 @@ namespace gv
 				// btnRemovePoint
 				// 
 				this->btnRemovePoint->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Bottom | System::Windows::Forms::AnchorStyles::Right));
-				this->btnRemovePoint->Location = System::Drawing::Point(447, 48);
+				this->btnRemovePoint->Location = System::Drawing::Point(595, 48);
 				this->btnRemovePoint->Name = L"btnRemovePoint";
 				this->btnRemovePoint->Size = System::Drawing::Size(93, 39);
 				this->btnRemovePoint->TabIndex = 1;
@@ -299,7 +335,7 @@ namespace gv
 				// btnAddPoint
 				// 
 				this->btnAddPoint->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Right));
-				this->btnAddPoint->Location = System::Drawing::Point(447, 3);
+				this->btnAddPoint->Location = System::Drawing::Point(595, 3);
 				this->btnAddPoint->Name = L"btnAddPoint";
 				this->btnAddPoint->Size = System::Drawing::Size(93, 39);
 				this->btnAddPoint->TabIndex = 0;
@@ -333,7 +369,7 @@ namespace gv
 				this->menuStrip1->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(1) {this->menuToolStripMenuItem});
 				this->menuStrip1->Location = System::Drawing::Point(0, 0);
 				this->menuStrip1->Name = L"menuStrip1";
-				this->menuStrip1->Size = System::Drawing::Size(578, 24);
+				this->menuStrip1->Size = System::Drawing::Size(726, 24);
 				this->menuStrip1->TabIndex = 7;
 				this->menuStrip1->Text = L"menuStrip1";
 				// 
@@ -362,7 +398,7 @@ namespace gv
 				// btnChangePointSize
 				// 
 				this->btnChangePointSize->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Right));
-				this->btnChangePointSize->Location = System::Drawing::Point(187, 121);
+				this->btnChangePointSize->Location = System::Drawing::Point(335, 121);
 				this->btnChangePointSize->Name = L"btnChangePointSize";
 				this->btnChangePointSize->Size = System::Drawing::Size(79, 23);
 				this->btnChangePointSize->TabIndex = 8;
@@ -375,16 +411,59 @@ namespace gv
 				this->listboxCameraMatrix->FormattingEnabled = true;
 				this->listboxCameraMatrix->Items->AddRange(gcnew cli::array< System::Object^  >(4) {L"1, 0, 0, 0", L"0, 1, 0, 0", L"0, 0, 1, 0", 
 					L"0, 0, 0, 1"});
-				this->listboxCameraMatrix->Location = System::Drawing::Point(299, 157);
+				this->listboxCameraMatrix->Location = System::Drawing::Point(433, 148);
 				this->listboxCameraMatrix->Name = L"listboxCameraMatrix";
-				this->listboxCameraMatrix->Size = System::Drawing::Size(267, 95);
+				this->listboxCameraMatrix->Size = System::Drawing::Size(267, 82);
 				this->listboxCameraMatrix->TabIndex = 9;
+				// 
+				// label5
+				// 
+				this->label5->Anchor = static_cast<System::Windows::Forms::AnchorStyles>(((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Left) 
+					| System::Windows::Forms::AnchorStyles::Right));
+				this->label5->AutoSize = true;
+				this->label5->Location = System::Drawing::Point(12, 217);
+				this->label5->Name = L"label5";
+				this->label5->Size = System::Drawing::Size(39, 13);
+				this->label5->TabIndex = 11;
+				this->label5->Text = L"Points:";
+				// 
+				// tbTest
+				// 
+				this->tbTest->Location = System::Drawing::Point(58, 172);
+				this->tbTest->Name = L"tbTest";
+				this->tbTest->Size = System::Drawing::Size(100, 20);
+				this->tbTest->TabIndex = 12;
+				// 
+				// btnTest
+				// 
+				this->btnTest->Location = System::Drawing::Point(201, 172);
+				this->btnTest->Name = L"btnTest";
+				this->btnTest->Size = System::Drawing::Size(75, 23);
+				this->btnTest->TabIndex = 13;
+				this->btnTest->Text = L"button1";
+				this->btnTest->UseVisualStyleBackColor = true;
+				this->btnTest->Click += gcnew System::EventHandler(this, &MainForm::btnTest_Click);
+				// 
+				// dtGrdVPoints
+				// 
+				this->dtGrdVPoints->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Bottom) 
+					| System::Windows::Forms::AnchorStyles::Left) 
+					| System::Windows::Forms::AnchorStyles::Right));
+				this->dtGrdVPoints->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
+				this->dtGrdVPoints->Location = System::Drawing::Point(0, 234);
+				this->dtGrdVPoints->Name = L"dtGrdVPoints";
+				this->dtGrdVPoints->Size = System::Drawing::Size(726, 122);
+				this->dtGrdVPoints->TabIndex = 14;
 				// 
 				// MainForm
 				// 
 				this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 				this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-				this->ClientSize = System::Drawing::Size(578, 325);
+				this->ClientSize = System::Drawing::Size(726, 354);
+				this->Controls->Add(this->dtGrdVPoints);
+				this->Controls->Add(this->btnTest);
+				this->Controls->Add(this->tbTest);
+				this->Controls->Add(this->label5);
 				this->Controls->Add(this->listboxCameraMatrix);
 				this->Controls->Add(this->btnChangePointSize);
 				this->Controls->Add(this->tbPointsSize);
@@ -400,6 +479,7 @@ namespace gv
 				this->panel2->PerformLayout();
 				this->menuStrip1->ResumeLayout(false);
 				this->menuStrip1->PerformLayout();
+				(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->dtGrdVPoints))->EndInit();
 				this->ResumeLayout(false);
 				this->PerformLayout();
 
@@ -549,8 +629,7 @@ namespace gv
 
 				 void pointAddedEvent(std::shared_ptr<IPoint> p)
 				 {
-					 int a = 10;
-					 a++;
+
 				 }
 
 				 void pointRemovedEvent(std::shared_ptr<IPoint> p)
@@ -604,7 +683,13 @@ namespace gv
 
 #pragma endregion Model Events
 
-		};
+		private: System::Void btnTest_Click(System::Object^  sender, System::EventArgs^  e) {
+					 pointVM->A++;
+
+
+					 pointsVM->Add(gcnew PointViewModel());
+				 }
+};
 
 #pragma endregion
 	}

@@ -35,6 +35,9 @@
     <ClInclude Include="vPoint.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="PointViewModel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="MainForm.resx">

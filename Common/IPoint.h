@@ -32,7 +32,7 @@ namespace gv
 		virtual PrimitiveType getPrimitive() const = 0;
 		virtual void trySetPrimitive(const PrimitiveType& newPrimitive) const = 0;
 
-		skb::EventHandler<PointPropChangedArgs> propertyChanged;
+		mutable skb::EventHandler<PointPropChangedArgs> propertyChanged;
 	};
 
 

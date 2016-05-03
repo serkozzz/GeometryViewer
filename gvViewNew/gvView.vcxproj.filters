@@ -35,7 +35,16 @@
     <ClInclude Include="vPoint.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="PointViewModel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="CLIHelper.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PointsViewModel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MainViewModel.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

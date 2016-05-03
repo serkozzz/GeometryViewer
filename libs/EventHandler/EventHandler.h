@@ -89,6 +89,8 @@ namespace skb    //means SerKoz Bicycles
 	//	std::string propName;
 	//};
 
+
+	//TODO remove data from arg. Remain only prop name.
 	template <typename T>
 	struct PropertyChangedArgs
 	{

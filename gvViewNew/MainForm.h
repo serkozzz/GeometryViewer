@@ -6,6 +6,8 @@
 
 #include "gvView.h"
 #include "vPoint.h"
+#include "MainViewModel.h"
+#include "CLIHelper.h"
 
 namespace gv
 {
@@ -29,11 +31,11 @@ namespace gv
 
 		private:
 
-			//PointViewModel^ pointVM;
-			//BindingList<PointViewModel^>^ pointsVM;
+			PointViewModel^ pointVM;
+			BindingList<PointViewModel^>^ pointsVM;
 
 
-			//MainViewModel^ _mainViewModel;
+			MainViewModel^ _mainViewModel;
 
 			gvView* _gvView;
 			int _pointsCount;

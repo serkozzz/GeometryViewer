@@ -36,6 +36,11 @@ const std::list<std::shared_ptr<mPoint> >& mPlan::getPoints() const
 	return _points;
 }
 
+const std::list<std::shared_ptr<IPoint> > mPlan::getPointsOnlyRead() const
+{
+	return std::list<std::shared_ptr<IPoint> >(_points.begin(), _points.end());
+}
+
 
 bool mPlan::isPointExist(const std::shared_ptr<const IPoint>& p) const
 {

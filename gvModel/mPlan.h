@@ -23,6 +23,7 @@ namespace gv
 			void AddPoint(const std::shared_ptr<mPoint>& p);
 			void RemovePoint(const std::shared_ptr<mPoint>& p);
 			const std::list<std::shared_ptr<mPoint> >& getPoints() const;
+			virtual const std::list<std::shared_ptr<IPoint> > getPointsOnlyRead() const;
 			//const std::list<std::shared_ptr<const mPoint> >& getConstPoints() const;
 			bool isPointExist(const std::shared_ptr<const IPoint>& p) const; 
 

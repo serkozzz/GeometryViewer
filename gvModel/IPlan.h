@@ -19,6 +19,7 @@ namespace gv
 		{
 		public:
 			virtual ICamera* getCamera() = 0;
+			virtual const std::list<std::shared_ptr<IPoint> > getPointsOnlyRead() const;
 
 			skb::EventHandler<const std::shared_ptr<IPoint>& > pointAdded;
 			skb::EventHandler<const std::shared_ptr<IPoint>& > pointRemoved;

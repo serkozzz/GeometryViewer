@@ -15,24 +15,16 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="MainForm.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
+    <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="MainForm.h">
+    <ClInclude Include="PointViewModel.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="IView.h">
+    <ClInclude Include="MainViewModel.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="gvView.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Common\IPoint.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="vPoint.h">
+    <ClInclude Include="PointsViewModel.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="CLIHelper.h">
@@ -40,11 +32,8 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="MainForm.resx">
-      <Filter>Resource Files</Filter>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="gvViewClassDiagram.cd" />
+    <ClCompile Include="Source.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

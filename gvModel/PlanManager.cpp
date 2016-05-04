@@ -12,6 +12,7 @@ PlanManager::PlanManager()
 
 PlanManager::~PlanManager()
 {
+	_cameraMover.reset();
 	if (_plan)
 		delete _plan;
 }

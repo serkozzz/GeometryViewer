@@ -31,6 +31,7 @@ namespace gv
 					_pointsVM->Add(gcnew PointViewModel(point.get()));
 				}
 
+				//Warning! You must save delagates reference as class member
 				pointAddedDel =  gcnew collectionChanged(this, &PointsViewModel::modelPointAddedEvent);
 				pointRemovedDel =  gcnew collectionChanged(this, &PointsViewModel::modelPointRemovedEvent);
 				pointAddedSubscId = 

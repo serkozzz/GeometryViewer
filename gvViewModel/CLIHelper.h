@@ -9,6 +9,7 @@ using namespace System::Runtime::InteropServices;
 class CLIHelper
 {
 public:
+	//Warning! You must follow that delagate reference will not be removed(for example, make it class member)
 	template<typename TDelegateType, typename TArgType>
 	static int SubscribeDelegateToUnmanagedEvent(TDelegateType^ del, skb::EventHandler<TArgType>& eventHandler)
 	{

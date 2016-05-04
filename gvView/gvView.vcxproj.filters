@@ -20,9 +20,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="MainForm.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="IView.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -38,13 +35,16 @@
     <ClInclude Include="CLIHelper.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="MainForm.resx">
-      <Filter>Resource Files</Filter>
-    </EmbeddedResource>
+    <ClInclude Include="MainView.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="gvViewClassDiagram.cd" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="MainView.resx">
+      <Filter>Resource Files</Filter>
+    </EmbeddedResource>
   </ItemGroup>
 </Project>

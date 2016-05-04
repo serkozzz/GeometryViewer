@@ -127,6 +127,12 @@
     <ProjectReference Include="..\gvController\gvController.vcxproj">
       <Project>{6fdce07d-3cef-4552-b5b6-5c5d5deb46ef}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\gvViewModel\gvViewModel.vcxproj">
+      <Project>{5ec449bf-ba6a-4d77-ac2f-e3501ff75e63}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\gvView\gvView.vcxproj">
+      <Project>{05af26d6-6fa9-400a-9d45-e89c99253782}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

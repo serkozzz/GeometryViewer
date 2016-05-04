@@ -1,2 +1,2 @@
-#include "MainForm.h"
+#include "MainView.h"
 

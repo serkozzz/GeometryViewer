@@ -7,17 +7,35 @@ namespace gv
 {
 	namespace View
 	{
-		public ref class MainViewModel
+		public ref class MainViewModel : INotifyPropertyChanged
 		{
+			PointViewModel^ _selectedPoint;
+
 		public:
-			PointsViewModel^ pointsVM;
-			PointViewModel^ selectedPoint;
+			property PointViewModel^ SelectedPoint
+			{
+				PointViewModel^ get() 
+				{
+					return _selectedPoint;
+				}
+
+				void set(PointViewModel^ newSelectedPoint) 
+				{
+					SelectedPoint = newSelectedPoint;
+					PropertyChanged(this, gcnew PropertyChangedEventArgs("SelectedPoint"));
+				}
+			}
+
+			property PointsViewModel^ pointsVM;
 
 			MainViewModel(Model::IPlan* plan)
 			{
 				pointsVM = gcnew PointsViewModel(plan);
-				selectedPoint = nullptr;
+				_selectedPoint = nullptr;
 			}
+
+		public:
+			virtual event PropertyChangedEventHandler^ PropertyChanged;
 		};
 	}
 }

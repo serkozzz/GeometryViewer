@@ -95,14 +95,14 @@
     <ClInclude Include="CLIHelper.h" />
     <ClInclude Include="gvView.h" />
     <ClInclude Include="IView.h" />
-    <ClInclude Include="MainForm.h">
+    <ClInclude Include="MainView.h">
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="vPoint.h" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="MainForm.resx">
-      <DependentUpon>MainForm.h</DependentUpon>
+    <EmbeddedResource Include="MainView.resx">
+      <DependentUpon>MainView.h</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

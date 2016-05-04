@@ -4,7 +4,7 @@
 #include <string.h>
 #include <msclr\marshal_cppstd.h>
 
-#include "gvView.h"
+#include "../gvViewModel/MainViewModel.h"
 #include "vPoint.h"
 
 namespace gv
@@ -22,9 +22,9 @@ namespace gv
 		using namespace System::Runtime::InteropServices;
 
 		/// <summary>
-		/// Summary for MainForm
+		/// Summary for MainView
 		/// </summary>
-		public ref class MainForm : public System::Windows::Forms::Form
+		public ref class MainView : public System::Windows::Forms::Form
 		{
 
 		private:
@@ -35,97 +35,195 @@ namespace gv
 
 			//MainViewModel^ _mainViewModel;
 
-			gvView* _gvView;
+			MainViewModel^ _viewModel;
 			int _pointsCount;
+
+			delegate void propChanged(Object^ Sender, PropertyChangedEventArgs^ arg);
+
 		private: System::Windows::Forms::TextBox^  tbTest;
-		private: System::Windows::Forms::Button^  btnTest;
-		private: System::Windows::Forms::DataGridView^  dtGrdVPoints;
+				 System::Windows::Forms::Button^  btnTest;
+				 System::Windows::Forms::DataGridView^  dtGrdVPoints;
 
-
-				 std::map<const skb::EventHandler<const std::shared_ptr<IPoint>& >*, int>* _subscriptions;
-
-				 delegate void collectionChanged(std::shared_ptr<IPoint>);
-				 delegate void propChanged(PointPropChangedArgs args);
-				 delegate void cameraChanged(float [16]);
-				 delegate void setCameraMatrixDelegate(System::Collections::ArrayList^ matrix);
-
-				 collectionChanged^ pointAddedEventDel;
-				 collectionChanged^ pointRemovedEventDel;
-				 collectionChanged^ pointSelectedEventDel;
-				 collectionChanged^ pointUnselectedEventDel;
-				 propChanged^ propChangedDel;
-				 cameraChanged^ cameraMatrixChangedDel;
-				 setCameraMatrixDelegate^ setCameraMatrixDel;
 		public:
-			MainForm(gvView* gvView) : _gvView(gvView), _pointsCount(0)
+			MainView(MainViewModel^ viewModel) : _viewModel(viewModel), _pointsCount(0)
 			{
-				_subscriptions = new std::map<const skb::EventHandler<const std::shared_ptr<IPoint>& >*, int>();
 
-				//Warning! You must save delagates reference as class member
-				pointAddedEventDel =  gcnew collectionChanged(this, &MainForm::pointAddedEvent);
-				CLIHelper::SubscribeDelegateToUnmanagedEvent<collectionChanged, std::shared_ptr<IPoint>>
-					(pointAddedEventDel, _gvView->pointAddedEvent);
-
-				pointRemovedEventDel =  gcnew collectionChanged(this, &MainForm::pointRemovedEvent);
-				CLIHelper::SubscribeDelegateToUnmanagedEvent<collectionChanged, std::shared_ptr<IPoint>>
-					(pointRemovedEventDel, _gvView->pointRemovedEvent);
-
-				pointSelectedEventDel =  gcnew collectionChanged(this, &MainForm::pointSelectedEvent);
-				CLIHelper::SubscribeDelegateToUnmanagedEvent<collectionChanged, std::shared_ptr<IPoint>>
-					(pointSelectedEventDel, _gvView->pointSelectedEvent);
-
-				pointUnselectedEventDel =  gcnew collectionChanged(this, &MainForm::pointUnselectedEvent);
-				CLIHelper::SubscribeDelegateToUnmanagedEvent<collectionChanged, std::shared_ptr<IPoint>>
-					(pointUnselectedEventDel, _gvView->pointUnselectedEvent);
-
-				propChangedDel =  gcnew propChanged(this, &MainForm::selectedPointPropertyChanged);
-				CLIHelper::SubscribeDelegateToUnmanagedEvent<propChanged, PointPropChangedArgs>
-					(propChangedDel, _gvView->selectedPointPropChangedEvent);
-
-				cameraMatrixChangedDel =  gcnew cameraChanged(this, &MainForm::cameraMatrixChanged);
-				CLIHelper::SubscribeDelegateToUnmanagedEvent<cameraChanged, float[16]>
-					(cameraMatrixChangedDel, _gvView->cameraMatrixChangedEvent);
-
-				setCameraMatrixDel = gcnew setCameraMatrixDelegate(this, &MainForm::setCameraMatrix);
 				InitializeComponent();
-				//
-				//TODO: Add the constructor code here
-				//
-				resetGUI(std::string("point") + std::to_string(_pointsCount));
+
+				dtGrdVPoints->DataSource = _viewModel->pointsVM;
+				subscribeToSelectedPoint();
+
+				propChanged^ p = gcnew propChanged(this, &MainView::ViewModelPropertyChanged);
+				_viewModel->PropertyChanged += p; 
+
+				//resetGUI(std::string("point") + std::to_string(_pointsCount));
 
 
-				pointVM = gcnew PointViewModel();
+				//pointVM = gcnew PointViewModel();
 
+				//Binding^ binding = gcnew Binding("Text",
+				//	pointVM,
+				//	"A",
+				//	true,
+				//	DataSourceUpdateMode::OnPropertyChanged);
 
-				Binding^ binding = gcnew Binding("Text",
-					pointVM,
-					"A",
-					true,
-					DataSourceUpdateMode::OnPropertyChanged);
+				//tbTest->DataBindings->Add(binding);
 
-				tbTest->DataBindings->Add(binding);
+				//pointsVM = gcnew BindingList<PointViewModel^>();
 
-				pointsVM = gcnew BindingList<PointViewModel^>();
+				//dtGrdVPoints->DataSource = pointsVM;
 
-				dtGrdVPoints->DataSource = pointsVM;
-
-				pointsVM->Add(pointVM);
-				pointsVM->Add(gcnew PointViewModel());
+				//pointsVM->Add(pointVM);
+				//pointsVM->Add(gcnew PointViewModel());
 			}
-
 
 		protected:
 			/// <summary>
 			/// Clean up any resources being used.
 			/// </summary>
-			~MainForm()
+			~MainView()
 			{
 				if (components)
 				{
-					delete _subscriptions;
 					delete components;
 				}
 			}
+
+
+#pragma region methods-helpers
+		private:
+
+			void subscribeToSelectedPoint()
+			{
+				if (_viewModel == nullptr)
+					return;
+
+				tbX->DataBindings->Add(gcnew Binding("Text",
+					_viewModel->SelectedPoint,
+					"PositionX",
+					true,
+					DataSourceUpdateMode::OnPropertyChanged));
+
+				tbY->DataBindings->Add(gcnew Binding("Text",
+					_viewModel->SelectedPoint,
+					"PositionY",
+					true,
+					DataSourceUpdateMode::OnPropertyChanged));
+
+				tbZ->DataBindings->Add(gcnew Binding("Text",
+					_viewModel->SelectedPoint,
+					"PositionZ",
+					true,
+					DataSourceUpdateMode::OnPropertyChanged));
+			}
+
+
+
+			vPoint getvPointFromGUI()
+			{
+				std::string name = marshal_as< std::string >(tbName->Text);
+
+				std::string xStr =  marshal_as< std::string >(tbX->Text);
+				std::string yStr =  marshal_as< std::string >(tbY->Text);
+				std::string zStr =  marshal_as< std::string >(tbZ->Text);
+
+				glm::vec3 pos(std::stof(xStr), std::stof(yStr), std::stof(zStr));
+
+				PrimitiveType primitive = getPrimitiveTypeFromStr(cbPrimitiv->Text);
+				return vPoint(name, pos, primitive);
+			}
+
+			void setGUIFromIPoint(const IPoint* point)
+			{
+				tbName->Text = gcnew String(point->getName().c_str());
+				tbX->Text = System::Convert::ToString(point->getPosition().x);
+				tbY->Text = System::Convert::ToString(point->getPosition().y);
+				tbZ->Text = System::Convert::ToString(point->getPosition().z);
+
+				cbPrimitiv->Text = getStrFromPrimitiveType(point->getPrimitive());
+			}
+
+			void resetGUI(std::string& nameForNewPoint)
+			{
+				gv::View::vPoint point(nameForNewPoint, glm::vec3(0, 0, 0), PrimitiveType::cubePrimitiveType);
+				setGUIFromIPoint(&point);
+			}
+
+			void resetGUI()
+			{
+				resetGUI(std::string(""));
+			}
+
+			System::String^ getStrFromPrimitiveType(PrimitiveType primitive)
+			{
+				if (primitive == PrimitiveType::cubePrimitiveType)
+					return "cube";
+				else if(primitive == PrimitiveType::spherePrimitiveType)
+					return "sphere";
+
+				throw std::invalid_argument("Unknown Primitive Type: " + std::to_string(primitive));
+			}
+
+
+			PrimitiveType getPrimitiveTypeFromStr(String^ str)
+			{
+				if (str == "cube")
+					return PrimitiveType::cubePrimitiveType;
+				else if(str = "sphere")
+					return PrimitiveType::spherePrimitiveType;
+
+				throw std::invalid_argument("Unknown Primitive Type: " + marshal_as< std::string >(str));
+			}
+#pragma endregion methods-helpers
+
+
+
+
+
+#pragma region ViewModel Events
+
+			void ViewModelPropertyChanged(Object^ Sender, PropertyChangedEventArgs^ arg)
+			{
+				if (arg->PropertyName == "SelectedPoint")
+				{
+					subscribeToSelectedPoint();
+				}
+			}
+
+#pragma endregion ViewModel Events
+			
+
+
+
+#pragma region GUI Events
+		private: System::Void btnAddPoint_Click(System::Object^  sender, System::EventArgs^  e) {
+					 _pointsCount++;
+					 resetGUI(std::string("point") + std::to_string(_pointsCount));
+				 }
+
+		private: System::Void btnRemovePoint_Click(System::Object^  sender, System::EventArgs^  e) {
+
+
+				 }
+
+
+		private: System::Void btnChangePointSize_Click(System::Object^  sender, System::EventArgs^  e) {
+
+				 }
+
+
+		private: System::Void loadPlanToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e) {
+					 //TODO dialog for plan name choosing
+				 }
+
+
+		private: System::Void savePlanToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e) {
+					 //TODO dialog for plan name choosing
+				 }
+
+
+#pragma endregion GUI Events
+
 
 		private: System::Windows::Forms::ListBox^  listboxCameraMatrix;
 
@@ -238,7 +336,6 @@ namespace gv
 				this->cbPrimitiv->Size = System::Drawing::Size(91, 21);
 				this->cbPrimitiv->TabIndex = 9;
 				this->cbPrimitiv->Text = L"cube";
-				this->cbPrimitiv->SelectedValueChanged += gcnew System::EventHandler(this, &MainForm::cbPrimitiv_SelectedValueChanged);
 				// 
 				// panel2
 				// 
@@ -262,7 +359,6 @@ namespace gv
 				this->tbZ->Size = System::Drawing::Size(61, 20);
 				this->tbZ->TabIndex = 7;
 				this->tbZ->Text = L"0";
-				this->tbZ->Leave += gcnew System::EventHandler(this, &MainForm::tbZ_Leave);
 				// 
 				// tbX
 				// 
@@ -273,7 +369,6 @@ namespace gv
 				this->tbX->Size = System::Drawing::Size(61, 20);
 				this->tbX->TabIndex = 5;
 				this->tbX->Text = L"0";
-				this->tbX->Leave += gcnew System::EventHandler(this, &MainForm::tbX_Leave);
 				// 
 				// tbY
 				// 
@@ -285,7 +380,6 @@ namespace gv
 				this->tbY->Size = System::Drawing::Size(61, 20);
 				this->tbY->TabIndex = 6;
 				this->tbY->Text = L"0";
-				this->tbY->Leave += gcnew System::EventHandler(this, &MainForm::tbY_Leave);
 				// 
 				// label2
 				// 
@@ -306,7 +400,6 @@ namespace gv
 				this->tbName->Name = L"tbName";
 				this->tbName->Size = System::Drawing::Size(264, 20);
 				this->tbName->TabIndex = 3;
-				this->tbName->Leave += gcnew System::EventHandler(this, &MainForm::tbName_Leave);
 				// 
 				// label1
 				// 
@@ -328,7 +421,7 @@ namespace gv
 				this->btnRemovePoint->TabIndex = 1;
 				this->btnRemovePoint->Text = L"remove point";
 				this->btnRemovePoint->UseVisualStyleBackColor = true;
-				this->btnRemovePoint->Click += gcnew System::EventHandler(this, &MainForm::btnRemovePoint_Click);
+				this->btnRemovePoint->Click += gcnew System::EventHandler(this, &MainView::btnRemovePoint_Click);
 				// 
 				// btnAddPoint
 				// 
@@ -339,7 +432,7 @@ namespace gv
 				this->btnAddPoint->TabIndex = 0;
 				this->btnAddPoint->Text = L"add new point";
 				this->btnAddPoint->UseVisualStyleBackColor = true;
-				this->btnAddPoint->Click += gcnew System::EventHandler(this, &MainForm::btnAddPoint_Click);
+				this->btnAddPoint->Click += gcnew System::EventHandler(this, &MainView::btnAddPoint_Click);
 				// 
 				// label4
 				// 
@@ -384,14 +477,14 @@ namespace gv
 				this->loadPlanToolStripMenuItem->Name = L"loadPlanToolStripMenuItem";
 				this->loadPlanToolStripMenuItem->Size = System::Drawing::Size(126, 22);
 				this->loadPlanToolStripMenuItem->Text = L"Load Plan";
-				this->loadPlanToolStripMenuItem->Click += gcnew System::EventHandler(this, &MainForm::loadPlanToolStripMenuItem_Click);
+				this->loadPlanToolStripMenuItem->Click += gcnew System::EventHandler(this, &MainView::loadPlanToolStripMenuItem_Click);
 				// 
 				// savePlanToolStripMenuItem
 				// 
 				this->savePlanToolStripMenuItem->Name = L"savePlanToolStripMenuItem";
 				this->savePlanToolStripMenuItem->Size = System::Drawing::Size(126, 22);
 				this->savePlanToolStripMenuItem->Text = L"Save Plan";
-				this->savePlanToolStripMenuItem->Click += gcnew System::EventHandler(this, &MainForm::savePlanToolStripMenuItem_Click);
+				this->savePlanToolStripMenuItem->Click += gcnew System::EventHandler(this, &MainView::savePlanToolStripMenuItem_Click);
 				// 
 				// btnChangePointSize
 				// 
@@ -402,7 +495,7 @@ namespace gv
 				this->btnChangePointSize->TabIndex = 8;
 				this->btnChangePointSize->Text = L"apply";
 				this->btnChangePointSize->UseVisualStyleBackColor = true;
-				this->btnChangePointSize->Click += gcnew System::EventHandler(this, &MainForm::btnChangePointSize_Click);
+				this->btnChangePointSize->Click += gcnew System::EventHandler(this, &MainView::btnChangePointSize_Click);
 				// 
 				// listboxCameraMatrix
 				// 
@@ -424,24 +517,7 @@ namespace gv
 				this->label5->Size = System::Drawing::Size(39, 13);
 				this->label5->TabIndex = 11;
 				this->label5->Text = L"Points:";
-				// 
-				// tbTest
-				// 
-				this->tbTest->Location = System::Drawing::Point(58, 172);
-				this->tbTest->Name = L"tbTest";
-				this->tbTest->Size = System::Drawing::Size(100, 20);
-				this->tbTest->TabIndex = 12;
-				// 
-				// btnTest
-				// 
-				this->btnTest->Location = System::Drawing::Point(201, 172);
-				this->btnTest->Name = L"btnTest";
-				this->btnTest->Size = System::Drawing::Size(75, 23);
-				this->btnTest->TabIndex = 13;
-				this->btnTest->Text = L"button1";
-				this->btnTest->UseVisualStyleBackColor = true;
-				this->btnTest->Click += gcnew System::EventHandler(this, &MainForm::btnTest_Click);
-				// 
+
 				// dtGrdVPoints
 				// 
 				this->dtGrdVPoints->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Bottom) 
@@ -453,7 +529,7 @@ namespace gv
 				this->dtGrdVPoints->Size = System::Drawing::Size(726, 122);
 				this->dtGrdVPoints->TabIndex = 14;
 				// 
-				// MainForm
+				// MainView
 				// 
 				this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 				this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
@@ -469,8 +545,8 @@ namespace gv
 				this->Controls->Add(this->panel1);
 				this->Controls->Add(this->menuStrip1);
 				this->MainMenuStrip = this->menuStrip1;
-				this->Name = L"MainForm";
-				this->Text = L"MainForm";
+				this->Name = L"MainView";
+				this->Text = L"MainView";
 				this->panel1->ResumeLayout(false);
 				this->panel1->PerformLayout();
 				this->panel2->ResumeLayout(false);
@@ -485,210 +561,8 @@ namespace gv
 #pragma endregion
 
 
-#pragma region methods-helpers
-		private:
-			vPoint getvPointFromGUI()
-			{
-				std::string name = marshal_as< std::string >(tbName->Text);
-
-				std::string xStr =  marshal_as< std::string >(tbX->Text);
-				std::string yStr =  marshal_as< std::string >(tbY->Text);
-				std::string zStr =  marshal_as< std::string >(tbZ->Text);
-
-				glm::vec3 pos(std::stof(xStr), std::stof(yStr), std::stof(zStr));
-
-				PrimitiveType primitive = getPrimitiveTypeFromStr(cbPrimitiv->Text);
-				return vPoint(name, pos, primitive);
-			}
-
-			void setGUIFromIPoint(const IPoint* point)
-			{
-				tbName->Text = gcnew String(point->getName().c_str());
-				tbX->Text = System::Convert::ToString(point->getPosition().x);
-				tbY->Text = System::Convert::ToString(point->getPosition().y);
-				tbZ->Text = System::Convert::ToString(point->getPosition().z);
-
-				cbPrimitiv->Text = getStrFromPrimitiveType(point->getPrimitive());
-			}
-
-			void resetGUI(std::string& nameForNewPoint)
-			{
-				gv::View::vPoint point(nameForNewPoint, glm::vec3(0, 0, 0), PrimitiveType::cubePrimitiveType);
-				setGUIFromIPoint(&point);
-			}
-
-			void resetGUI()
-			{
-				resetGUI(std::string(""));
-			}
-
-			System::String^ getStrFromPrimitiveType(PrimitiveType primitive)
-			{
-				if (primitive == PrimitiveType::cubePrimitiveType)
-					return "cube";
-				else if(primitive == PrimitiveType::spherePrimitiveType)
-					return "sphere";
-
-				throw std::invalid_argument("Unknown Primitive Type: " + std::to_string(primitive));
-			}
-
-
-			PrimitiveType getPrimitiveTypeFromStr(String^ str)
-			{
-				if (str == "cube")
-					return PrimitiveType::cubePrimitiveType;
-				else if(str = "sphere")
-					return PrimitiveType::spherePrimitiveType;
-
-				throw std::invalid_argument("Unknown Primitive Type: " + marshal_as< std::string >(str));
-			}
-#pragma endregion methods-helpers
-
-#pragma region GUI Events
-		private: System::Void btnAddPoint_Click(System::Object^  sender, System::EventArgs^  e) {
-
-					 if (_gvView->addPointClick != nullptr)
-					 {
-						 _gvView->addPointClick(std::make_shared<vPoint>(getvPointFromGUI()));
-					 }
-					 _pointsCount++;
-					 resetGUI(std::string("point") + std::to_string(_pointsCount));
-				 }
-
-		private: System::Void btnRemovePoint_Click(System::Object^  sender, System::EventArgs^  e) {
-
-					 if (_gvView->addPointClick != nullptr)
-					 {
-						 _gvView->removePointClick(_gvView->getSelectedPoint());
-					 }
-				 }
-
-
-		private: System::Void btnChangePointSize_Click(System::Object^  sender, System::EventArgs^  e) {
-
-					 if (_gvView->changePointSizeClick != nullptr)
-					 {
-						 std::string pointSizeStr = marshal_as< std::string >(tbY->Text);
-						 int pointSize = std::stoi(pointSizeStr);
-						 _gvView->changePointSizeClick(pointSize);
-					 }
-				 }
-
-
-		private: System::Void loadPlanToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e) {
-					 if (_gvView->loadPlanClick != nullptr)
-					 {
-						 //TODO dialog for plan name choosing
-						 _gvView->loadPlanClick("test plan name");
-					 }
-				 }
-		private: System::Void savePlanToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e) {
-					 if (_gvView->savePlanClick != nullptr)
-					 {
-						 //TODO dialog for plan name choosing
-						 _gvView->savePlanClick("test plan name");
-					 }
-
-				 }
-
-		private: System::Void tbX_Leave(System::Object^  sender, System::EventArgs^  e) {
-
-					 if (auto selectedPoint = _gvView->getSelectedPoint()) 
-						 selectedPoint->trySetPosition(getvPointFromGUI().getPosition());
-				 }
-
-		private: System::Void tbY_Leave(System::Object^  sender, System::EventArgs^  e) {
-
-					 if (auto selectedPoint = _gvView->getSelectedPoint()) 
-						 selectedPoint->trySetPosition(getvPointFromGUI().getPosition());
-				 }
-
-		private: System::Void tbZ_Leave(System::Object^  sender, System::EventArgs^  e) {
-
-					 if (auto selectedPoint = _gvView->getSelectedPoint()) 
-						 selectedPoint->trySetPosition(getvPointFromGUI().getPosition());
-				 }
-
-		private: System::Void tbName_Leave(System::Object^  sender, System::EventArgs^  e) {
-
-					 if (auto selectedPoint = _gvView->getSelectedPoint()) 
-						 selectedPoint->trySetName(getvPointFromGUI().getName());
-				 }
-
-		private: System::Void cbPrimitiv_SelectedValueChanged(System::Object^  sender, System::EventArgs^  e) {
-
-					 if (auto selectedPoint = _gvView->getSelectedPoint()) 
-						 selectedPoint->trySetPrimitive(getvPointFromGUI().getPrimitive());
-				 }
-
-#pragma endregion GUI Events
-
-#pragma region Model Events
-
-				 void pointAddedEvent(std::shared_ptr<IPoint> p)
-				 {
-
-				 }
-
-				 void pointRemovedEvent(std::shared_ptr<IPoint> p)
-				 {
-				 }
-
-				 void pointSelectedEvent(/*args is not used*/ std::shared_ptr<IPoint> p)
-				 {
-					 setGUIFromIPoint(_gvView->getSelectedPoint().get());
-				 }
-
-				 void pointUnselectedEvent(/*args is not used*/ std::shared_ptr<IPoint> p)
-				 {
-					 resetGUI();
-				 }
-
-				 void selectedPointPropertyChanged(PointPropChangedArgs arg)
-				 {
-					 setGUIFromIPoint(_gvView->getSelectedPoint().get());
-				 }
-
-
-
-				 void setCameraMatrix(System::Collections::ArrayList^ newMatrix)
-				 {
-
-					 for (int i = 0; i < 4; i++)
-					 {
-						 String^ row = System::Convert::ToString(newMatrix[0 + i]) + ", " 
-							 + System::Convert::ToString(newMatrix[4 + i]) + ", " 
-							 + System::Convert::ToString(newMatrix[8 + i]) + ", " 
-							 + System::Convert::ToString(newMatrix[12 + i]); 
-
-						 listboxCameraMatrix->Items[i] = row;
-					 }
-
-				 }
-
-				 void cameraMatrixChanged(float newMatrix[16])
-				 {
-					 if(InvokeRequired)
-					 {
-						 System::Collections::ArrayList^ matrixlist = gcnew System::Collections::ArrayList(16);
-						 for (int i = 0; i < 16; i++)
-						 {
-							 matrixlist->Add(newMatrix[i]);
-						 }
-						 Invoke(setCameraMatrixDel, matrixlist);
-					 }
-				 }
-
-#pragma endregion Model Events
-
-		private: System::Void btnTest_Click(System::Object^  sender, System::EventArgs^  e) {
-					 pointVM->A++;
-
-
-					 pointsVM->Add(gcnew PointViewModel());
-				 }
-		};
-
 #pragma endregion
+
+		};
 	}
 }

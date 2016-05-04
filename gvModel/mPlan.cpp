@@ -48,3 +48,4 @@ bool mPlan::isPointExist(const std::shared_ptr<const IPoint>& p) const
 	return (it == _points.end()) ? false : true;
 
 }
+

@@ -34,7 +34,7 @@ int main(array<System::String ^> ^args)
 
 	// Create the main window and run it
 	Model* model = new Model();
-	MainViewModel^ viewModel = gcnew MainViewModel(model->getPlanManager().getPlan());
+	MainViewModel^ viewModel = gcnew MainViewModel(model->getPlanManager());
 	MainView^ f = gcnew MainView(viewModel);
 	
 	Controller3D* controller3D = new Controller3D(model);

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../gvModel/IPlan.h"
+#include "../gvModel/PlanManager.h"
 #include "PointsViewModel.h"
 
 namespace gv 
@@ -10,6 +10,7 @@ namespace gv
 		public ref class MainViewModel : INotifyPropertyChanged
 		{
 			PointViewModel^ _selectedPoint;
+			Model::PlanManager& _planManager;
 
 		public:
 			property PointViewModel^ SelectedPoint
@@ -26,16 +27,27 @@ namespace gv
 				}
 			}
 
-			property PointsViewModel^ pointsVM;
+		public:
+			virtual event PropertyChangedEventHandler^ PropertyChanged;
 
-			MainViewModel(Model::IPlan* plan)
+
+			property PointsViewModel^ PointsVM;
+
+			MainViewModel(Model::PlanManager& planManager) : _planManager(planManager)
 			{
-				pointsVM = gcnew PointsViewModel(plan);
+				PointsVM = gcnew PointsViewModel(planManager);
 				_selectedPoint = nullptr;
 			}
 
 		public:
-			virtual event PropertyChangedEventHandler^ PropertyChanged;
+			//invoking from View
+			void viewCreatePointCommand()
+			{
+				_planManager.createNewPoint();
+				auto pointsList = PointsVM->GetPoints();
+				SelectedPoint = pointsList[pointsList->Count - 1];
+			}
+
 		};
 	}
 }

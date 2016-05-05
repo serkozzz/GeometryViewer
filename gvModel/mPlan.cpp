@@ -46,6 +46,6 @@ bool mPlan::isPointExist(const std::shared_ptr<const IPoint>& p) const
 {
 	auto it = std::find(_points.begin(), _points.end(), p);
 	return (it == _points.end()) ? false : true;
-
 }
+
 

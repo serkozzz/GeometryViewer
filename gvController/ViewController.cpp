@@ -48,13 +48,13 @@ ViewController::~ViewController()
 #pragma region View Events
 void ViewController::addPointClick(const std::shared_ptr<IPoint>& p)
 {
-	_planManager.tryAddPoint(p);
+	//_planManager.tryAddPoint(p);
 }
 
 
 void ViewController::removePointClick(const std::shared_ptr<IPoint>& p)
 {
-	_planManager.tryRemovePoint(p);
+	//_planManager.tryRemovePoint(p);
 }
 
 

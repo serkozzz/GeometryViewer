@@ -27,16 +27,16 @@ namespace gv
 			const IPoint* _modelPoint;
 
 			delegate void propChanged(PointPropChangedArgs args);
-			propChanged^ propChangedDel;
+			propChanged^ _propChangedDel;
 
 
 		public:
 
 			PointViewModel(const gv::IPoint* modelPoint) : _modelPoint(modelPoint)
 			{			
-				propChangedDel =  gcnew propChanged(this, &PointViewModel::modelPointPropertyChangedEvent);
+				_propChangedDel =  gcnew propChanged(this, &PointViewModel::modelPointPropertyChangedEvent);
 				subscriptionId = 
-					(CLIHelper::SubscribeDelegateToUnmanagedEvent(propChangedDel, _modelPoint->propertyChanged));
+					(CLIHelper::SubscribeDelegateToUnmanagedEvent(_propChangedDel, _modelPoint->propertyChanged));
 			}
 
 			~PointViewModel()

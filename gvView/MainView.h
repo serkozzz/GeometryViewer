@@ -47,14 +47,12 @@ namespace gv
 		public:
 			MainView(MainViewModel^ viewModel) : _viewModel(viewModel), _pointsCount(0)
 			{
-
 				InitializeComponent();
 
-				dtGrdVPoints->DataSource = _viewModel->pointsVM;
+				dtGrdVPoints->DataSource = _viewModel->PointsVM;
 				subscribeToSelectedPoint();
 
-				propChanged^ p = gcnew propChanged(this, &MainView::ViewModelPropertyChanged);
-				_viewModel->PropertyChanged += p; 
+				_viewModel->PropertyChanged += gcnew PropertyChangedEventHandler(this, &MainView::ViewModelPropertyChanged);
 
 				//resetGUI(std::string("point") + std::to_string(_pointsCount));
 
@@ -95,7 +93,7 @@ namespace gv
 
 			void subscribeToSelectedPoint()
 			{
-				if (_viewModel == nullptr)
+				if (_viewModel->SelectedPoint == nullptr)
 					return;
 
 				tbX->DataBindings->Add(gcnew Binding("Text",
@@ -177,9 +175,6 @@ namespace gv
 #pragma endregion methods-helpers
 
 
-
-
-
 #pragma region ViewModel Events
 
 			void ViewModelPropertyChanged(Object^ Sender, PropertyChangedEventArgs^ arg)
@@ -197,8 +192,7 @@ namespace gv
 
 #pragma region GUI Events
 		private: System::Void btnAddPoint_Click(System::Object^  sender, System::EventArgs^  e) {
-					 _pointsCount++;
-					 resetGUI(std::string("point") + std::to_string(_pointsCount));
+					 _viewModel->viewCreatePointCommand();
 				 }
 
 		private: System::Void btnRemovePoint_Click(System::Object^  sender, System::EventArgs^  e) {

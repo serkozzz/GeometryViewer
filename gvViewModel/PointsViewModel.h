@@ -2,6 +2,7 @@
 
 #include "PointViewModel.h"
 #include "../gvModel/IPlan.h"
+#include "../gvModel/PlanManager.h"
 
 
 
@@ -12,16 +13,25 @@ namespace gv
 		public ref class PointsViewModel
 		{
 			BindingList<PointViewModel^>^ _pointsVM;
+
 			Model::IPlan* _plan;
+			Model::PlanManager& _planManager;
 
 			int pointAddedSubscId;
 			int pointRemovedSubscId;		
 			delegate void collectionChanged(const std::shared_ptr<IPoint> point);
-			collectionChanged^ pointAddedDel;
-			collectionChanged^ pointRemovedDel;
+			collectionChanged^ _pointAddedDel;
+			collectionChanged^ _pointRemovedDel;
 
 		public:
-			PointsViewModel(Model::IPlan* plan) : _plan(plan)
+
+			BindingList<PointViewModel^>^ GetPoints()
+			{
+				return _pointsVM;
+			}
+
+
+			PointsViewModel(Model::PlanManager& planManager) : _planManager(planManager), _plan(planManager.getPlan())
 			{
 				_pointsVM = gcnew BindingList<PointViewModel^>();
 
@@ -32,12 +42,12 @@ namespace gv
 				}
 
 				//Warning! You must save delagates reference as class member
-				pointAddedDel =  gcnew collectionChanged(this, &PointsViewModel::modelPointAddedEvent);
-				pointRemovedDel =  gcnew collectionChanged(this, &PointsViewModel::modelPointRemovedEvent);
+				_pointAddedDel =  gcnew collectionChanged(this, &PointsViewModel::modelPointAddedEvent);
+				_pointRemovedDel =  gcnew collectionChanged(this, &PointsViewModel::modelPointRemovedEvent);
 				pointAddedSubscId = 
-					(CLIHelper::SubscribeDelegateToUnmanagedEvent(pointAddedDel, plan->pointAdded));
+					(CLIHelper::SubscribeDelegateToUnmanagedEvent(_pointAddedDel, _plan->pointAdded));
 				pointRemovedSubscId = 
-					(CLIHelper::SubscribeDelegateToUnmanagedEvent(pointRemovedDel, plan->pointRemoved));
+					(CLIHelper::SubscribeDelegateToUnmanagedEvent(_pointRemovedDel, _plan->pointRemoved));
 			}
 
 			~PointsViewModel()
@@ -46,6 +56,8 @@ namespace gv
 				_plan->pointRemoved -= pointRemovedSubscId;
 			}
 
+			//invoking form model
+		private:
 			void modelPointAddedEvent(const std::shared_ptr<IPoint> newPoint)
 			{
 				_pointsVM->Add(gcnew PointViewModel(newPoint.get()));

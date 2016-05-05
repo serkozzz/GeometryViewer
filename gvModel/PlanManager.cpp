@@ -23,18 +23,23 @@ IPlan* PlanManager::getPlan()
 }
 
 
-void PlanManager::tryAddPoint(const std::shared_ptr<IPoint>& point)
+void PlanManager::createNewPoint()
 {
-	mPoint p(point.get());
+	static int pointsCount = 0;
+
+	mPoint p("point" + std::to_string(pointsCount), 
+		glm::vec3(0, 0, 0),
+		PrimitiveType::cubePrimitiveType);
+	pointsCount++;
+
 	auto pPtr = std::make_shared<mPoint>(p);
 	_plan->AddPoint(pPtr);
 	_subscriptions[pPtr] = 
 		(pPtr->tryPropertyChanged += std::bind(&PlanManager::onTryPointPropChanged, this, std::placeholders::_1));
 }
 
-void PlanManager::tryRemovePoint(const std::shared_ptr<IPoint>& point)
+void PlanManager::removePoint(const std::shared_ptr<IPoint>& point)
 {
-
 	if (!_plan->isPointExist(point))
 	{
 		throw std::exception("Attemption to delete point that is abscent in the plan");

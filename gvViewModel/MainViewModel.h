@@ -48,6 +48,16 @@ namespace gv
 				SelectedPoint = pointsList[pointsList->Count - 1];
 			}
 
+			
+			void viewSelectPointCommand(int rowIndex)
+			{
+				auto pointsList = PointsVM->GetPoints();
+				if (rowIndex == pointsList->IndexOf(SelectedPoint))
+					return;
+
+				SelectedPoint = pointsList[rowIndex];
+
+			}
 		};
 	}
 }

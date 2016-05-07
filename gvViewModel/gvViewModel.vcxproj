@@ -90,9 +90,6 @@
     <ProjectReference Include="..\Common\Common.vcxproj">
       <Project>{747d8198-88f4-4330-ac74-baf362e9be8e}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\gvModel\gvModel.vcxproj">
-      <Project>{1cef1409-52c9-4c7b-940c-c4e2022f51ce}</Project>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />

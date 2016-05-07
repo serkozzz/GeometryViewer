@@ -1,11 +1,9 @@
 #pragma once
 
-#include <map>
 #include <string.h>
 #include <msclr\marshal_cppstd.h>
 
 #include "../gvViewModel/MainViewModel.h"
-#include "vPoint.h"
 
 namespace gv
 {
@@ -28,23 +26,14 @@ namespace gv
 		{
 
 		private:
-
-			//PointViewModel^ pointVM;
-			//BindingList<PointViewModel^>^ pointsVM;
-
-
-			//MainViewModel^ _mainViewModel;
-
 			MainViewModel^ _viewModel;
+			int _indexOfSelectedRow;
 
-			delegate void propChanged(Object^ Sender, PropertyChangedEventArgs^ arg);
-
-		private: System::Windows::Forms::TextBox^  tbTest;
-				 System::Windows::Forms::Button^  btnTest;
-				 System::Windows::Forms::DataGridView^  dtGrdVPoints;
+		private: 
+			System::Windows::Forms::DataGridView^  dtGrdVPoints;
 
 		public:
-			MainView(MainViewModel^ viewModel) : _viewModel(viewModel)
+			MainView(MainViewModel^ viewModel) : _viewModel(viewModel), _indexOfSelectedRow(-1)
 			{
 				InitializeComponent();
 
@@ -53,26 +42,6 @@ namespace gv
 				subscribeToSelectedPoint();
 
 				_viewModel->PropertyChanged += gcnew PropertyChangedEventHandler(this, &MainView::ViewModelPropertyChanged);
-
-				//resetGUI(std::string("point") + std::to_string(_pointsCount));
-
-
-				//pointVM = gcnew PointViewModel();
-
-				//Binding^ binding = gcnew Binding("Text",
-				//	pointVM,
-				//	"A",
-				//	true,
-				//	DataSourceUpdateMode::OnPropertyChanged);
-
-				//tbTest->DataBindings->Add(binding);
-
-				//pointsVM = gcnew BindingList<PointViewModel^>();
-
-				//dtGrdVPoints->DataSource = pointsVM;
-
-				//pointsVM->Add(pointVM);
-				//pointsVM->Add(gcnew PointViewModel());
 			}
 
 		protected:
@@ -126,43 +95,6 @@ namespace gv
 					DataSourceUpdateMode::OnPropertyChanged));
 			}
 
-
-
-			vPoint getvPointFromGUI()
-			{
-				std::string name = marshal_as< std::string >(tbName->Text);
-
-				std::string xStr =  marshal_as< std::string >(tbX->Text);
-				std::string yStr =  marshal_as< std::string >(tbY->Text);
-				std::string zStr =  marshal_as< std::string >(tbZ->Text);
-
-				glm::vec3 pos(std::stof(xStr), std::stof(yStr), std::stof(zStr));
-
-				PrimitiveType primitive = getPrimitiveTypeFromStr(cbPrimitiv->Text);
-				return vPoint(name, pos, primitive);
-			}
-
-			void setGUIFromIPoint(const IPoint* point)
-			{
-				tbName->Text = gcnew String(point->getName().c_str());
-				tbX->Text = System::Convert::ToString(point->getPosition().x);
-				tbY->Text = System::Convert::ToString(point->getPosition().y);
-				tbZ->Text = System::Convert::ToString(point->getPosition().z);
-
-				cbPrimitiv->Text = getStrFromPrimitiveType(point->getPrimitive());
-			}
-
-			void resetGUI(std::string& nameForNewPoint)
-			{
-				gv::View::vPoint point(nameForNewPoint, glm::vec3(0, 0, 0), PrimitiveType::cubePrimitiveType);
-				setGUIFromIPoint(&point);
-			}
-
-			void resetGUI()
-			{
-				resetGUI(std::string(""));
-			}
-
 			System::String^ getStrFromPrimitiveType(PrimitiveType primitive)
 			{
 				if (primitive == PrimitiveType::cubePrimitiveType)
@@ -193,6 +125,16 @@ namespace gv
 				if (arg->PropertyName == "SelectedPoint")
 				{
 					subscribeToSelectedPoint();
+					int indexOfVMSelectedPoint = 
+						_viewModel->PointsVM->GetPoints()->IndexOf(_viewModel->SelectedPoint);
+
+					if (_indexOfSelectedRow == indexOfVMSelectedPoint)
+						return;
+
+					_indexOfSelectedRow = indexOfVMSelectedPoint;
+					dtGrdVPoints->CurrentCell = dtGrdVPoints->Rows[indexOfVMSelectedPoint]->Cells[0]; //hack for dataGridView little black arrow specify to selected row
+					dtGrdVPoints->Rows[indexOfVMSelectedPoint]->Selected = true;
+
 				}
 			}
 
@@ -202,7 +144,7 @@ namespace gv
 
 
 #pragma region GUI Events
-		private: System::Void btnAddPoint_Click(System::Object^  sender, System::EventArgs^  e) {
+		private: System::Void btnCreateNewPoint_Click(System::Object^  sender, System::EventArgs^  e) {
 					 _viewModel->viewCreatePointCommand();
 				 }
 
@@ -295,8 +237,6 @@ namespace gv
 				this->btnChangePointSize = (gcnew System::Windows::Forms::Button());
 				this->listboxCameraMatrix = (gcnew System::Windows::Forms::ListBox());
 				this->label5 = (gcnew System::Windows::Forms::Label());
-				this->tbTest = (gcnew System::Windows::Forms::TextBox());
-				this->btnTest = (gcnew System::Windows::Forms::Button());
 				this->dtGrdVPoints = (gcnew System::Windows::Forms::DataGridView());
 				this->panel1->SuspendLayout();
 				this->panel2->SuspendLayout();
@@ -435,9 +375,9 @@ namespace gv
 				this->btnAddPoint->Name = L"btnAddPoint";
 				this->btnAddPoint->Size = System::Drawing::Size(93, 39);
 				this->btnAddPoint->TabIndex = 0;
-				this->btnAddPoint->Text = L"add new point";
+				this->btnAddPoint->Text = L"create new point";
 				this->btnAddPoint->UseVisualStyleBackColor = true;
-				this->btnAddPoint->Click += gcnew System::EventHandler(this, &MainView::btnAddPoint_Click);
+				this->btnAddPoint->Click += gcnew System::EventHandler(this, &MainView::btnCreateNewPoint_Click);
 				// 
 				// label4
 				// 
@@ -522,7 +462,7 @@ namespace gv
 				this->label5->Size = System::Drawing::Size(39, 13);
 				this->label5->TabIndex = 11;
 				this->label5->Text = L"Points:";
-
+				// 
 				// dtGrdVPoints
 				// 
 				this->dtGrdVPoints->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Bottom) 
@@ -530,9 +470,12 @@ namespace gv
 					| System::Windows::Forms::AnchorStyles::Right));
 				this->dtGrdVPoints->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
 				this->dtGrdVPoints->Location = System::Drawing::Point(0, 234);
+				this->dtGrdVPoints->MultiSelect = false;
 				this->dtGrdVPoints->Name = L"dtGrdVPoints";
+				this->dtGrdVPoints->SelectionMode = System::Windows::Forms::DataGridViewSelectionMode::FullRowSelect;
 				this->dtGrdVPoints->Size = System::Drawing::Size(726, 122);
 				this->dtGrdVPoints->TabIndex = 14;
+				this->dtGrdVPoints->SelectionChanged += gcnew System::EventHandler(this, &MainView::dtGrdVPoints_SelectionChanged);
 				// 
 				// MainView
 				// 
@@ -540,8 +483,6 @@ namespace gv
 				this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 				this->ClientSize = System::Drawing::Size(726, 354);
 				this->Controls->Add(this->dtGrdVPoints);
-				this->Controls->Add(this->btnTest);
-				this->Controls->Add(this->tbTest);
 				this->Controls->Add(this->label5);
 				this->Controls->Add(this->listboxCameraMatrix);
 				this->Controls->Add(this->btnChangePointSize);
@@ -568,6 +509,16 @@ namespace gv
 
 #pragma endregion
 
+		private: System::Void dtGrdVPoints_SelectionChanged(System::Object^  sender, System::EventArgs^  e) {
+
+				
+					 int newIndexOfSelectedRow = dtGrdVPoints->Rows->IndexOf(dtGrdVPoints->SelectedRows[0]);
+					 if (_indexOfSelectedRow == newIndexOfSelectedRow)
+						 return;
+
+					 _indexOfSelectedRow = newIndexOfSelectedRow;
+					 _viewModel->viewSelectPointCommand(newIndexOfSelectedRow);
+				 }
 		};
 	}
 }

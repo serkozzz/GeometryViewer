@@ -70,49 +70,17 @@ namespace gv
 				}
 			}
 
-		public:
-
-			int _a;
-			property int A
-			{
-				int get() 
-				{
-					return _a;
-				}
-
-				void set( int newx ) 
-				{
-					_a = newx;
-					PropertyChanged(this, gcnew PropertyChangedEventArgs("A"));
-				}
-			} 
-
-			int _b;
-			property int B
-			{
-				int get() 
-				{
-					return _b;
-				}
-
-				void set( int newx ) 
-				{
-					_b = newx;
-					PropertyChanged(this, gcnew PropertyChangedEventArgs("B"));
-				}
-			} 
-
 #pragma region Position
 		public:
 
-			property int PositionX 
+			property float PositionX 
 			{
-				int get() 
+				float get() 
 				{
 					return _modelPoint->getPosition().x;
 				}
 
-				void set(int newx) 
+				void set(float newx) 
 				{
 					glm::vec3 pos = _modelPoint->getPosition();
 					pos.x = newx;	

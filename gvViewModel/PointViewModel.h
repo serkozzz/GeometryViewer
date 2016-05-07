@@ -60,9 +60,9 @@ namespace gv
 				}
 				else if (arg.propName == IPoint::positionPropertyName)
 				{
-					//PropertyChanged(this, gcnew PropertyChangedEventArgs("PositionX"));
-					//PropertyChanged(this, gcnew PropertyChangedEventArgs("PositionY"));
-					//PropertyChanged(this, gcnew PropertyChangedEventArgs("PositionZ"));
+					PropertyChanged(this, gcnew PropertyChangedEventArgs("PositionX"));
+					PropertyChanged(this, gcnew PropertyChangedEventArgs("PositionY"));
+					PropertyChanged(this, gcnew PropertyChangedEventArgs("PositionZ"));
 				}
 				else if (arg.propName == IPoint::primitivePropertyName)
 				{

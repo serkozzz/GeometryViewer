@@ -96,24 +96,29 @@ namespace gv
 				if (_viewModel->SelectedPoint == nullptr)
 					return;
 
+				tbX->DataBindings->Clear();
 				tbX->DataBindings->Add(gcnew Binding("Text",
 					_viewModel->SelectedPoint,
 					"PositionX",
 					true,
 					DataSourceUpdateMode::OnPropertyChanged));
 
+
+				tbY->DataBindings->Clear();
 				tbY->DataBindings->Add(gcnew Binding("Text",
 					_viewModel->SelectedPoint,
 					"PositionY",
 					true,
 					DataSourceUpdateMode::OnPropertyChanged));
 
+				tbZ->DataBindings->Clear();
 				tbZ->DataBindings->Add(gcnew Binding("Text",
 					_viewModel->SelectedPoint,
 					"PositionZ",
 					true,
 					DataSourceUpdateMode::OnPropertyChanged));
 
+				tbName->DataBindings->Clear();
 				tbName->DataBindings->Add(gcnew Binding("Text", 
 					_viewModel->SelectedPoint,
 					"Name",
@@ -192,7 +197,7 @@ namespace gv
 			}
 
 #pragma endregion ViewModel Events
-			
+
 
 
 

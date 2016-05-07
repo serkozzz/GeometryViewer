@@ -36,7 +36,6 @@ namespace gv
 			//MainViewModel^ _mainViewModel;
 
 			MainViewModel^ _viewModel;
-			int _pointsCount;
 
 			delegate void propChanged(Object^ Sender, PropertyChangedEventArgs^ arg);
 
@@ -45,11 +44,12 @@ namespace gv
 				 System::Windows::Forms::DataGridView^  dtGrdVPoints;
 
 		public:
-			MainView(MainViewModel^ viewModel) : _viewModel(viewModel), _pointsCount(0)
+			MainView(MainViewModel^ viewModel) : _viewModel(viewModel)
 			{
 				InitializeComponent();
 
-				dtGrdVPoints->DataSource = _viewModel->PointsVM;
+				dtGrdVPoints->DataSource = _viewModel->PointsVM->GetPoints();
+
 				subscribeToSelectedPoint();
 
 				_viewModel->PropertyChanged += gcnew PropertyChangedEventHandler(this, &MainView::ViewModelPropertyChanged);
@@ -111,6 +111,12 @@ namespace gv
 				tbZ->DataBindings->Add(gcnew Binding("Text",
 					_viewModel->SelectedPoint,
 					"PositionZ",
+					true,
+					DataSourceUpdateMode::OnPropertyChanged));
+
+				tbName->DataBindings->Add(gcnew Binding("Text", 
+					_viewModel->SelectedPoint,
+					"Name",
 					true,
 					DataSourceUpdateMode::OnPropertyChanged));
 			}

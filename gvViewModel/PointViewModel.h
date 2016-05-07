@@ -34,6 +34,7 @@ namespace gv
 
 			PointViewModel(const gv::IPoint* modelPoint) : _modelPoint(modelPoint)
 			{			
+				glm::vec3 p =  _modelPoint->getPosition();
 				_propChangedDel =  gcnew propChanged(this, &PointViewModel::modelPointPropertyChangedEvent);
 				subscriptionId = 
 					(CLIHelper::SubscribeDelegateToUnmanagedEvent(_propChangedDel, _modelPoint->propertyChanged));
@@ -59,9 +60,9 @@ namespace gv
 				}
 				else if (arg.propName == IPoint::positionPropertyName)
 				{
-					PropertyChanged(this, gcnew PropertyChangedEventArgs("PositionX"));
-					PropertyChanged(this, gcnew PropertyChangedEventArgs("PositionY"));
-					PropertyChanged(this, gcnew PropertyChangedEventArgs("PositionZ"));
+					//PropertyChanged(this, gcnew PropertyChangedEventArgs("PositionX"));
+					//PropertyChanged(this, gcnew PropertyChangedEventArgs("PositionY"));
+					//PropertyChanged(this, gcnew PropertyChangedEventArgs("PositionZ"));
 				}
 				else if (arg.propName == IPoint::primitivePropertyName)
 				{
@@ -104,14 +105,14 @@ namespace gv
 #pragma region Position
 		public:
 
-			property float PositionX 
+			property int PositionX 
 			{
-				float get() 
+				int get() 
 				{
 					return _modelPoint->getPosition().x;
 				}
 
-				void set(float newx) 
+				void set(int newx) 
 				{
 					glm::vec3 pos = _modelPoint->getPosition();
 					pos.x = newx;	

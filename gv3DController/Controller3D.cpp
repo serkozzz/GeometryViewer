@@ -130,10 +130,15 @@ namespace gv
 
 		void Controller3D::pointPropertyChanged(const PointPropChangedArgs& args)
 		{
-			std::shared_ptr<const IPoint> pPtr = std::shared_ptr<const IPoint>(args.sender);
+			auto pPtr = static_cast<const IPoint*>(args.sender);
+			Engine::ISceneNode* node = nullptr;
+			for(auto& pair : _points)
+			{
+				if (pair.first.get() == pPtr)
+					node = pair.second;
+			}
 
-			auto it = _points.find(pPtr);
-			if (it == _points.end())
+			if (node == nullptr)
 				throw std::exception("Attempt to change point property for point that is abscent in the plan");
 
 			//if (args.propName == IPoint::namePropertyName)
@@ -144,7 +149,7 @@ namespace gv
 			else if (args.propName == IPoint::positionPropertyName)
 			{
 				const glm::vec3* newPos = static_cast<const glm::vec3*>(args.newValue);
-				it->second->setPosition(pPtr->getPosition());
+				node->setPosition(pPtr->getPosition());
 			}
 			else if (args.propName == IPoint::primitivePropertyName)
 			{
@@ -155,7 +160,7 @@ namespace gv
 					meshName = _cubeMeshName;
 				else if (*newPrimitiveType == PrimitiveType::spherePrimitiveType)
 					meshName = _sphereMeshName;
-				it->second->setMesh(meshName);
+				node->setMesh(meshName);
 			}
 		}
 

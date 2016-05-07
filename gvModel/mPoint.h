@@ -40,12 +40,12 @@ namespace gv
 			void setPosition(const glm::vec3& newPosition)
 			{
 				_position = newPosition;
-				propertyChanged(PointPropChangedArgs(this, &_position, IPoint::positionPropertyName));
+				propertyChanged(PointPropChangedArgs(this, &newPosition, IPoint::positionPropertyName));
 			}
 
 			void trySetPosition(const glm::vec3& newPosition) const
 			{
-				tryPropertyChanged(PointPropChangedArgs(this, &_position, IPoint::positionPropertyName));
+				tryPropertyChanged(PointPropChangedArgs(this, &newPosition, IPoint::positionPropertyName));
 			}
 
 			std::string getName() const
@@ -80,7 +80,7 @@ namespace gv
 				tryPropertyChanged(PointPropChangedArgs(this, &_primitive, IPoint::primitivePropertyName));
 			}
 
-			skb::EventHandler<PointPropChangedArgs> propertyChanged;
+			//skb::EventHandler<PointPropChangedArgs> propertyChanged;
 			skb::EventHandler<PointPropChangedArgs> tryPropertyChanged;
 		};
 

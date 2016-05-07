@@ -46,6 +46,18 @@ bool mPlan::isPointExist(const std::shared_ptr<const IPoint>& p) const
 {
 	auto it = std::find(_points.begin(), _points.end(), p);
 	return (it == _points.end()) ? false : true;
+
+}
+
+
+std::shared_ptr<mPoint> mPlan::getPointByPointer(const IPoint* p) const
+{
+	auto it = std::find_if (_points.begin(), _points.end(), [&] (std::shared_ptr<mPoint> point) -> bool
+	{
+		return (point.get() == p);
+	});
+
+	return (it == _points.end()) ? nullptr : *it;
 }
 
 

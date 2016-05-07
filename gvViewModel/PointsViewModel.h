@@ -19,7 +19,7 @@ namespace gv
 
 			int pointAddedSubscId;
 			int pointRemovedSubscId;		
-			delegate void collectionChanged(const std::shared_ptr<IPoint> point);
+			delegate void collectionChanged(const std::shared_ptr<IPoint>& point);
 			collectionChanged^ _pointAddedDel;
 			collectionChanged^ _pointRemovedDel;
 
@@ -58,12 +58,13 @@ namespace gv
 
 			//invoking form model
 		private:
-			void modelPointAddedEvent(const std::shared_ptr<IPoint> newPoint)
+			void modelPointAddedEvent(const std::shared_ptr<IPoint>& newPoint)
 			{
+				newPoint->getPosition();
 				_pointsVM->Add(gcnew PointViewModel(newPoint.get()));
 			}
 
-			void modelPointRemovedEvent(const std::shared_ptr<IPoint> removedPoint)
+			void modelPointRemovedEvent(const std::shared_ptr<IPoint>& removedPoint)
 			{
 				int pointVMIndex = -1;
 				for (int i = 0; i < _pointsVM->Count; i++)

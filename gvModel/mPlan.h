@@ -25,6 +25,7 @@ namespace gv
 			const std::list<std::shared_ptr<mPoint> >& getPoints() const;
 			const std::list<std::shared_ptr<IPoint> > getPointsOnlyRead() const;
 			bool isPointExist(const std::shared_ptr<const IPoint>& p) const; 
+			std::shared_ptr<mPoint> getPointByPointer(const IPoint* p) const; 
 
 		};
 	}

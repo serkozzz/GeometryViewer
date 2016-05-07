@@ -20,6 +20,8 @@ namespace gv
 			GLFWwindow*  _window;
 			const IInputListener* _listener;
 			double _cursorX, _cursorY;
+			bool isDisabled;
+
 		public:
 			InputController(GLFWwindow* _window, const IInputListener* listener);
 			virtual void checkInput();

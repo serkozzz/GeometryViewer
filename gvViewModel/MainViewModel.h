@@ -22,7 +22,7 @@ namespace gv
 
 				void set(PointViewModel^ newSelectedPoint) 
 				{
-					SelectedPoint = newSelectedPoint;
+					_selectedPoint = newSelectedPoint;
 					PropertyChanged(this, gcnew PropertyChangedEventArgs("SelectedPoint"));
 				}
 			}

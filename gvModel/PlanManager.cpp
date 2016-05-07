@@ -33,9 +33,11 @@ void PlanManager::createNewPoint()
 	pointsCount++;
 
 	auto pPtr = std::make_shared<mPoint>(p);
+	
 	_plan->AddPoint(pPtr);
 	_subscriptions[pPtr] = 
 		(pPtr->tryPropertyChanged += std::bind(&PlanManager::onTryPointPropChanged, this, std::placeholders::_1));
+
 }
 
 void PlanManager::removePoint(const std::shared_ptr<IPoint>& point)
@@ -53,27 +55,27 @@ void PlanManager::removePoint(const std::shared_ptr<IPoint>& point)
 
 void PlanManager::onTryPointPropChanged(PointPropChangedArgs args)
 {
-	auto pPtr = std::shared_ptr<const IPoint>(args.sender);
-	if (!_plan->isPointExist(pPtr))
+	auto pPtr = static_cast<const IPoint*>(args.sender);
+	std::shared_ptr<mPoint> mpoint = _plan->getPointByPointer(pPtr);
+
+	if (mpoint == nullptr)
 	{
 		throw std::exception("Attemption to change point property for point that is abscent in the plan");
 	}
-	auto& points = _plan->getPoints();
-	auto it = std::find(points.begin(), points.end(), pPtr);
 
 	if (args.propName == IPoint::namePropertyName)
 	{
 		const std::string* newName = static_cast<const std::string*>(args.newValue);
-		(*it)->setName(*newName);
+		mpoint->setName(*newName);
 	}
 	else if (args.propName == IPoint::positionPropertyName)
 	{
 		const glm::vec3* newPos = static_cast<const glm::vec3*>(args.newValue);
-		(*it)->setPosition(*newPos);
+		mpoint->setPosition(*newPos);
 	}
 	else if (args.propName == IPoint::primitivePropertyName)
 	{
 		const PrimitiveType* newPrimitiveType = static_cast<const PrimitiveType*>(args.newValue);
-		(*it)->trySetPrimitive(*newPrimitiveType);
+		mpoint->trySetPrimitive(*newPrimitiveType);
 	}
 }

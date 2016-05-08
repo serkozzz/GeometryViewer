@@ -28,6 +28,15 @@ namespace gv
 		private:
 			MainViewModel^ _viewModel;
 			int _indexOfSelectedRow;
+		private: System::Windows::Forms::Label^  label7;
+		private: System::Windows::Forms::Label^  label6;
+		private: System::Windows::Forms::TextBox^  tbScaleZ;
+		private: System::Windows::Forms::TextBox^  tbScaleX;
+		private: System::Windows::Forms::TextBox^  tbScaleY;
+		private: System::Windows::Forms::TextBox^  tbRotZ;
+		private: System::Windows::Forms::TextBox^  tbRotX;
+		private: System::Windows::Forms::TextBox^  tbRotY;
+		private: System::Windows::Forms::Label^  label8;
 
 		private: 
 			System::Windows::Forms::DataGridView^  dtGrdVPoints;
@@ -62,30 +71,30 @@ namespace gv
 
 			void subscribeToSelectedPoint()
 			{
-				tbX->DataBindings->Clear();
-				tbY->DataBindings->Clear();
-				tbZ->DataBindings->Clear();
+				tbPosX->DataBindings->Clear();
+				tbPosY->DataBindings->Clear();
+				tbPosZ->DataBindings->Clear();
 				tbName->DataBindings->Clear();
 
 				if (_viewModel->SelectedPoint == nullptr)
 					return;
 
 
-				tbX->DataBindings->Add(gcnew Binding("Text",
+				tbPosX->DataBindings->Add(gcnew Binding("Text",
 					_viewModel->SelectedPoint,
 					"PositionX",
 					true,
 					DataSourceUpdateMode::OnPropertyChanged));
 
 
-				tbY->DataBindings->Add(gcnew Binding("Text",
+				tbPosY->DataBindings->Add(gcnew Binding("Text",
 					_viewModel->SelectedPoint,
 					"PositionY",
 					true,
 					DataSourceUpdateMode::OnPropertyChanged));
 
 
-				tbZ->DataBindings->Add(gcnew Binding("Text",
+				tbPosZ->DataBindings->Add(gcnew Binding("Text",
 					_viewModel->SelectedPoint,
 					"PositionZ",
 					true,
@@ -189,10 +198,13 @@ namespace gv
 		private: System::Windows::Forms::ComboBox^  cbPrimitiv;
 
 		private: System::Windows::Forms::Panel^  panel2;
-		private: System::Windows::Forms::TextBox^  tbZ;
+private: System::Windows::Forms::TextBox^  tbPosZ;
 
-		private: System::Windows::Forms::TextBox^  tbX;
-		private: System::Windows::Forms::TextBox^  tbY;
+private: System::Windows::Forms::TextBox^  tbPosX;
+private: System::Windows::Forms::TextBox^  tbPosY;
+
+
+
 
 
 		private: System::Windows::Forms::Label^  label2;
@@ -223,12 +235,20 @@ namespace gv
 			void InitializeComponent(void)
 			{
 				this->panel1 = (gcnew System::Windows::Forms::Panel());
+				this->label7 = (gcnew System::Windows::Forms::Label());
+				this->label6 = (gcnew System::Windows::Forms::Label());
 				this->label3 = (gcnew System::Windows::Forms::Label());
 				this->cbPrimitiv = (gcnew System::Windows::Forms::ComboBox());
 				this->panel2 = (gcnew System::Windows::Forms::Panel());
-				this->tbZ = (gcnew System::Windows::Forms::TextBox());
-				this->tbX = (gcnew System::Windows::Forms::TextBox());
-				this->tbY = (gcnew System::Windows::Forms::TextBox());
+				this->tbScaleZ = (gcnew System::Windows::Forms::TextBox());
+				this->tbScaleX = (gcnew System::Windows::Forms::TextBox());
+				this->tbScaleY = (gcnew System::Windows::Forms::TextBox());
+				this->tbRotZ = (gcnew System::Windows::Forms::TextBox());
+				this->tbRotX = (gcnew System::Windows::Forms::TextBox());
+				this->tbRotY = (gcnew System::Windows::Forms::TextBox());
+				this->tbPosZ = (gcnew System::Windows::Forms::TextBox());
+				this->tbPosX = (gcnew System::Windows::Forms::TextBox());
+				this->tbPosY = (gcnew System::Windows::Forms::TextBox());
 				this->label2 = (gcnew System::Windows::Forms::Label());
 				this->tbName = (gcnew System::Windows::Forms::TextBox());
 				this->label1 = (gcnew System::Windows::Forms::Label());
@@ -244,6 +264,7 @@ namespace gv
 				this->listboxCameraMatrix = (gcnew System::Windows::Forms::ListBox());
 				this->label5 = (gcnew System::Windows::Forms::Label());
 				this->dtGrdVPoints = (gcnew System::Windows::Forms::DataGridView());
+				this->label8 = (gcnew System::Windows::Forms::Label());
 				this->panel1->SuspendLayout();
 				this->panel2->SuspendLayout();
 				this->menuStrip1->SuspendLayout();
@@ -254,23 +275,50 @@ namespace gv
 				// 
 				this->panel1->Anchor = static_cast<System::Windows::Forms::AnchorStyles>(((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Left) 
 					| System::Windows::Forms::AnchorStyles::Right));
+				this->panel1->Controls->Add(this->label8);
+				this->panel1->Controls->Add(this->label7);
+				this->panel1->Controls->Add(this->label6);
 				this->panel1->Controls->Add(this->label3);
 				this->panel1->Controls->Add(this->cbPrimitiv);
 				this->panel1->Controls->Add(this->panel2);
+				this->panel1->Controls->Add(this->label2);
 				this->panel1->Controls->Add(this->tbName);
 				this->panel1->Controls->Add(this->label1);
 				this->panel1->Controls->Add(this->btnRemovePoint);
 				this->panel1->Controls->Add(this->btnAddPoint);
 				this->panel1->Location = System::Drawing::Point(12, 23);
 				this->panel1->Name = L"panel1";
-				this->panel1->Size = System::Drawing::Size(702, 90);
+				this->panel1->Size = System::Drawing::Size(684, 141);
 				this->panel1->TabIndex = 0;
+				// 
+				// label7
+				// 
+				this->label7->Anchor = static_cast<System::Windows::Forms::AnchorStyles>(((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Bottom) 
+					| System::Windows::Forms::AnchorStyles::Right));
+				this->label7->AutoSize = true;
+				this->label7->Location = System::Drawing::Point(146, 100);
+				this->label7->Name = L"label7";
+				this->label7->Size = System::Drawing::Size(32, 13);
+				this->label7->TabIndex = 12;
+				this->label7->Text = L"scale";
+				// 
+				// label6
+				// 
+				this->label6->Anchor = static_cast<System::Windows::Forms::AnchorStyles>(((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Bottom) 
+					| System::Windows::Forms::AnchorStyles::Right));
+				this->label6->AutoSize = true;
+				this->label6->Location = System::Drawing::Point(146, 72);
+				this->label6->Name = L"label6";
+				this->label6->Size = System::Drawing::Size(42, 13);
+				this->label6->TabIndex = 11;
+				this->label6->Text = L"rotation";
 				// 
 				// label3
 				// 
-				this->label3->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Right));
+				this->label3->Anchor = static_cast<System::Windows::Forms::AnchorStyles>(((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Bottom) 
+					| System::Windows::Forms::AnchorStyles::Right));
 				this->label3->AutoSize = true;
-				this->label3->Location = System::Drawing::Point(524, 20);
+				this->label3->Location = System::Drawing::Point(420, 20);
 				this->label3->Name = L"label3";
 				this->label3->Size = System::Drawing::Size(27, 13);
 				this->label3->TabIndex = 10;
@@ -282,7 +330,7 @@ namespace gv
 					| System::Windows::Forms::AnchorStyles::Right));
 				this->cbPrimitiv->FormattingEnabled = true;
 				this->cbPrimitiv->Items->AddRange(gcnew cli::array< System::Object^  >(2) {L"cube", L"sphere"});
-				this->cbPrimitiv->Location = System::Drawing::Point(498, 36);
+				this->cbPrimitiv->Location = System::Drawing::Point(411, 36);
 				this->cbPrimitiv->Name = L"cbPrimitiv";
 				this->cbPrimitiv->Size = System::Drawing::Size(91, 21);
 				this->cbPrimitiv->TabIndex = 9;
@@ -292,52 +340,119 @@ namespace gv
 				// 
 				this->panel2->Anchor = static_cast<System::Windows::Forms::AnchorStyles>(((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Bottom) 
 					| System::Windows::Forms::AnchorStyles::Right));
-				this->panel2->Controls->Add(this->tbZ);
-				this->panel2->Controls->Add(this->tbX);
-				this->panel2->Controls->Add(this->tbY);
-				this->panel2->Controls->Add(this->label2);
-				this->panel2->Location = System::Drawing::Point(282, 20);
+				this->panel2->Controls->Add(this->tbScaleZ);
+				this->panel2->Controls->Add(this->tbScaleX);
+				this->panel2->Controls->Add(this->tbScaleY);
+				this->panel2->Controls->Add(this->tbRotZ);
+				this->panel2->Controls->Add(this->tbRotX);
+				this->panel2->Controls->Add(this->tbRotY);
+				this->panel2->Controls->Add(this->tbPosZ);
+				this->panel2->Controls->Add(this->tbPosX);
+				this->panel2->Controls->Add(this->tbPosY);
+				this->panel2->Location = System::Drawing::Point(195, 36);
 				this->panel2->Name = L"panel2";
-				this->panel2->Size = System::Drawing::Size(210, 48);
+				this->panel2->Size = System::Drawing::Size(210, 93);
 				this->panel2->TabIndex = 8;
 				// 
-				// tbZ
+				// tbScaleZ
 				// 
-				this->tbZ->Anchor = static_cast<System::Windows::Forms::AnchorStyles>(((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Bottom) 
+				this->tbScaleZ->Anchor = static_cast<System::Windows::Forms::AnchorStyles>(((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Bottom) 
 					| System::Windows::Forms::AnchorStyles::Right));
-				this->tbZ->Location = System::Drawing::Point(139, 16);
-				this->tbZ->Name = L"tbZ";
-				this->tbZ->Size = System::Drawing::Size(61, 20);
-				this->tbZ->TabIndex = 7;
-				this->tbZ->Text = L"0";
+				this->tbScaleZ->Location = System::Drawing::Point(137, 67);
+				this->tbScaleZ->Name = L"tbScaleZ";
+				this->tbScaleZ->Size = System::Drawing::Size(61, 20);
+				this->tbScaleZ->TabIndex = 13;
+				this->tbScaleZ->Text = L"0";
 				// 
-				// tbX
+				// tbScaleX
 				// 
-				this->tbX->Anchor = static_cast<System::Windows::Forms::AnchorStyles>(((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Bottom) 
+				this->tbScaleX->Anchor = static_cast<System::Windows::Forms::AnchorStyles>(((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Bottom) 
 					| System::Windows::Forms::AnchorStyles::Left));
-				this->tbX->Location = System::Drawing::Point(5, 16);
-				this->tbX->Name = L"tbX";
-				this->tbX->Size = System::Drawing::Size(61, 20);
-				this->tbX->TabIndex = 5;
-				this->tbX->Text = L"0";
+				this->tbScaleX->Location = System::Drawing::Point(3, 67);
+				this->tbScaleX->Name = L"tbScaleX";
+				this->tbScaleX->Size = System::Drawing::Size(61, 20);
+				this->tbScaleX->TabIndex = 11;
+				this->tbScaleX->Text = L"0";
 				// 
-				// tbY
+				// tbScaleY
 				// 
-				this->tbY->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Bottom) 
+				this->tbScaleY->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Bottom) 
 					| System::Windows::Forms::AnchorStyles::Left) 
 					| System::Windows::Forms::AnchorStyles::Right));
-				this->tbY->Location = System::Drawing::Point(72, 16);
-				this->tbY->Name = L"tbY";
-				this->tbY->Size = System::Drawing::Size(61, 20);
-				this->tbY->TabIndex = 6;
-				this->tbY->Text = L"0";
+				this->tbScaleY->Location = System::Drawing::Point(70, 67);
+				this->tbScaleY->Name = L"tbScaleY";
+				this->tbScaleY->Size = System::Drawing::Size(61, 20);
+				this->tbScaleY->TabIndex = 12;
+				this->tbScaleY->Text = L"0";
+				// 
+				// tbRotZ
+				// 
+				this->tbRotZ->Anchor = static_cast<System::Windows::Forms::AnchorStyles>(((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Bottom) 
+					| System::Windows::Forms::AnchorStyles::Right));
+				this->tbRotZ->Location = System::Drawing::Point(137, 36);
+				this->tbRotZ->Name = L"tbRotZ";
+				this->tbRotZ->Size = System::Drawing::Size(61, 20);
+				this->tbRotZ->TabIndex = 10;
+				this->tbRotZ->Text = L"0";
+				// 
+				// tbRotX
+				// 
+				this->tbRotX->Anchor = static_cast<System::Windows::Forms::AnchorStyles>(((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Bottom) 
+					| System::Windows::Forms::AnchorStyles::Left));
+				this->tbRotX->Location = System::Drawing::Point(3, 36);
+				this->tbRotX->Name = L"tbRotX";
+				this->tbRotX->Size = System::Drawing::Size(61, 20);
+				this->tbRotX->TabIndex = 8;
+				this->tbRotX->Text = L"0";
+				// 
+				// tbRotY
+				// 
+				this->tbRotY->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Bottom) 
+					| System::Windows::Forms::AnchorStyles::Left) 
+					| System::Windows::Forms::AnchorStyles::Right));
+				this->tbRotY->Location = System::Drawing::Point(70, 36);
+				this->tbRotY->Name = L"tbRotY";
+				this->tbRotY->Size = System::Drawing::Size(61, 20);
+				this->tbRotY->TabIndex = 9;
+				this->tbRotY->Text = L"0";
+				// 
+				// tbPosZ
+				// 
+				this->tbPosZ->Anchor = static_cast<System::Windows::Forms::AnchorStyles>(((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Bottom) 
+					| System::Windows::Forms::AnchorStyles::Right));
+				this->tbPosZ->Location = System::Drawing::Point(137, 3);
+				this->tbPosZ->Name = L"tbPosZ";
+				this->tbPosZ->Size = System::Drawing::Size(61, 20);
+				this->tbPosZ->TabIndex = 7;
+				this->tbPosZ->Text = L"0";
+				// 
+				// tbPosX
+				// 
+				this->tbPosX->Anchor = static_cast<System::Windows::Forms::AnchorStyles>(((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Bottom) 
+					| System::Windows::Forms::AnchorStyles::Left));
+				this->tbPosX->Location = System::Drawing::Point(3, 3);
+				this->tbPosX->Name = L"tbPosX";
+				this->tbPosX->Size = System::Drawing::Size(61, 20);
+				this->tbPosX->TabIndex = 5;
+				this->tbPosX->Text = L"0";
+				// 
+				// tbPosY
+				// 
+				this->tbPosY->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Bottom) 
+					| System::Windows::Forms::AnchorStyles::Left) 
+					| System::Windows::Forms::AnchorStyles::Right));
+				this->tbPosY->Location = System::Drawing::Point(70, 3);
+				this->tbPosY->Name = L"tbPosY";
+				this->tbPosY->Size = System::Drawing::Size(61, 20);
+				this->tbPosY->TabIndex = 6;
+				this->tbPosY->Text = L"0";
 				// 
 				// label2
 				// 
 				this->label2->Anchor = static_cast<System::Windows::Forms::AnchorStyles>(((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Bottom) 
 					| System::Windows::Forms::AnchorStyles::Right));
 				this->label2->AutoSize = true;
-				this->label2->Location = System::Drawing::Point(79, 0);
+				this->label2->Location = System::Drawing::Point(146, 43);
 				this->label2->Name = L"label2";
 				this->label2->Size = System::Drawing::Size(43, 13);
 				this->label2->TabIndex = 4;
@@ -349,12 +464,12 @@ namespace gv
 					| System::Windows::Forms::AnchorStyles::Right));
 				this->tbName->Location = System::Drawing::Point(12, 36);
 				this->tbName->Name = L"tbName";
-				this->tbName->Size = System::Drawing::Size(264, 20);
+				this->tbName->Size = System::Drawing::Size(101, 20);
 				this->tbName->TabIndex = 3;
 				// 
 				// label1
 				// 
-				this->label1->Anchor = static_cast<System::Windows::Forms::AnchorStyles>(((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Left) 
+				this->label1->Anchor = static_cast<System::Windows::Forms::AnchorStyles>(((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Bottom) 
 					| System::Windows::Forms::AnchorStyles::Right));
 				this->label1->AutoSize = true;
 				this->label1->Location = System::Drawing::Point(54, 20);
@@ -366,7 +481,7 @@ namespace gv
 				// btnRemovePoint
 				// 
 				this->btnRemovePoint->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Bottom | System::Windows::Forms::AnchorStyles::Right));
-				this->btnRemovePoint->Location = System::Drawing::Point(595, 48);
+				this->btnRemovePoint->Location = System::Drawing::Point(558, 74);
 				this->btnRemovePoint->Name = L"btnRemovePoint";
 				this->btnRemovePoint->Size = System::Drawing::Size(93, 39);
 				this->btnRemovePoint->TabIndex = 1;
@@ -377,7 +492,7 @@ namespace gv
 				// btnAddPoint
 				// 
 				this->btnAddPoint->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Right));
-				this->btnAddPoint->Location = System::Drawing::Point(595, 3);
+				this->btnAddPoint->Location = System::Drawing::Point(558, 26);
 				this->btnAddPoint->Name = L"btnAddPoint";
 				this->btnAddPoint->Size = System::Drawing::Size(93, 39);
 				this->btnAddPoint->TabIndex = 0;
@@ -390,7 +505,7 @@ namespace gv
 				this->label4->Anchor = static_cast<System::Windows::Forms::AnchorStyles>(((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Left) 
 					| System::Windows::Forms::AnchorStyles::Right));
 				this->label4->AutoSize = true;
-				this->label4->Location = System::Drawing::Point(66, 126);
+				this->label4->Location = System::Drawing::Point(42, 230);
 				this->label4->Name = L"label4";
 				this->label4->Size = System::Drawing::Size(57, 13);
 				this->label4->TabIndex = 3;
@@ -400,7 +515,7 @@ namespace gv
 				// 
 				this->tbPointsSize->Anchor = static_cast<System::Windows::Forms::AnchorStyles>(((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Bottom) 
 					| System::Windows::Forms::AnchorStyles::Left));
-				this->tbPointsSize->Location = System::Drawing::Point(129, 123);
+				this->tbPointsSize->Location = System::Drawing::Point(105, 227);
 				this->tbPointsSize->Name = L"tbPointsSize";
 				this->tbPointsSize->Size = System::Drawing::Size(44, 20);
 				this->tbPointsSize->TabIndex = 6;
@@ -411,7 +526,7 @@ namespace gv
 				this->menuStrip1->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(1) {this->menuToolStripMenuItem});
 				this->menuStrip1->Location = System::Drawing::Point(0, 0);
 				this->menuStrip1->Name = L"menuStrip1";
-				this->menuStrip1->Size = System::Drawing::Size(726, 24);
+				this->menuStrip1->Size = System::Drawing::Size(708, 24);
 				this->menuStrip1->TabIndex = 7;
 				this->menuStrip1->Text = L"menuStrip1";
 				// 
@@ -440,7 +555,7 @@ namespace gv
 				// btnChangePointSize
 				// 
 				this->btnChangePointSize->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Right));
-				this->btnChangePointSize->Location = System::Drawing::Point(335, 121);
+				this->btnChangePointSize->Location = System::Drawing::Point(215, 227);
 				this->btnChangePointSize->Name = L"btnChangePointSize";
 				this->btnChangePointSize->Size = System::Drawing::Size(79, 23);
 				this->btnChangePointSize->TabIndex = 8;
@@ -453,7 +568,7 @@ namespace gv
 				this->listboxCameraMatrix->FormattingEnabled = true;
 				this->listboxCameraMatrix->Items->AddRange(gcnew cli::array< System::Object^  >(4) {L"1, 0, 0, 0", L"0, 1, 0, 0", L"0, 0, 1, 0", 
 					L"0, 0, 0, 1"});
-				this->listboxCameraMatrix->Location = System::Drawing::Point(433, 148);
+				this->listboxCameraMatrix->Location = System::Drawing::Point(435, 216);
 				this->listboxCameraMatrix->Name = L"listboxCameraMatrix";
 				this->listboxCameraMatrix->Size = System::Drawing::Size(267, 82);
 				this->listboxCameraMatrix->TabIndex = 9;
@@ -463,7 +578,7 @@ namespace gv
 				this->label5->Anchor = static_cast<System::Windows::Forms::AnchorStyles>(((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Left) 
 					| System::Windows::Forms::AnchorStyles::Right));
 				this->label5->AutoSize = true;
-				this->label5->Location = System::Drawing::Point(12, 217);
+				this->label5->Location = System::Drawing::Point(12, 288);
 				this->label5->Name = L"label5";
 				this->label5->Size = System::Drawing::Size(39, 13);
 				this->label5->TabIndex = 11;
@@ -475,19 +590,30 @@ namespace gv
 					| System::Windows::Forms::AnchorStyles::Left) 
 					| System::Windows::Forms::AnchorStyles::Right));
 				this->dtGrdVPoints->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
-				this->dtGrdVPoints->Location = System::Drawing::Point(0, 234);
+				this->dtGrdVPoints->Location = System::Drawing::Point(0, 304);
 				this->dtGrdVPoints->MultiSelect = false;
 				this->dtGrdVPoints->Name = L"dtGrdVPoints";
 				this->dtGrdVPoints->SelectionMode = System::Windows::Forms::DataGridViewSelectionMode::FullRowSelect;
-				this->dtGrdVPoints->Size = System::Drawing::Size(726, 122);
+				this->dtGrdVPoints->Size = System::Drawing::Size(708, 154);
 				this->dtGrdVPoints->TabIndex = 14;
 				this->dtGrdVPoints->SelectionChanged += gcnew System::EventHandler(this, &MainView::dtGrdVPoints_SelectionChanged);
+				// 
+				// label8
+				// 
+				this->label8->Anchor = static_cast<System::Windows::Forms::AnchorStyles>(((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Bottom) 
+					| System::Windows::Forms::AnchorStyles::Right));
+				this->label8->AutoSize = true;
+				this->label8->Location = System::Drawing::Point(250, 20);
+				this->label8->Name = L"label8";
+				this->label8->Size = System::Drawing::Size(73, 13);
+				this->label8->TabIndex = 13;
+				this->label8->Text = L"transformation";
 				// 
 				// MainView
 				// 
 				this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 				this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-				this->ClientSize = System::Drawing::Size(726, 354);
+				this->ClientSize = System::Drawing::Size(708, 456);
 				this->Controls->Add(this->dtGrdVPoints);
 				this->Controls->Add(this->label5);
 				this->Controls->Add(this->listboxCameraMatrix);
@@ -532,6 +658,6 @@ namespace gv
 
 
 				 }
-		};
+};
 	}
 }

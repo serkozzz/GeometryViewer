@@ -35,14 +35,14 @@ ISceneNode* SceneManager::createSceneNode(const std::string& nodeName, const std
 	if (_nodes.find(nodeName) != _nodes.end())
 	{
 		std::string message = "Node with name = " + nodeName + " is already exist";
-		throw std::exception(message.c_str());
+		throw std::logic_error(message.c_str());
 	}
 
 	std::shared_ptr<Mesh> mesh = MeshManager::sharedMeshManager()->getMesh(meshName);
 	if (mesh == nullptr)
 	{
 		std::string message = "Mesh with name = " + meshName + " is not exist";
-		throw std::exception(message.c_str());
+		throw std::logic_error(message.c_str());
 	}
 
 	std::shared_ptr<SceneNode> node(new SceneNode(nodeName, meshName, transform));
@@ -57,12 +57,12 @@ ISceneNode* SceneManager::createSceneNode(const std::string& nodeName, const std
 
 void SceneManager::removeSceneNode(ISceneNode* node)
 {
-
+	removeSceneNode(node->getName());
 }
 
 void SceneManager::removeSceneNode(const std::string& nodeName)
 {
-
+	_nodes.erase(nodeName);
 }
 
 

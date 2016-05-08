@@ -74,7 +74,9 @@ namespace gv
 						pointVMIndex = i;
 					}
 				}
-				_pointsVM->RemoveAt(pointVMIndex);
+
+				if (pointVMIndex != -1)
+					_pointsVM->RemoveAt(pointVMIndex);
 			}
 		};
 	}

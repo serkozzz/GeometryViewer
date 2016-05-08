@@ -40,17 +40,19 @@ void PlanManager::createNewPoint()
 
 }
 
-void PlanManager::removePoint(const std::shared_ptr<IPoint>& point)
+void PlanManager::removePoint(const IPoint* point)
 {
-	if (!_plan->isPointExist(point))
+
+	auto mpoint = _plan->getPointByPointer(point);
+
+	if (mpoint == nullptr)
 	{
 		throw std::exception("Attemption to delete point that is abscent in the plan");
 	}
 
-	point->propertyChanged -= _subscriptions[point];
-	_subscriptions.erase(point);
-	auto mp = std::dynamic_pointer_cast<mPoint>(point);
-	_plan->RemovePoint(mp);
+	mpoint->propertyChanged -= _subscriptions[mpoint];
+	_subscriptions.erase(mpoint);
+	_plan->RemovePoint(mpoint);
 }
 
 void PlanManager::onTryPointPropChanged(PointPropChangedArgs args)

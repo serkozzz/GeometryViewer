@@ -48,14 +48,37 @@ namespace gv
 				SelectedPoint = pointsList[pointsList->Count - 1];
 			}
 
-			
-			void viewSelectPointCommand(int rowIndex)
+
+			void viewSelectPointCommand(int pointIndex)
 			{
 				auto pointsList = PointsVM->GetPoints();
-				if (rowIndex == pointsList->IndexOf(SelectedPoint))
+				if (pointIndex == pointsList->IndexOf(SelectedPoint))
 					return;
 
-				SelectedPoint = pointsList[rowIndex];
+				SelectedPoint = pointsList[pointIndex];
+
+			}
+
+
+			void viewRemovePointCommand(int pointIndex)
+			{
+				auto pointsList = PointsVM->GetPoints();
+				if (pointIndex >= pointsList->Count)
+					throw std::logic_error("ViewModel: attemption of removing point with unexisted index");
+
+				PointViewModel^ removingPoint = pointsList[pointIndex];
+
+
+				if (removingPoint == SelectedPoint)
+				{
+					if (pointIndex + 1 < pointsList->Count)
+						SelectedPoint = pointsList[pointIndex + 1];
+					else if (pointIndex > 0)
+						SelectedPoint = pointsList[pointIndex - 1];
+					else 
+						SelectedPoint = nullptr;
+				}
+				_planManager.removePoint(removingPoint->getModelPoint());
 
 			}
 		};

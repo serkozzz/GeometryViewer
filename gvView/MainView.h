@@ -62,10 +62,15 @@ namespace gv
 
 			void subscribeToSelectedPoint()
 			{
+				tbX->DataBindings->Clear();
+				tbY->DataBindings->Clear();
+				tbZ->DataBindings->Clear();
+				tbName->DataBindings->Clear();
+
 				if (_viewModel->SelectedPoint == nullptr)
 					return;
 
-				tbX->DataBindings->Clear();
+
 				tbX->DataBindings->Add(gcnew Binding("Text",
 					_viewModel->SelectedPoint,
 					"PositionX",
@@ -73,21 +78,19 @@ namespace gv
 					DataSourceUpdateMode::OnPropertyChanged));
 
 
-				tbY->DataBindings->Clear();
 				tbY->DataBindings->Add(gcnew Binding("Text",
 					_viewModel->SelectedPoint,
 					"PositionY",
 					true,
 					DataSourceUpdateMode::OnPropertyChanged));
 
-				tbZ->DataBindings->Clear();
+
 				tbZ->DataBindings->Add(gcnew Binding("Text",
 					_viewModel->SelectedPoint,
 					"PositionZ",
 					true,
 					DataSourceUpdateMode::OnPropertyChanged));
 
-				tbName->DataBindings->Clear();
 				tbName->DataBindings->Add(gcnew Binding("Text", 
 					_viewModel->SelectedPoint,
 					"Name",
@@ -124,6 +127,9 @@ namespace gv
 			{
 				if (arg->PropertyName == "SelectedPoint")
 				{
+					if (_viewModel->SelectedPoint == nullptr)
+						return;
+
 					subscribeToSelectedPoint();
 					int indexOfVMSelectedPoint = 
 						_viewModel->PointsVM->GetPoints()->IndexOf(_viewModel->SelectedPoint);
@@ -150,7 +156,7 @@ namespace gv
 
 		private: System::Void btnRemovePoint_Click(System::Object^  sender, System::EventArgs^  e) {
 
-
+					 _viewModel->viewRemovePointCommand(dtGrdVPoints->CurrentRow->Index);
 				 }
 
 
@@ -511,13 +517,20 @@ namespace gv
 
 		private: System::Void dtGrdVPoints_SelectionChanged(System::Object^  sender, System::EventArgs^  e) {
 
-				
+					 if (dtGrdVPoints->SelectedRows->Count == 0)
+						 return;
+
 					 int newIndexOfSelectedRow = dtGrdVPoints->Rows->IndexOf(dtGrdVPoints->SelectedRows[0]);
 					 if (_indexOfSelectedRow == newIndexOfSelectedRow)
 						 return;
 
 					 _indexOfSelectedRow = newIndexOfSelectedRow;
 					 _viewModel->viewSelectPointCommand(newIndexOfSelectedRow);
+
+
+
+
+
 				 }
 		};
 	}

@@ -74,6 +74,16 @@ namespace gv
 				tbPosX->DataBindings->Clear();
 				tbPosY->DataBindings->Clear();
 				tbPosZ->DataBindings->Clear();
+
+				tbRotX->DataBindings->Clear();
+				tbRotY->DataBindings->Clear();
+				tbRotZ->DataBindings->Clear();
+
+				tbScaleX->DataBindings->Clear();
+				tbScaleY->DataBindings->Clear();
+				tbScaleZ->DataBindings->Clear();
+
+
 				tbName->DataBindings->Clear();
 
 				if (_viewModel->SelectedPoint == nullptr)
@@ -86,19 +96,57 @@ namespace gv
 					true,
 					DataSourceUpdateMode::OnPropertyChanged));
 
-
 				tbPosY->DataBindings->Add(gcnew Binding("Text",
 					_viewModel->SelectedPoint,
 					"PositionY",
 					true,
 					DataSourceUpdateMode::OnPropertyChanged));
 
-
 				tbPosZ->DataBindings->Add(gcnew Binding("Text",
 					_viewModel->SelectedPoint,
 					"PositionZ",
 					true,
 					DataSourceUpdateMode::OnPropertyChanged));
+
+
+
+				tbRotX->DataBindings->Add(gcnew Binding("Text",
+					_viewModel->SelectedPoint,
+					"RotationX",
+					true,
+					DataSourceUpdateMode::OnPropertyChanged));
+
+				tbRotY->DataBindings->Add(gcnew Binding("Text",
+					_viewModel->SelectedPoint,
+					"RotationY",
+					true,
+					DataSourceUpdateMode::OnPropertyChanged));
+
+				tbRotZ->DataBindings->Add(gcnew Binding("Text",
+					_viewModel->SelectedPoint,
+					"RotationZ",
+					true,
+					DataSourceUpdateMode::OnPropertyChanged));
+
+
+				tbScaleX->DataBindings->Add(gcnew Binding("Text",
+					_viewModel->SelectedPoint,
+					"ScaleX",
+					true,
+					DataSourceUpdateMode::OnPropertyChanged));
+
+				tbScaleY->DataBindings->Add(gcnew Binding("Text",
+					_viewModel->SelectedPoint,
+					"ScaleY",
+					true,
+					DataSourceUpdateMode::OnPropertyChanged));
+
+				tbScaleZ->DataBindings->Add(gcnew Binding("Text",
+					_viewModel->SelectedPoint,
+					"ScaleZ",
+					true,
+					DataSourceUpdateMode::OnPropertyChanged));
+
 
 				tbName->DataBindings->Add(gcnew Binding("Text", 
 					_viewModel->SelectedPoint,
@@ -198,10 +246,10 @@ namespace gv
 		private: System::Windows::Forms::ComboBox^  cbPrimitiv;
 
 		private: System::Windows::Forms::Panel^  panel2;
-private: System::Windows::Forms::TextBox^  tbPosZ;
+		private: System::Windows::Forms::TextBox^  tbPosZ;
 
-private: System::Windows::Forms::TextBox^  tbPosX;
-private: System::Windows::Forms::TextBox^  tbPosY;
+		private: System::Windows::Forms::TextBox^  tbPosX;
+		private: System::Windows::Forms::TextBox^  tbPosY;
 
 
 
@@ -658,6 +706,6 @@ private: System::Windows::Forms::TextBox^  tbPosY;
 
 
 				 }
-};
+		};
 	}
 }

@@ -68,7 +68,7 @@ namespace gv
 			_sceneManager->createMesh(_cubeMeshName, PrimitiveCreator::getCube());
 			/////_sceneManager->createMesh(_sphereMeshName, PrimitiveCreator::getSphere());
 
-			
+
 			_sceneManager->createMesh("gv_axis", PrimitiveCreator::getBox(glm::vec2(-0.05, -0.05), glm::vec2(100, 0.05), 0.1));
 			//_sceneManager->createMesh("gv_axis", PrimitiveCreator::getXYRectangle(glm::vec2(0, 0), glm::vec2(100000, 0.1)));
 
@@ -151,6 +151,20 @@ namespace gv
 				const glm::vec3* newPos = static_cast<const glm::vec3*>(args.newValue);
 				node->setPosition(pPtr->getPosition());
 			}
+			else if (args.propName == IPoint::rotationPropertyName)
+			{
+				const glm::vec3* newRotation = static_cast<const glm::vec3*>(args.newValue);
+				//node->setPosition(pPtr->getPosition());
+			}
+			else if (args.propName == IPoint::scalePropertyName)
+			{
+				const glm::vec3* newScale = static_cast<const glm::vec3*>(args.newValue);
+				//node->setPosition(pPtr->getPosition());
+			}
+
+
+
+
 			else if (args.propName == IPoint::primitivePropertyName)
 			{
 				const PrimitiveType* newPrimitiveType = static_cast<const PrimitiveType*>(args.newValue);

@@ -12,7 +12,7 @@ namespace UnitTests
 	{
 	public:
 
-		std::map<std::shared_ptr<gv::IPoint>, std::shared_ptr<gv::View::vPoint> > _vPoints;
+		//std::map<std::shared_ptr<gv::IPoint>, std::shared_ptr<gv::View::vPoint> > _vPoints;
 
 		virtual void pointAdded(const std::shared_ptr<gv::IPoint>& p);
 

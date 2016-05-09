@@ -64,6 +64,18 @@ namespace gv
 					PropertyChanged(this, gcnew PropertyChangedEventArgs("PositionY"));
 					PropertyChanged(this, gcnew PropertyChangedEventArgs("PositionZ"));
 				}
+				else if (arg.propName == IPoint::rotationPropertyName)
+				{
+					PropertyChanged(this, gcnew PropertyChangedEventArgs("RotationX"));
+					PropertyChanged(this, gcnew PropertyChangedEventArgs("RotationY"));
+					PropertyChanged(this, gcnew PropertyChangedEventArgs("RotationZ"));
+				}
+				else if (arg.propName == IPoint::scalePropertyName)
+				{
+					PropertyChanged(this, gcnew PropertyChangedEventArgs("ScaleX"));
+					PropertyChanged(this, gcnew PropertyChangedEventArgs("ScaleY"));
+					PropertyChanged(this, gcnew PropertyChangedEventArgs("ScaleZ"));
+				}
 				else if (arg.propName == IPoint::primitivePropertyName)
 				{
 
@@ -117,6 +129,98 @@ namespace gv
 					_modelPoint->trySetPosition(pos);
 				}
 			} 
+
+			property float RotationX
+			{
+				float get()
+				{
+					return _modelPoint->getRotation().x;
+				}
+
+				void set(float newX)
+				{
+					glm::vec3 rot = _modelPoint->getRotation();
+					rot.x = newX;	
+					_modelPoint->trySetRotation(rot);
+				}
+			}
+
+			property float RotationY
+			{
+				float get()
+				{
+					return _modelPoint->getRotation().y;
+				}
+
+				void set(float newY)
+				{
+					glm::vec3 rot = _modelPoint->getRotation();
+					rot.y = newY;	
+					_modelPoint->trySetRotation(rot);
+				}
+			}
+
+			property float RotationZ
+			{
+				float get()
+				{
+					return _modelPoint->getRotation().z;
+				}
+
+				void set(float newZ)
+				{
+					glm::vec3 rot = _modelPoint->getRotation();
+					rot.z = newZ;	
+					_modelPoint->trySetRotation(rot);
+				}
+			}
+
+
+
+			property float ScaleX
+			{
+				float get()
+				{
+					return _modelPoint->getScale().x;
+				}
+
+				void set(float newX)
+				{
+					glm::vec3 scale = _modelPoint->getScale();
+					scale.x = newX;	
+					_modelPoint->trySetScale(scale);
+				}
+			}
+
+			property float ScaleY
+			{
+				float get()
+				{
+					return _modelPoint->getScale().y;
+				}
+
+				void set(float newY)
+				{
+					glm::vec3 scale = _modelPoint->getScale();
+					scale.y = newY;	
+					_modelPoint->trySetScale(scale);
+				}
+			}
+
+			property float ScaleZ
+			{
+				float get()
+				{
+					return _modelPoint->getScale().z;
+				}
+
+				void set(float newZ)
+				{
+					glm::vec3 scale = _modelPoint->getScale();
+					scale.z = newZ;	
+					_modelPoint->trySetScale(scale);
+				}
+			}
 
 
 

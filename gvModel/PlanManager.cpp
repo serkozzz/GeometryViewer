@@ -33,7 +33,7 @@ void PlanManager::createNewPoint()
 	pointsCount++;
 
 	auto pPtr = std::make_shared<mPoint>(p);
-	
+
 	_plan->AddPoint(pPtr);
 	_subscriptions[pPtr] = 
 		(pPtr->tryPropertyChanged += std::bind(&PlanManager::onTryPointPropChanged, this, std::placeholders::_1));
@@ -74,6 +74,16 @@ void PlanManager::onTryPointPropChanged(PointPropChangedArgs args)
 	{
 		const glm::vec3* newPos = static_cast<const glm::vec3*>(args.newValue);
 		mpoint->setPosition(*newPos);
+	}
+	else if (args.propName == IPoint::rotationPropertyName)
+	{
+		const glm::vec3* newRotation = static_cast<const glm::vec3*>(args.newValue);
+		mpoint->setRotation(*newRotation);
+	}
+	else if (args.propName == IPoint::scalePropertyName)
+	{
+		const glm::vec3* newScale = static_cast<const glm::vec3*>(args.newValue);
+		mpoint->setScale(*newScale);
 	}
 	else if (args.propName == IPoint::primitivePropertyName)
 	{

@@ -45,6 +45,7 @@ void Renderer::renderFrame(float timeFromLastFrameMs)
 	GLuint mvpMatrixId = glGetUniformLocation(programID, "MVP");
 	GLuint mMatrixId = glGetUniformLocation(programID, "M");
 	GLuint vMatrixId = glGetUniformLocation(programID, "V");
+	GLuint materialColorId = glGetUniformLocation(programID, "materialColor");
 	GLuint lightPosId = glGetUniformLocation(programID, "LightPosition_worldspace");
 	GLuint lightPowerId = glGetUniformLocation(programID, "LightPower");
 	GLuint lightColorId = glGetUniformLocation(programID, "LightColor");
@@ -60,7 +61,6 @@ void Renderer::renderFrame(float timeFromLastFrameMs)
 	const Camera* camera3d = sceneManager->get3DCamera();
 	glm::mat4 VMatrix = camera3d->getViewMatrix();
 	glm::mat4 VPmatrix = camera3d->getViewProjectMatrix();
-	//glm::mat4 VPmatrix = glm::mat4(1.0f);
 
 	static float timeCount = 0;
 	timeCount += timeFromLastFrameMs;
@@ -95,6 +95,13 @@ void Renderer::renderFrame(float timeFromLastFrameMs)
 
 		glUniformMatrix4fv(mvpMatrixId, 1, GL_FALSE, &MVP[0][0]);
 		glUniformMatrix4fv(mMatrixId, 1, GL_FALSE, &modelMatrix[0][0]);
+		
+		auto material = node.second->getMaterial();	
+		glUniform3f(
+			materialColorId,
+			material->getColor().r,
+			material->getColor().g,
+			material->getColor().b);
 
 		// Use our shader
 		glUseProgram(programID);

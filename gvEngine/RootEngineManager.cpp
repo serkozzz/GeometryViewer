@@ -9,6 +9,7 @@
 #include "ThreadManager.h"
 #include "Logger.h"
 #include "Camera.h"
+#include "DoNothingCamera.h"
 #include "SceneManager.h"
 #include "VideoMemoryManager.h"
 
@@ -43,8 +44,11 @@ void RootEngineManager::startInSeparatedThread(int sizeX, int sizeY, IInputListe
 	OpenGLInitializer::initialize();
 	VideoMemoryManager::sharedVideoMemoryManager()->initialize();
 
-	Camera camera3d("mainCamera", ((float)sizeX) / sizeY);
-	SceneManager::sharedSceneManager()->setCurrentCamera(std::make_shared<Camera>(camera3d));
+	SceneManager::sharedSceneManager()->setCurrentCamera(
+		std::make_shared<Camera>("mainCamera", ((float)sizeX) / sizeY));
+	//SceneManager::sharedSceneManager()->setCurrentCamera(
+	//	std::make_shared<DoNothingCamera>("mainCamera", ((float)sizeX) / sizeY));
+
 	_inputController = new InputController(_windowManager->getWindow(), InputListener);
 	_renderer = new Renderer(_windowManager);
 	_threadManager = new ThreadManager(

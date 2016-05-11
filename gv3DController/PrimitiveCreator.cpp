@@ -63,6 +63,34 @@ static GeometryData* CreateTriangle()
 }
 
 
+static GeometryData* CreateLittleTriangle()
+{
+	//test triangle
+	static GeometryData* triangle = new GeometryData();
+	triangle->verticies.push_back(gv::Engine::Vertex(
+		glm::vec3(-1.0f, 0.0f, 0.0f),  
+		glm::vec3(0.0f, 0.0f, 1.0f),
+		glm::vec2(0.0f, 0.0f)));
+
+	triangle->verticies.push_back(gv::Engine::Vertex(
+		glm::vec3(1.0f, 0.0f, 0.0f),  
+		glm::vec3(0.0f, 0.0f, 1.0f),
+		glm::vec2(0.0f, 0.0f)));
+
+	triangle->verticies.push_back(gv::Engine::Vertex(
+		glm::vec3(0.0f,  1.0f, 0.0f),  
+		glm::vec3(0.0f, 0.0f, 1.0f),
+		glm::vec2(0.0f, 0.0f)));
+
+
+	triangle->indecies.push_back(0);
+	triangle->indecies.push_back(1);
+	triangle->indecies.push_back(2);
+	return triangle;
+}
+
+
+
 static GeometryData* CreateRectangle(glm::vec2 leftBottom, glm::vec2 rightUp)
 {
 	//test rectangle
@@ -210,6 +238,13 @@ std::shared_ptr<const GeometryData> PrimitiveCreator::getTriangle()
 {
 	return std::shared_ptr<const GeometryData>(CreateTriangle());
 }
+
+std::shared_ptr<const GeometryData> PrimitiveCreator::getLittleTriangle()
+{
+	return std::shared_ptr<const GeometryData>(CreateLittleTriangle());
+}
+
+
 
 std::shared_ptr<const gv::Engine::GeometryData> PrimitiveCreator::getXYRectangle(
 	glm::vec2 leftBottom, glm::vec2 rightUp)

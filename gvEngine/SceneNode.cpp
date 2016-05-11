@@ -59,12 +59,36 @@ void SceneNode::setPosition(const glm::vec3& position)
 	_transformMatrix[3] = glm::vec4(position, 1.0f);
 }
 
+
+glm::vec3 SceneNode::getRotation() const
+{
+	return glm::vec3(1.0f);
+}
+
+
+void SceneNode::setRotation(const glm::vec3& rotation)
+{
+
+}
+
 glm::vec3 SceneNode::getScale() const
 {
-	throw std::exception("NotImplementedException");
+	throw std::logic_error("NotImplementedException");
 }
 
 void SceneNode::setScale(const glm::vec3& scale)
 {
-	throw std::exception("NotImplementedException");
+	throw std::logic_error("NotImplementedException");
+}
+
+
+std::shared_ptr<Material> SceneNode::getMaterial() const
+{
+	return _material;
+}
+
+
+void SceneNode::setMaterial(const std::shared_ptr<Material> material)
+{
+	_material = material;
 }

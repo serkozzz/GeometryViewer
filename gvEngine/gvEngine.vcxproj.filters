@@ -96,6 +96,12 @@
     <ClInclude Include="openGLInitializer.h">
       <Filter>utils</Filter>
     </ClInclude>
+    <ClInclude Include="DoNothingCamera.h">
+      <Filter>Заголовочные файлы</Filter>
+    </ClInclude>
+    <ClInclude Include="Material.h">
+      <Filter>Заголовочные файлы</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="test.cpp">
@@ -148,6 +154,12 @@
     </ClCompile>
     <ClCompile Include="OpenGLInitializer.cpp">
       <Filter>utils</Filter>
+    </ClCompile>
+    <ClCompile Include="DoNothingCamera.cpp">
+      <Filter>Файлы исходного кода</Filter>
+    </ClCompile>
+    <ClCompile Include="Material.cpp">
+      <Filter>Файлы исходного кода</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

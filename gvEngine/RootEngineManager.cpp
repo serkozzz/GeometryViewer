@@ -44,10 +44,10 @@ void RootEngineManager::startInSeparatedThread(int sizeX, int sizeY, IInputListe
 	OpenGLInitializer::initialize();
 	VideoMemoryManager::sharedVideoMemoryManager()->initialize();
 
-	SceneManager::sharedSceneManager()->setCurrentCamera(
-		std::make_shared<Camera>("mainCamera", ((float)sizeX) / sizeY));
 	//SceneManager::sharedSceneManager()->setCurrentCamera(
-	//	std::make_shared<DoNothingCamera>("mainCamera", ((float)sizeX) / sizeY));
+	//	std::make_shared<Camera>("mainCamera", ((float)sizeX) / sizeY));
+	SceneManager::sharedSceneManager()->setCurrentCamera(
+		std::make_shared<DoNothingCamera>("mainCamera", ((float)sizeX) / sizeY));
 
 	_inputController = new InputController(_windowManager->getWindow(), InputListener);
 	_renderer = new Renderer(_windowManager);

@@ -8,7 +8,7 @@ in vec3 LightDirection_cameraspace;
 
 uniform float LightPower;
 uniform vec3 LightColor;
-uniform materialColor;
+uniform vec3 materialColor;
 
 uniform float AmbientIntensity;
 

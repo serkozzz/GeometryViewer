@@ -29,8 +29,8 @@ namespace gv
 			virtual void setScale(const glm::vec3& scale) = 0;
 
 
-			virtual std::shared_ptr<Material> getMaterial() const;
-			virtual void setMaterial(const std::shared_ptr<Material> material);
+			virtual std::shared_ptr<Material> getMaterial() const = 0;
+			virtual void setMaterial(const std::shared_ptr<Material>& material) = 0;
 
 			//TO DO rotations methods
 		};

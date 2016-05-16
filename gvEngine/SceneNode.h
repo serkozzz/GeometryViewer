@@ -30,6 +30,11 @@ namespace gv
 			SceneNode(const std::string& name, const std::string& meshName);
 			SceneNode(const std::string& name, const std::string& meshName, const glm::mat4& transform);
 
+			void initialize(const std::string& name, 
+				const std::string& meshName,
+				const glm::mat4& transform, 
+				std::shared_ptr<Material>& material);
+
 			virtual std::string getName() const;
 
 			virtual void setMesh(const std::string& meshName);
@@ -49,7 +54,7 @@ namespace gv
 
 
 			virtual std::shared_ptr<Material> getMaterial() const;
-			virtual void setMaterial(const std::shared_ptr<Material> material);
+			virtual void setMaterial(const std::shared_ptr<Material>& material);
 		};
 	}
 }

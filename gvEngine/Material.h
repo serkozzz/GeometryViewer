@@ -1,6 +1,7 @@
 #pragma once
 
-#include "glm\vec3.hpp"
+#include "glm/glm.hpp"
+#include <memory>
 
 namespace gv
 {
@@ -10,9 +11,12 @@ namespace gv
 		{
 			glm::vec3 _color;
 		public:
-			Material(glm::vec3);
+			Material(const glm::vec3& color);
+			Material(float r, float g, float b);
+
 			glm::vec3 getColor() const;
 			void setColor(const glm::vec3& color);
+			static std::shared_ptr<Material> createDefaultMaterial();
 		};
 	}
 }

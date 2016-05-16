@@ -5,20 +5,32 @@ using namespace gv::Engine;
 
 SceneNode::SceneNode(const std::string& name) : _name(name)
 {
-
+	initialize(name, "", glm::mat4(1.0), Material::createDefaultMaterial());
 }
 
 SceneNode::SceneNode(const std::string& name, const std::string& meshName) : _name(name), _meshName(meshName)
 {
-
+	initialize(name, meshName, glm::mat4(1.0), Material::createDefaultMaterial());
 }
 
 
 SceneNode::SceneNode(const std::string& name, const std::string& meshName, const glm::mat4& transform) 
-	:_name(name), _meshName(meshName), _transformMatrix(transform)
 {
-
+	initialize(name, meshName, transform, Material::createDefaultMaterial());
 }
+
+
+void SceneNode::initialize(const std::string& name, 
+				const std::string& meshName,
+				const glm::mat4& transform, 
+				std::shared_ptr<Material>& material)
+{
+	_name = name;
+	_meshName = meshName;
+	_transformMatrix = transform;
+	_material = material;
+}
+
 
 
 std::string SceneNode::getName() const
@@ -88,7 +100,7 @@ std::shared_ptr<Material> SceneNode::getMaterial() const
 }
 
 
-void SceneNode::setMaterial(const std::shared_ptr<Material> material)
+void SceneNode::setMaterial(const std::shared_ptr<Material>& material)
 {
 	_material = material;
 }

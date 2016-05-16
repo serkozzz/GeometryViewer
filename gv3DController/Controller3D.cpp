@@ -80,11 +80,10 @@ namespace gv
 			_sceneManager->createSceneNode("triangleNode", "triangle", 
 				transform);
 
-			Engine::Material m(0, 1, 0);
 
-			auto transform2 = glm::translate(glm::mat4(1.0), glm::vec3(0, 0, 0.5));
-			//_sceneManager->createSceneNode("littleTriangleNode", "little_triangle", 
-			//	transform2)->setMaterial(std::make_shared<Material>(glm::vec3(0, 1, 0)));
+			auto transform2 = glm::translate(glm::mat4(1.0), glm::vec3(0, 0, -1.1));
+			_sceneManager->createSceneNode("littleTriangleNode", "little_triangle", 
+				transform2)->setMaterial(std::make_shared<Material>(glm::vec3(0, 1, 0)));
 
 			//_sceneManager->createSceneNode("gv_XAxis", "gv_axis", 
 			//	glm::mat4(1.0));

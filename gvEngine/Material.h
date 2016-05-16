@@ -1,5 +1,6 @@
 #pragma once
 
+#include "dllexport.h"
 #include "glm/glm.hpp"
 #include <memory>
 
@@ -7,7 +8,7 @@ namespace gv
 {
 	namespace Engine
 	{
-		class Material
+		class GVAPI Material
 		{
 			glm::vec3 _color;
 		public:

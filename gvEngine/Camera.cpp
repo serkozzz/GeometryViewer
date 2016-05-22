@@ -20,6 +20,19 @@ Camera::Camera(const std::string& name, float aspect)
 		_nearClipDistance,       
 		_farClipDistance 
 		);
+
+
+	float f = _farClipDistance;
+	float n = _nearClipDistance;
+
+	_projectionMatrix = glm::mat4(-1.0f / (tan(_fov / 2) * _aspect), 0.0f, 0.0f, 0.0f,
+		0.0f, 1.0f / tan(_fov / 2), 0.0f, 0.0f, 
+		0.0f, 0.0f, (f + n) / (f - n), 1.0f,
+		0.0f, 0.0f, -2 * f * n / (f - n), 0.0f);
+
+
+
+
 }
 
 void Camera::setFOV(float fov)
@@ -36,6 +49,7 @@ glm::mat4 Camera::getViewMatrix() const
 
 glm::mat4 Camera::getProjectMatrix() const
 {
+	//return glm::mat4(1.0f);
 	return _projectionMatrix;
 }
 

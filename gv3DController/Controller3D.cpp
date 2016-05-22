@@ -81,23 +81,26 @@ namespace gv
 				transform);
 
 
-			auto transform2 = glm::translate(glm::mat4(1.0), glm::vec3(0, 0, -1.1));
+			auto transform2 = glm::translate(glm::mat4(1.0), glm::vec3(0, 0, 0.6));
 			_sceneManager->createSceneNode("littleTriangleNode", "little_triangle", 
 				transform2)->setMaterial(std::make_shared<Material>(glm::vec3(0, 1, 0)));
 
-			//_sceneManager->createSceneNode("gv_XAxis", "gv_axis", 
-			//	glm::mat4(1.0));
+			_sceneManager->createSceneNode("gv_XAxis", "gv_axis", 
+				glm::mat4(1.0));
 
-			//_sceneManager->createSceneNode("gv_YAxis", "gv_axis", 
-			//	glm::rotate(glm::mat4(1.0), glm::pi<float>() / 2, glm::vec3(0.0f, 0.0f, 1.0f)));
+			_sceneManager->createSceneNode("gv_YAxis", "gv_axis", 
+				glm::rotate(glm::mat4(1.0), glm::pi<float>() / 2, glm::vec3(0.0f, 0.0f, 1.0f)));
 
-			//_sceneManager->createSceneNode("gv_ZAxis", "gv_axis", 
-			//	glm::rotate(glm::mat4(1.0), -glm::pi<float>() / 2, glm::vec3(0.0f, 1.0f, 0.0f)));
+			_sceneManager->createSceneNode("gv_ZAxis", "gv_axis", 
+				glm::rotate(glm::mat4(1.0), -glm::pi<float>() / 2, glm::vec3(0.0f, 1.0f, 0.0f)));
 
 
 
 			auto mCamera = _planManager.getPlan()->getCamera();
+			//mCamera->trySetPosition(glm::vec3(0, 0, 5));
 			_sceneManager->get3DCamera()->setTransformMatrix(mCamera->getTransform());
+
+			
 		}
 
 

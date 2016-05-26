@@ -32,8 +32,8 @@ RootEngineManager* RootEngineManager::sharedRootEngineManager()
 
 void RootEngineManager::startInSeparatedThread(int sizeX, int sizeY, IInputListener* InputListener)
 {
-	sk::Logger::sharedLogger()->setBehavior(
-		std::shared_ptr<sk::IWritingBehavior>(new sk::FileWritingBehavior("gvEngine.log")));
+	sk::Logger::sharedLogger()->setOutputDriver(
+		std::shared_ptr<sk::IOutputDeviceDriver>(new sk::OutputToFileDriver("gvEngine.log")));
 	sk::Logger::sharedLogger()->writeMessage(std::to_string((int)sk::Logger::sharedLogger()));
 
 

@@ -5,13 +5,13 @@
 
 namespace sk
 {
-	class IWritingBehavior;
+	class IOutputDeviceDriver;
 
 	class Logger
 	{
-		std::shared_ptr<IWritingBehavior> _writingBehaviour;
+		std::shared_ptr<IOutputDeviceDriver> _outputDriver;
 		static Logger* _loggerInstance;
-		Logger(std::shared_ptr<IWritingBehavior> behavior);
+		Logger(std::shared_ptr<IOutputDeviceDriver> outputDriver);
 	public:
 		static Logger* sharedLogger();
 
@@ -22,38 +22,44 @@ namespace sk
 			Error
 		};
 
-		void setBehavior(std::shared_ptr<IWritingBehavior> newBehavior);
+		void setOutputDriver(std::shared_ptr<IOutputDeviceDriver> outputDriver);
 
 		void writeMessage(const std::string& message, 
 			Logger::MessageType messageType = Logger::MessageType::Special);
+
+		void clear();
+
 	};
 
 
 
-	class IWritingBehavior
+	class IOutputDeviceDriver
 	{
 	public:
 		void virtual writeMessage(const std::string& header, const std::string& message) = 0;
-		virtual ~IWritingBehavior()
+		void virtual clearScreen() = 0;
+		virtual ~IOutputDeviceDriver()
 		{}
 	};
 
 
 
-	class FileWritingBehavior : public IWritingBehavior
+	class OutputToFileDriver : public IOutputDeviceDriver
 	{
 		std::string _fileName;
 	public:
-		FileWritingBehavior(const std::string& fileName);
+		OutputToFileDriver(const std::string& fileName);
 		void virtual writeMessage(const std::string& header, const std::string& message);
+		void virtual clearScreen();	
 	};
 
 
 
-	class StandardOutStreamWritingBehavior : public IWritingBehavior
+	class StandardOutStreamDriver : public IOutputDeviceDriver
 	{
 	public:
 		void virtual writeMessage(const std::string& header, const std::string& message);
+		void virtual clearScreen();
 	};
 
 }

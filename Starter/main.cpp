@@ -21,8 +21,8 @@ using namespace gv::Model;
 //[STAThreadAttribute]
 int main(array<System::String ^> ^args)
 {
-	sk::Logger::sharedLogger()->setBehavior(
-		std::shared_ptr<sk::IWritingBehavior>(new sk::FileWritingBehavior("geometryViewer.log")));
+	sk::Logger::sharedLogger()->setOutputDriver(
+		std::shared_ptr<sk::IOutputDeviceDriver>(new sk::OutputToFileDriver("geometryViewer.log")));
 	sk::Logger::sharedLogger()->writeMessage("--------------------------------------------"
 		"------------------------------------------------------------------------------");
 	sk::Logger::sharedLogger()->writeMessage("\n\n\n");

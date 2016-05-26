@@ -13,7 +13,7 @@ using namespace sk;
 
 Logger* Logger::_loggerInstance = nullptr;
 
-Logger::Logger(std::shared_ptr<IWritingBehavior> behavior) : _writingBehaviour(behavior)
+Logger::Logger(std::shared_ptr<IOutputDeviceDriver> behavior) : _outputDriver(behavior)
 {
 }
 
@@ -21,15 +21,15 @@ Logger* Logger::sharedLogger()
 {
 	if (_loggerInstance == nullptr)
 	{
-		_loggerInstance = new Logger(std::shared_ptr<IWritingBehavior>(new StandardOutStreamWritingBehavior()));
+		_loggerInstance = new Logger(std::shared_ptr<IOutputDeviceDriver>(new StandardOutStreamDriver()));
 	}
 	return _loggerInstance;
 }
 
 
-void Logger::setBehavior(std::shared_ptr<IWritingBehavior> newBehavior)
+void Logger::setOutputDriver(std::shared_ptr<IOutputDeviceDriver> outputDriver)
 {
-	_writingBehaviour = newBehavior;
+	_outputDriver = outputDriver;
 }
 
 
@@ -62,15 +62,20 @@ void Logger::writeMessage(const std::string& message,
 			break;
 		}
 	}
-	_writingBehaviour->writeMessage(strstrHeader.str(), message);
+	_outputDriver->writeMessage(strstrHeader.str(), message);
 }
 
-FileWritingBehavior::FileWritingBehavior(const std::string& fileName) : _fileName(fileName)
+void Logger::clear()
+{
+	_outputDriver->clearScreen();
+}
+
+OutputToFileDriver::OutputToFileDriver(const std::string& fileName) : _fileName(fileName)
 {
 
 }
 
-void FileWritingBehavior::writeMessage(const std::string& header, const std::string& message)
+void OutputToFileDriver::writeMessage(const std::string& header, const std::string& message)
 {
 	std::ofstream stream(_fileName, std::ofstream::app);
 	std::string resultMessage = header + message;
@@ -78,7 +83,19 @@ void FileWritingBehavior::writeMessage(const std::string& header, const std::str
 	//stream.close();
 }
 
-void StandardOutStreamWritingBehavior::writeMessage(const std::string& header, const std::string& message)
+void OutputToFileDriver::clearScreen()
+{
+	std::ofstream stream(_fileName, std::ofstream::trunc);
+}
+
+
+void StandardOutStreamDriver::writeMessage(const std::string& header, const std::string& message)
 {
 	std::cout << header + message << std::endl;
+}
+
+
+void StandardOutStreamDriver::clearScreen()
+{
+
 }

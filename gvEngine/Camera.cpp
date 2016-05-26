@@ -1,6 +1,7 @@
 #include <glm/gtc/matrix_transform.hpp>
 
 #include "Camera.h"
+#include "Logger.h"
 
 using namespace gv::Engine;
 
@@ -20,6 +21,26 @@ Camera::Camera(const std::string& name, float aspect)
 		_nearClipDistance,       
 		_farClipDistance 
 		);
+
+	glm::vec4 points[20];
+	for (int i = 0; i < 20; i++)
+	{
+		points[i].x = 0;
+		points[i].y = 0;
+		points[i].z = i - 9;
+	}
+
+	glm::vec4 resultPoints[20];
+	for (int i = 0; i < 20; i++)
+	{
+		resultPoints[i] = (_projectionMatrix * points[i]) / points[i].z;
+	}
+
+	for (int i = 0; i < 20; i++)
+	{
+		sk::Logger::sharedLogger()->writeMessage("z = " + std::to_string(points[i].z) + "\t z`= " + std::to_string(resultPoints[i].z));
+	}
+
 
 
 	float f = _farClipDistance;

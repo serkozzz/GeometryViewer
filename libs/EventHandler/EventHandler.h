@@ -36,7 +36,7 @@ namespace skb    //means SerKoz Bicycles
 	template <typename ArgsType>
 	int EventHandler<ArgsType>::operator+= (callbackType callback)
 	{
-		if(callback)
+		if (callback)
 		{
 			_handlers[_subscriptionsCount] = callback;	
 		}
@@ -47,21 +47,21 @@ namespace skb    //means SerKoz Bicycles
 	void EventHandler<ArgsType>::operator-= (int subscriptionId)
 	{
 		auto it = _handlers.find(subscriptionId);
-		if(it != _handlers.end())
+		if (it != _handlers.end())
 			_handlers.erase(it);
 	}
 
 	template <class ArgsType>
 	bool  EventHandler<ArgsType>::operator==(std::nullptr_t)
 	{
-		if(_handlers.empty())
+		if (_handlers.empty())
 			return true;
 		return false;
 	}
 
 
 	template <class ArgsType>
-	bool  EventHandler<ArgsType>::operator!=(std::nullptr_t arg)
+	bool EventHandler<ArgsType>::operator!=(std::nullptr_t arg)
 	{
 		return !(this->operator==(arg));
 	}
@@ -99,7 +99,7 @@ namespace skb    //means SerKoz Bicycles
 		{
 		}
 
-		const T* sender; ///object whose properties is chanded
+		const T* sender; ///object whose properties is changed
 		const void* newValue; 
 		std::string propName;
 	};

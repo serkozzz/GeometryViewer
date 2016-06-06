@@ -94,7 +94,20 @@ namespace skb    //means SerKoz Bicycles
 	template <typename T>
 	struct PropertyChangedArgs
 	{
-		PropertyChangedArgs(const T* sender, const void* newValue, const std::string& propName) 
+		PropertyChangedArgs(const T* sender, const std::string& propName) 
+			: sender(sender), propName(propName)
+		{
+		}
+
+		const T* sender; ///object whose properties is changed
+		std::string propName;
+	};
+
+
+	template <typename T>
+	struct TryPropertyChangedArgs
+	{
+		TryPropertyChangedArgs(const T* sender, const void* newValue, const std::string& propName) 
 			: sender(sender), newValue(newValue), propName(propName)
 		{
 		}
@@ -103,7 +116,6 @@ namespace skb    //means SerKoz Bicycles
 		const void* newValue; 
 		std::string propName;
 	};
-
 	//template <typename T>
 	//struct TryPropertyChangeArgs
 	//{

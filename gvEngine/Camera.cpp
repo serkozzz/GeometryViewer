@@ -39,7 +39,7 @@ Camera::Camera(const std::string& name, float aspect)
 	{
 		points[i].x = 1;
 		points[i].y = 1;
-		points[i].z = i - 9;
+		points[i].z = i - 9.0f;
 
 		if(points[i].z == 0)
 			points[i].z = 0.2f;
@@ -63,11 +63,6 @@ Camera::Camera(const std::string& name, float aspect)
 		sk::Logger::sharedLogger()->writeMessage("z = " + std::to_string(points[i].z) + "\t z`= " + std::to_string(resultPoints[i].z));
 		sk::Logger::sharedLogger()->writeMessage("");
 	}
-
-
-
-
-
 
 
 }

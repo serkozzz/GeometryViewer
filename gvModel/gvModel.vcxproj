@@ -82,6 +82,7 @@
     <ClCompile Include="IgvModel.cpp" />
     <ClCompile Include="mCamera.cpp" />
     <ClCompile Include="mPlan.cpp" />
+    <ClCompile Include="PlanElement.cpp" />
     <ClCompile Include="PlanManager.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -93,6 +94,7 @@
     <ClInclude Include="Model.h" />
     <ClInclude Include="mPlan.h" />
     <ClInclude Include="mPoint.h" />
+    <ClInclude Include="PlanElement.h" />
     <ClInclude Include="PlanManager.h" />
   </ItemGroup>
   <ItemGroup>

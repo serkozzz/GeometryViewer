@@ -25,10 +25,10 @@ namespace gv
 		static const std::string primitivePropertyName;
 		
 
+
 		virtual glm::vec3 getPosition() const = 0;
 		virtual void trySetPosition(const glm::vec3& newPosition) const = 0;
-
-		
+	
 		virtual glm::vec3 getRotation() const = 0;
 		virtual void trySetRotation(const glm::vec3& newRotation) const = 0;
 

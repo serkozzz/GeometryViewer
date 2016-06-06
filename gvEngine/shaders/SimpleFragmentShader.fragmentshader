@@ -8,6 +8,7 @@ in vec3 LightDirection_cameraspace;
 
 uniform float LightPower;
 uniform vec3 LightColor;
+uniform vec3 materialColor;
 
 uniform float AmbientIntensity;
 
@@ -24,7 +25,6 @@ void main()
 	float cosTheta = clamp( dot( n,l ), 0,1 ); 
 
 	float distance = LightDirection_cameraspace.length();
-    vec3 materialColor = vec3(1, 1, 0);
 
 
 

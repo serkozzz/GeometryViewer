@@ -14,6 +14,8 @@ namespace gv
 		class mPoint : public IPoint
 		{
 			glm::vec3 _position;
+			glm::vec3 _rotation;
+			glm::vec3 _scale;
 			std::string _name;
 			PrimitiveType _primitive;
 
@@ -40,12 +42,44 @@ namespace gv
 			void setPosition(const glm::vec3& newPosition)
 			{
 				_position = newPosition;
-				propertyChanged(PointPropChangedArgs(this, &_position, IPoint::positionPropertyName));
+				propertyChanged(PointPropChangedArgs(this, &newPosition, IPoint::positionPropertyName));
 			}
 
 			void trySetPosition(const glm::vec3& newPosition) const
 			{
-				tryPropertyChanged(PointPropChangedArgs(this, &_position, IPoint::positionPropertyName));
+				tryPropertyChanged(PointPropChangedArgs(this, &newPosition, IPoint::positionPropertyName));
+			}
+
+			glm::vec3 getRotation() const
+			{
+				return _rotation;
+			}
+
+			void setRotation(const glm::vec3& newRotation)
+			{
+				_rotation = newRotation;
+				propertyChanged(PointPropChangedArgs(this, &newRotation, IPoint::rotationPropertyName));
+			}
+
+			void trySetRotation(const glm::vec3& newRotation) const
+			{
+				tryPropertyChanged(PointPropChangedArgs(this, &newRotation, IPoint::rotationPropertyName));
+			}
+
+			glm::vec3 getScale() const
+			{
+				return _scale;
+			}
+
+			void setScale(const glm::vec3& newScale)
+			{
+				_scale = newScale;
+				propertyChanged(PointPropChangedArgs(this, &newScale, IPoint::scalePropertyName));
+			}
+
+			void trySetScale(const glm::vec3& newScale) const
+			{
+				tryPropertyChanged(PointPropChangedArgs(this, &newScale, IPoint::scalePropertyName));
 			}
 
 			std::string getName() const
@@ -80,7 +114,7 @@ namespace gv
 				tryPropertyChanged(PointPropChangedArgs(this, &_primitive, IPoint::primitivePropertyName));
 			}
 
-			skb::EventHandler<PointPropChangedArgs> propertyChanged;
+			//skb::EventHandler<PointPropChangedArgs> propertyChanged;
 			skb::EventHandler<PointPropChangedArgs> tryPropertyChanged;
 		};
 

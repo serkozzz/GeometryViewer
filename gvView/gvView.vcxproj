@@ -92,26 +92,21 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Common\IPoint.h" />
+    <ClInclude Include="CLIHelper.h" />
     <ClInclude Include="gvView.h" />
     <ClInclude Include="IView.h" />
-    <ClInclude Include="MainForm.h">
+    <ClInclude Include="MainView.h">
       <FileType>CppForm</FileType>
     </ClInclude>
-    <ClInclude Include="PointViewModel.h" />
     <ClInclude Include="vPoint.h" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="MainForm.resx">
-      <DependentUpon>MainForm.h</DependentUpon>
+    <EmbeddedResource Include="MainView.resx">
+      <DependentUpon>MainView.h</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <None Include="gvViewClassDiagram.cd" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Common\Common.vcxproj">
-      <Project>{747d8198-88f4-4330-ac74-baf362e9be8e}</Project>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

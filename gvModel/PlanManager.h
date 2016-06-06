@@ -26,8 +26,8 @@ namespace gv
 
 			IPlan* getPlan();
 
-			void tryAddPoint(const std::shared_ptr<IPoint>& point);
-			void tryRemovePoint(const std::shared_ptr<IPoint>& point);
+			void createNewPoint();
+			void removePoint(const IPoint* point);
 
 #ifdef UNIT_TESTS
 			mPlan* getPlanRegerenceForTest()

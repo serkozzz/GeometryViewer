@@ -6,7 +6,8 @@
 
 #include "gvView.h"
 #include "vPoint.h"
-#include "PointViewModel.h"
+#include "MainViewModel.h"
+#include "CLIHelper.h"
 
 namespace gv
 {
@@ -31,8 +32,10 @@ namespace gv
 		private:
 
 			PointViewModel^ pointVM;
-			
 			BindingList<PointViewModel^>^ pointsVM;
+
+
+			MainViewModel^ _mainViewModel;
 
 			gvView* _gvView;
 			int _pointsCount;
@@ -48,15 +51,6 @@ namespace gv
 				 delegate void cameraChanged(float [16]);
 				 delegate void setCameraMatrixDelegate(System::Collections::ArrayList^ matrix);
 
-				 template<typename TDelegateType, typename TArgType>
-				 void bindHelperMethod(TDelegateType^ del, skb::EventHandler<TArgType>& eventHandler)
-				 {
-					 IntPtr funcPointer = Marshal::GetFunctionPointerForDelegate(del);
-					 eventHandler += static_cast<void (CALLBACK *)(TArgType)>(funcPointer.ToPointer());
-				 }
-
-
-
 				 collectionChanged^ pointAddedEventDel;
 				 collectionChanged^ pointRemovedEventDel;
 				 collectionChanged^ pointSelectedEventDel;
@@ -69,24 +63,30 @@ namespace gv
 			{
 				_subscriptions = new std::map<const skb::EventHandler<const std::shared_ptr<IPoint>& >*, int>();
 
-				//May be I must save delagates reference as class member
+				//Warning! You must save delagates reference as class member
 				pointAddedEventDel =  gcnew collectionChanged(this, &MainForm::pointAddedEvent);
-				bindHelperMethod<collectionChanged, std::shared_ptr<IPoint>>(pointAddedEventDel, _gvView->pointAddedEvent);
+				CLIHelper::SubscribeDelegateToUnmanagedEvent<collectionChanged, std::shared_ptr<IPoint>>
+					(pointAddedEventDel, _gvView->pointAddedEvent);
 
 				pointRemovedEventDel =  gcnew collectionChanged(this, &MainForm::pointRemovedEvent);
-				bindHelperMethod<collectionChanged, std::shared_ptr<IPoint>>(pointRemovedEventDel, _gvView->pointRemovedEvent);
+				CLIHelper::SubscribeDelegateToUnmanagedEvent<collectionChanged, std::shared_ptr<IPoint>>
+					(pointRemovedEventDel, _gvView->pointRemovedEvent);
 
 				pointSelectedEventDel =  gcnew collectionChanged(this, &MainForm::pointSelectedEvent);
-				bindHelperMethod<collectionChanged, std::shared_ptr<IPoint>>(pointSelectedEventDel, _gvView->pointSelectedEvent);
+				CLIHelper::SubscribeDelegateToUnmanagedEvent<collectionChanged, std::shared_ptr<IPoint>>
+					(pointSelectedEventDel, _gvView->pointSelectedEvent);
 
 				pointUnselectedEventDel =  gcnew collectionChanged(this, &MainForm::pointUnselectedEvent);
-				bindHelperMethod<collectionChanged, std::shared_ptr<IPoint>>(pointUnselectedEventDel, _gvView->pointUnselectedEvent);
+				CLIHelper::SubscribeDelegateToUnmanagedEvent<collectionChanged, std::shared_ptr<IPoint>>
+					(pointUnselectedEventDel, _gvView->pointUnselectedEvent);
 
 				propChangedDel =  gcnew propChanged(this, &MainForm::selectedPointPropertyChanged);
-				bindHelperMethod<propChanged, PointPropChangedArgs>(propChangedDel, _gvView->selectedPointPropChangedEvent);
+				CLIHelper::SubscribeDelegateToUnmanagedEvent<propChanged, PointPropChangedArgs>
+					(propChangedDel, _gvView->selectedPointPropChangedEvent);
 
 				cameraMatrixChangedDel =  gcnew cameraChanged(this, &MainForm::cameraMatrixChanged);
-				bindHelperMethod<cameraChanged, float[16]>(cameraMatrixChangedDel, _gvView->cameraMatrixChangedEvent);
+				CLIHelper::SubscribeDelegateToUnmanagedEvent<cameraChanged, float[16]>
+					(cameraMatrixChangedDel, _gvView->cameraMatrixChangedEvent);
 
 				setCameraMatrixDel = gcnew setCameraMatrixDelegate(this, &MainForm::setCameraMatrix);
 				InitializeComponent();
@@ -689,7 +689,7 @@ namespace gv
 
 					 pointsVM->Add(gcnew PointViewModel());
 				 }
-};
+		};
 
 #pragma endregion
 	}

@@ -2,6 +2,7 @@
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 
+
 #include "Controller3D.h"
 #include "PrimitiveCreator.h"
 #include "InputListener.h"
@@ -68,16 +69,21 @@ namespace gv
 			_sceneManager->createMesh(_cubeMeshName, PrimitiveCreator::getCube());
 			/////_sceneManager->createMesh(_sphereMeshName, PrimitiveCreator::getSphere());
 
-			
+
 			_sceneManager->createMesh("gv_axis", PrimitiveCreator::getBox(glm::vec2(-0.05, -0.05), glm::vec2(100, 0.05), 0.1));
-			//_sceneManager->createMesh("gv_axis", PrimitiveCreator::getXYRectangle(glm::vec2(0, 0), glm::vec2(100000, 0.1)));
 
 			//test triangle
 			_sceneManager->createMesh("triangle", PrimitiveCreator::getTriangle());
+			_sceneManager->createMesh("little_triangle", PrimitiveCreator::getLittleTriangle());
 
 			auto transform = glm::translate(glm::mat4(1.0), glm::vec3(0, 0, 0));
 			_sceneManager->createSceneNode("triangleNode", "triangle", 
 				transform);
+
+
+			auto transform2 = glm::translate(glm::mat4(1.0), glm::vec3(0, 0, 0.6));
+			_sceneManager->createSceneNode("littleTriangleNode", "little_triangle", 
+				transform2)->setMaterial(std::make_shared<Material>(glm::vec3(0, 1, 0)));
 
 			_sceneManager->createSceneNode("gv_XAxis", "gv_axis", 
 				glm::mat4(1.0));
@@ -88,8 +94,13 @@ namespace gv
 			_sceneManager->createSceneNode("gv_ZAxis", "gv_axis", 
 				glm::rotate(glm::mat4(1.0), -glm::pi<float>() / 2, glm::vec3(0.0f, 1.0f, 0.0f)));
 
+
+
 			auto mCamera = _planManager.getPlan()->getCamera();
+			//mCamera->trySetPosition(glm::vec3(0, 0, 5));
 			_sceneManager->get3DCamera()->setTransformMatrix(mCamera->getTransform());
+
+			
 		}
 
 
@@ -130,10 +141,15 @@ namespace gv
 
 		void Controller3D::pointPropertyChanged(const PointPropChangedArgs& args)
 		{
-			std::shared_ptr<const IPoint> pPtr = std::shared_ptr<const IPoint>(args.sender);
+			auto pPtr = static_cast<const IPoint*>(args.sender);
+			Engine::ISceneNode* node = nullptr;
+			for(auto& pair : _points)
+			{
+				if (pair.first.get() == pPtr)
+					node = pair.second;
+			}
 
-			auto it = _points.find(pPtr);
-			if (it == _points.end())
+			if (node == nullptr)
 				throw std::exception("Attempt to change point property for point that is abscent in the plan");
 
 			//if (args.propName == IPoint::namePropertyName)
@@ -144,8 +160,22 @@ namespace gv
 			else if (args.propName == IPoint::positionPropertyName)
 			{
 				const glm::vec3* newPos = static_cast<const glm::vec3*>(args.newValue);
-				it->second->setPosition(pPtr->getPosition());
+				node->setPosition(pPtr->getPosition());
 			}
+			else if (args.propName == IPoint::rotationPropertyName)
+			{
+				const glm::vec3* newRotation = static_cast<const glm::vec3*>(args.newValue);
+				//node->setPosition(pPtr->getPosition());
+			}
+			else if (args.propName == IPoint::scalePropertyName)
+			{
+				const glm::vec3* newScale = static_cast<const glm::vec3*>(args.newValue);
+				//node->setPosition(pPtr->getPosition());
+			}
+
+
+
+
 			else if (args.propName == IPoint::primitivePropertyName)
 			{
 				const PrimitiveType* newPrimitiveType = static_cast<const PrimitiveType*>(args.newValue);
@@ -155,7 +185,7 @@ namespace gv
 					meshName = _cubeMeshName;
 				else if (*newPrimitiveType == PrimitiveType::spherePrimitiveType)
 					meshName = _sphereMeshName;
-				it->second->setMesh(meshName);
+				node->setMesh(meshName);
 			}
 		}
 

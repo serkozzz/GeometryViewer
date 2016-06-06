@@ -16,9 +16,9 @@ namespace gv
 		public:
 			Camera(const std::string& name, float aspect);
 			void setFOV(float fov);
-			glm::mat4 getViewMatrix() const;
-			glm::mat4 getProjectMatrix() const;
-			glm::mat4 getViewProjectMatrix() const;
+			virtual glm::mat4 getViewMatrix() const;
+			virtual glm::mat4 getProjectMatrix() const;
+			virtual glm::mat4 getViewProjectMatrix() const;
 		};
 	}
 }

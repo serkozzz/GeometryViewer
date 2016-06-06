@@ -9,6 +9,7 @@
 #include "ThreadManager.h"
 #include "Logger.h"
 #include "Camera.h"
+#include "DoNothingCamera.h"
 #include "SceneManager.h"
 #include "VideoMemoryManager.h"
 
@@ -31,8 +32,8 @@ RootEngineManager* RootEngineManager::sharedRootEngineManager()
 
 void RootEngineManager::startInSeparatedThread(int sizeX, int sizeY, IInputListener* InputListener)
 {
-	sk::Logger::sharedLogger()->setBehavior(
-		std::shared_ptr<sk::IWritingBehavior>(new sk::FileWritingBehavior("gvEngine.log")));
+	sk::Logger::sharedLogger()->setOutputDriver(
+		std::shared_ptr<sk::IOutputDeviceDriver>(new sk::OutputToFileDriver("gvEngine.log")));
 	sk::Logger::sharedLogger()->writeMessage(std::to_string((int)sk::Logger::sharedLogger()));
 
 
@@ -43,8 +44,11 @@ void RootEngineManager::startInSeparatedThread(int sizeX, int sizeY, IInputListe
 	OpenGLInitializer::initialize();
 	VideoMemoryManager::sharedVideoMemoryManager()->initialize();
 
-	Camera camera3d("mainCamera", ((float)sizeX) / sizeY);
-	SceneManager::sharedSceneManager()->setCurrentCamera(std::make_shared<Camera>(camera3d));
+	SceneManager::sharedSceneManager()->setCurrentCamera(
+		std::make_shared<Camera>("mainCamera", ((float)sizeX) / sizeY));
+	//SceneManager::sharedSceneManager()->setCurrentCamera(
+	//	std::make_shared<DoNothingCamera>("mainCamera", ((float)sizeX) / sizeY));
+
 	_inputController = new InputController(_windowManager->getWindow(), InputListener);
 	_renderer = new Renderer(_windowManager);
 	_threadManager = new ThreadManager(

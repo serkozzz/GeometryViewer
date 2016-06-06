@@ -21,23 +21,23 @@
       <FileName>IView.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="gv::View::MainForm" Collapsed="true">
+  <Class Name="gv::View::MainView" Collapsed="true">
     <Position X="5.75" Y="5" Width="1.5" />
     <NestedTypes>
-      <Delegate Name="gv::View::MainForm::collectionChanged" Collapsed="true">
+      <Delegate Name="gv::View::MainView::collectionChanged" Collapsed="true">
         <TypeIdentifier>
-          <NewMemberFileName>MainForm.h</NewMemberFileName>
+          <NewMemberFileName>MainView.h</NewMemberFileName>
         </TypeIdentifier>
       </Delegate>
-      <Delegate Name="gv::View::MainForm::propChanged" Collapsed="true">
+      <Delegate Name="gv::View::MainView::propChanged" Collapsed="true">
         <TypeIdentifier>
-          <NewMemberFileName>MainForm.h</NewMemberFileName>
+          <NewMemberFileName>MainView.h</NewMemberFileName>
         </TypeIdentifier>
       </Delegate>
     </NestedTypes>
     <TypeIdentifier>
       <HashCode>CQAIAEFAAgCGABAAAiGEIBYCQgBGAAAAAAAAxQwAAEk=</HashCode>
-      <FileName>MainForm.h</FileName>
+      <FileName>MainView.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="gv::View::vPoint" Collapsed="true">

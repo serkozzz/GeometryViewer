@@ -36,6 +36,11 @@ const std::list<std::shared_ptr<mPoint> >& mPlan::getPoints() const
 	return _points;
 }
 
+const std::list<std::shared_ptr<IPoint> > mPlan::getPointsOnlyRead() const
+{
+	return std::list<std::shared_ptr<IPoint> >(_points.begin(), _points.end());
+}
+
 
 bool mPlan::isPointExist(const std::shared_ptr<const IPoint>& p) const
 {
@@ -43,3 +48,16 @@ bool mPlan::isPointExist(const std::shared_ptr<const IPoint>& p) const
 	return (it == _points.end()) ? false : true;
 
 }
+
+
+std::shared_ptr<mPoint> mPlan::getPointByPointer(const IPoint* p) const
+{
+	auto it = std::find_if (_points.begin(), _points.end(), [&] (std::shared_ptr<mPoint> point) -> bool
+	{
+		return (point.get() == p);
+	});
+
+	return (it == _points.end()) ? nullptr : *it;
+}
+
+

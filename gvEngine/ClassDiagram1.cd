@@ -119,7 +119,7 @@
       <FileName>iinputlistener.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="sk::IWritingBehavior" Collapsed="true">
+  <Class Name="sk::IOutputDeviceDriver" Collapsed="true">
     <Position X="1.75" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAQAAAA=</HashCode>

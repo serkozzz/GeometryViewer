@@ -89,9 +89,6 @@
     <ProjectReference Include="..\gvModel\gvModel.vcxproj">
       <Project>{1cef1409-52c9-4c7b-940c-c4e2022f51ce}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\gvView\gvView.vcxproj">
-      <Project>{05af26d6-6fa9-400a-9d45-e89c99253782}</Project>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

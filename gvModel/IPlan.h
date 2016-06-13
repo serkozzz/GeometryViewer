@@ -5,7 +5,7 @@
 
 
 #include "EventHandler.h"
-#include "IPoint.h"
+#include "Figure.h"
 #include "ICamera.h"
 
 

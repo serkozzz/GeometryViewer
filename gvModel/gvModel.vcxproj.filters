@@ -16,57 +16,30 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="mPlan.cpp">
-      <Filter>Data</Filter>
-    </ClCompile>
-    <ClCompile Include="mCamera.cpp">
-      <Filter>Data</Filter>
-    </ClCompile>
-    <ClCompile Include="ICamera.cpp">
-      <Filter>Data</Filter>
-    </ClCompile>
-    <ClCompile Include="PlanManager.cpp">
-      <Filter>Logic</Filter>
-    </ClCompile>
-    <ClCompile Include="CameraMover.cpp">
-      <Filter>Logic</Filter>
-    </ClCompile>
-    <ClCompile Include="IgvModel.cpp">
-      <Filter>Logic</Filter>
-    </ClCompile>
     <ClCompile Include="PlanElement.cpp">
+      <Filter>Data</Filter>
+    </ClCompile>
+    <ClCompile Include="Point.cpp">
+      <Filter>Data</Filter>
+    </ClCompile>
+    <ClCompile Include="Figure.cpp">
       <Filter>Data</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="mPoint.h">
-      <Filter>Data</Filter>
-    </ClInclude>
-    <ClInclude Include="mPlan.h">
-      <Filter>Data</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Common\IPoint.h">
-      <Filter>Data</Filter>
-    </ClInclude>
-    <ClInclude Include="IPlan.h">
-      <Filter>Data</Filter>
-    </ClInclude>
-    <ClInclude Include="ICamera.h">
-      <Filter>Data</Filter>
-    </ClInclude>
-    <ClInclude Include="mCamera.h">
-      <Filter>Data</Filter>
-    </ClInclude>
-    <ClInclude Include="PlanManager.h">
-      <Filter>Logic</Filter>
-    </ClInclude>
-    <ClInclude Include="Model.h">
-      <Filter>Logic</Filter>
-    </ClInclude>
-    <ClInclude Include="CameraMover.h">
-      <Filter>Logic</Filter>
-    </ClInclude>
     <ClInclude Include="PlanElement.h">
+      <Filter>Data</Filter>
+    </ClInclude>
+    <ClInclude Include="Point.h">
+      <Filter>Data</Filter>
+    </ClInclude>
+    <ClInclude Include="Figure.h">
+      <Filter>Data</Filter>
+    </ClInclude>
+    <ClInclude Include="Plan.h">
+      <Filter>Data</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
       <Filter>Data</Filter>
     </ClInclude>
   </ItemGroup>

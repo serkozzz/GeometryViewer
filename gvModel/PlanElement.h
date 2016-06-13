@@ -11,7 +11,7 @@ namespace gv
 	struct Transform;
 	namespace Model
 	{
-		//class PlanElement;	
+		class PlanElement;	
 		typedef skb::PropertyChangedArgs<PlanElement> PlanElementPropChangedArgs;
 		typedef skb::TryPropertyChangedArgs<PlanElement> PlanElementTryPropChangedArgs;
 
@@ -34,7 +34,6 @@ namespace gv
 			void trySetPosition(const glm::vec3& newPosition) const;
 			void setPosition(const glm::vec3& newPosition);
 
-
 			glm::vec3 getRotationEuler() const;
 			void trySetRotationEuler(const glm::vec3& newRotation) const;
 			void setRotationEuler(const glm::vec3& newRotation);
@@ -50,6 +49,12 @@ namespace gv
 
 			skb::EventHandler<PlanElementPropChangedArgs> propertyChanged;
 			mutable	skb::EventHandler<PlanElementTryPropChangedArgs> tryPropertyChanged;
+
+
+		protected:
+
+			virtual void sendPropertyChanged(const std::string& propName) const;
+			virtual void sendTryPropertyChanged(const void* newValue, const std::string& propName) const;
 		};
 	}
 }

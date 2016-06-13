@@ -17,20 +17,20 @@ PlanElement::PlanElement()
 }
 
 
-glm::vec3  PlanElement::PlanElement::getPosition() const
+glm::vec3 PlanElement::getPosition() const
 {
 	return _transform->position;
 }
 
-void PlanElement::PlanElement::setPosition(const glm::vec3& newPosition)
+void PlanElement::setPosition(const glm::vec3& newPosition)
 {
 	_transform->position = newPosition;
-	propertyChanged(PlanElementPropChangedArgs(this, PlanElement::positionPropertyName));
+	sendPropertyChanged(PlanElement::positionPropertyName);
 }
 
 void PlanElement::trySetPosition(const glm::vec3& newPosition) const
 {
-	tryPropertyChanged(PlanElementTryPropChangedArgs(this, &newPosition, PlanElement::positionPropertyName));
+	sendTryPropertyChanged(&newPosition, PlanElement::positionPropertyName);
 }
 
 glm::vec3 PlanElement::getRotationEuler() const
@@ -41,12 +41,12 @@ glm::vec3 PlanElement::getRotationEuler() const
 void PlanElement::setRotationEuler(const glm::vec3& newRotation)
 {
 	_transform->rotationEuler = newRotation;
-	propertyChanged(PlanElementPropChangedArgs(this, PlanElement::rotationPropertyName));
+	sendPropertyChanged(PlanElement::rotationPropertyName);
 }
 
 void PlanElement::trySetRotationEuler(const glm::vec3& newRotation) const
 {
-	tryPropertyChanged(PlanElementTryPropChangedArgs(this, &newRotation, PlanElement::rotationPropertyName));
+	sendTryPropertyChanged(&newRotation, PlanElement::rotationPropertyName);
 }
 
 glm::vec3  PlanElement::getScale() const
@@ -57,12 +57,12 @@ glm::vec3  PlanElement::getScale() const
 void PlanElement::setScale(const glm::vec3& newScale)
 {
 	_transform->scale = newScale;
-	propertyChanged(PlanElementPropChangedArgs(this, PlanElement::scalePropertyName));
+	sendPropertyChanged(PlanElement::scalePropertyName);
 }
 
 void PlanElement::trySetScale(const glm::vec3& newScale) const
 {
-	tryPropertyChanged(PlanElementTryPropChangedArgs(this, &newScale, PlanElement::scalePropertyName));
+	sendTryPropertyChanged(&newScale, PlanElement::scalePropertyName);
 }
 
 std::string PlanElement::getName() const
@@ -73,10 +73,22 @@ std::string PlanElement::getName() const
 void PlanElement::setName(const std::string& newName)
 {
 	_name = newName;
-	propertyChanged(PlanElementPropChangedArgs(this, PlanElement::namePropertyName));
+	sendPropertyChanged(PlanElement::namePropertyName);
 }
 
 void PlanElement::trySetName(const std::string& newName) const
 {
-	tryPropertyChanged(PlanElementTryPropChangedArgs(this, &newName, PlanElement::namePropertyName));
+	sendTryPropertyChanged(&newName, PlanElement::namePropertyName);
+}
+
+
+void PlanElement::sendPropertyChanged(const std::string& propName) const
+{
+	propertyChanged(PlanElementPropChangedArgs(this, propName));
+}
+
+
+void PlanElement::sendTryPropertyChanged(const void* newValue, const std::string& propName) const
+{
+	tryPropertyChanged(PlanElementTryPropChangedArgs(this, newValue, propName));
 }

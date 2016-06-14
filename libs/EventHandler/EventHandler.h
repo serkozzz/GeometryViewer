@@ -76,21 +76,6 @@ namespace skb    //means SerKoz Bicycles
 
 	}
 
-	//template <typename T>
-	//struct PropertyChangedArgs
-	//{
-	//	PropertyChangedArgs(T* sender, T* newValue, const std::string& propName) 
-	//		: sender(sender), newValue(newValue), propName(propName)
-	//	{
-	//	}
-
-	//	T* sender; ///object whose properties is chanded
-	//	T* newValue; 
-	//	std::string propName;
-	//};
-
-
-	//TODO remove data from arg. Remain only prop name.
 	template <typename T>
 	struct PropertyChangedArgs
 	{
@@ -116,14 +101,29 @@ namespace skb    //means SerKoz Bicycles
 		const void* newValue; 
 		std::string propName;
 	};
-	//template <typename T>
-	//struct TryPropertyChangeArgs
-	//{
-	//	TryPropertyChangeArgs(const T* sender, const std::string& propName, const void* newValue) 
-	//		: propName(propName), newValue(newValue)
-	//	{
-	//	}
-	//	const std::string& propName;
-	//	const void* newValue;
-	//};
+
+
+	template <typename T>
+	struct ItemAddedEventArgs
+	{
+		ItemAddedEventArgs(const T* newItem, const T* itemBeforeNewItem) 
+			: item(newItem), itemBeforeNewItem(itemBeforeNewItem) 
+		{
+		}
+
+		const T* item;
+		const T* itemBeforeNewItem;
+	};
+
+	template <typename T>
+	struct ItemRemovedEventArgs
+	{
+		ItemRemovedEventArgs(const T* removedItem) 
+			: item(newItem)
+		{
+		}
+
+		const T* item;
+	};
+
 }

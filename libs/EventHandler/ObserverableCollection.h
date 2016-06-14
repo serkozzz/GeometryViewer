@@ -12,14 +12,18 @@ namespace skb    //means SerKoz Bicycles
 
 		void append(const ItemType* item)
 		{
-
+			const ItemType* lastItem = (_collection.size() == 0) ? nullptr : &_collection.back(); 
+			_collection.push_back(*item);
+			pointAdded(ItemAddedEventArgs<ItemType>(&_collection.back(), lastItem));
 		}
+
+
 		void insert(const ItemType* insertableItem, const ItemType* itemBeforeInsertion);
 		bool remove(const ItemType* item);
 		const CollectionType<ItemType, std::allocator<ItemType> >* getItems() const;
 
 
-		skb::EventHandler<const ItemType*> pointAdded;
-		skb::EventHandler<const ItemType*> pointRemoved;
+		skb::EventHandler<ItemAddedEventArgs<ItemType> > pointAdded;
+		skb::EventHandler<ItemRemovedEventArgs<ItemType> > pointRemoved;
 	};
 }

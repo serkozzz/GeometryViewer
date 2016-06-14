@@ -8,7 +8,7 @@ using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 #include <algorithm>
 #include <ObserverableCollection.h>
 
-
+#include "Call.h"
 
 
 namespace gvModelUnitTests
@@ -19,7 +19,17 @@ namespace gvModelUnitTests
 		TEST_METHOD(ObserverableCollectionTest1)
 		{
 			skb::ObserverableCollection< std::list, int > col;
-			col._collection.push_back(90);
+			int a = 11;
+			col.append(&a);
+
+
+			Call call11(Method::itemAddedEventMethod, "");
+			Call call12(Method::itemRemovedEventMethod, "11");
+			call12 = call11;
+
+			CallWithValue<int> call(Method::itemAddedEventMethod, "", &a);
+			CallWithValue<int> call2(Method::itemRemovedEventMethod, "2222", &a);
+			call2 = call;
 
 		}
 	};

@@ -30,6 +30,9 @@
     <ClInclude Include="..\libs\EventHandler\ObserverableCollection.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\libs\EventHandler\EventHandler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\libs\Logger\Logger.cpp">

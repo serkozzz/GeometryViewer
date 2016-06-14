@@ -9,7 +9,9 @@ namespace gvModelUnitTests
 		planElementPropChangedMethod,
 		pointPropChangedMethod,
 		planElementTryPropChangedMethod,
-		pointTryPropChangedMethod
+		pointTryPropChangedMethod,
+		itemAddedEventMethod,
+		itemRemovedEventMethod
 	};
 
 	struct Call
@@ -46,5 +48,16 @@ namespace gvModelUnitTests
 	private:
 		Method method;
 		std::string propertyName;
+	};
+
+	template<typename T>
+	struct CallWithValue : public Call
+	{
+		CallWithValue(Method method, std::string propertyName, const T* value) 
+			: Call(method, propertyName), value(value)
+		{
+		}
+	private:
+		const T* value;
 	};
 }

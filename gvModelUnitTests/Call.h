@@ -45,6 +45,11 @@ namespace gvModelUnitTests
 			return true;
 		}
 
+		bool operator!= (const Call& other)
+		{
+			return !this->operator==(other);
+		}
+
 	private:
 		Method method;
 		std::string propertyName;
@@ -57,6 +62,18 @@ namespace gvModelUnitTests
 			: Call(method, propertyName), value(value)
 		{
 		}
+
+		//bool operator== (const CallWithValue<T>& other)
+		//{
+		//	if (this->method != other.method)
+		//		return false;
+		//	if (this->propertyName != other.propertyName)
+		//		return false;
+		//	if (this->value != other.value)
+		//		return false;
+
+		//	return true;
+		//}
 	private:
 		const T* value;
 	};

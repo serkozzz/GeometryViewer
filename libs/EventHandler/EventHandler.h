@@ -119,7 +119,7 @@ namespace skb    //means SerKoz Bicycles
 	struct ItemRemovedEventArgs
 	{
 		ItemRemovedEventArgs(const T* removedItem) 
-			: item(newItem)
+			: item(removedItem)
 		{
 		}
 

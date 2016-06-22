@@ -31,7 +31,7 @@ namespace gvModelUnitTests
 		}
 	public:
 
-		TEST_METHOD(AddItemTest)
+		TEST_METHOD(AppendTest)
 		{
 			skb::ObserverableCollection< std::list, int > col;
 
@@ -63,8 +63,50 @@ namespace gvModelUnitTests
 		}
 
 
+		TEST_METHOD(InsertTest)
+		{
+			skb::ObserverableCollection< std::list, int > col;
 
-		TEST_METHOD(RemoveItemTest)
+			int subsriptionId = (col.pointAdded += std::bind(&ObserverableCollectionTest::ItemAdded, this, std::placeholders::_1));
+			int testItem1 = 11;
+			int testItem2 = 34;
+			int insertableItem = 88;
+
+
+			col.append(testItem1);
+			col.append(testItem2);
+
+			col.insert(&insertableItem, &col.getItems()->back());
+
+			auto it = col.getItems()->begin();
+			it++;
+
+			const int& item2 = *it;
+			if (col.getItems()->size() != 3 || item2 != insertableItem)
+				Assert::Fail();
+
+			CallWithValue<int> requierdCall(Method::itemAddedEventMethod, "", &item2);
+			if (requierdCall != *_call)
+				Assert::Fail();
+
+
+
+			int insertableItem2 = 112;
+			col.insert(&insertableItem2, nullptr);
+
+			const int& item4 = col.getItems()->back();
+			if (col.getItems()->size() != 4 || item4 != insertableItem2)
+				Assert::Fail();
+
+			CallWithValue<int> requierdCall2(Method::itemAddedEventMethod, "", &item4);
+			if (requierdCall2 != *_call)
+				Assert::Fail();
+
+			col.pointAdded -= subsriptionId;
+		}
+
+
+		TEST_METHOD(RemoveTest)
 		{
 			skb::ObserverableCollection< std::list, int > col;
 			int subsriptionId = (col.pointRemoved += std::bind(&ObserverableCollectionTest::ItemRemoved, this, std::placeholders::_1));

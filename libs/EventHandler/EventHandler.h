@@ -106,13 +106,13 @@ namespace skb    //means SerKoz Bicycles
 	template <typename T>
 	struct ItemAddedEventArgs
 	{
-		ItemAddedEventArgs(const T* newItem, const T* itemBeforeNewItem) 
-			: item(newItem), itemBeforeNewItem(itemBeforeNewItem) 
+		ItemAddedEventArgs(const T* newItem, const T* itemAfterNewItem) 
+			: item(newItem), itemAfterNewItem(itemAfterNewItem) 
 		{
 		}
 
 		const T* item;
-		const T* itemBeforeNewItem;
+		const T* itemAfterNewItem;
 	};
 
 	template <typename T>

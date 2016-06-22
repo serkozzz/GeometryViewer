@@ -4,28 +4,65 @@
 
 namespace skb    //means SerKoz Bicycles
 {
+
+
+	/*
+	Class is wrapper for std container which emits events when somebody perform action with collection
+	(add item, remove item etc).
+	Note all comparation operations for collection item will be performed for item adresses. In this way elements are considered equal 
+	only if they are in fact one element.
+	*/
 	template< template<typename, typename> class CollectionType, typename ItemType >
 	class ObserverableCollection
 	{
 		CollectionType<ItemType, std::allocator<ItemType> > _collection;
-	public:
 
+		class isPointersEqual
+		{
+
+			const ItemType& _baseItem;
+		public:
+			isPointersEqual(const ItemType& baseItem) : _baseItem(baseItem)
+			{
+			}
+
+			bool operator() (const ItemType& item)
+			{
+				return &_baseItem == &item;
+			}
+		};
+
+	public:
+		/*
+		adds item to the tail of collection;
+		WARNING! item from args will be copied and item in the collection will have other adress
+		*/
 		void append(const ItemType& item)
 		{
-			const ItemType* lastItem = (_collection.size() == 0) ? nullptr : &_collection.back(); 
 			_collection.push_back(item);
-			pointAdded(ItemAddedEventArgs<ItemType>(&_collection.back(), lastItem));
+			pointAdded(ItemAddedEventArgs<ItemType>(&_collection.back(), nullptr));
 		}
 
+		/*
+		adds item before itemAfterInsertion;
+		WARNING! item from args will be copied and item in the collection will have other adress
+		*/
+		void insert(const ItemType* insertableItem, const ItemType* itemAfterInsertion)
+		{
+			auto it = std::find_if(_collection.begin(), _collection.end(), isPointersEqual(*itemAfterInsertion));
+			_collection.insert(it, *insertableItem);
+			it--;
+			pointAdded(ItemAddedEventArgs<ItemType>(&(*it), itemAfterInsertion));
+		}
 
-		void insert(const ItemType* insertableItem, const ItemType* itemBeforeInsertion);
-
-
+		/*
+		remove item from the collection;
+		WARNING! It will remove only item with such adress. 
+		*/
 		bool remove(const ItemType* removedItem)
 		{
-			auto it = std::find_if(_collection.begin(), _collection.end(), [&removedItem] (const ItemType& item) {
-				return removedItem == &item;
-			});
+			auto it = std::find_if(_collection.begin(), _collection.end(), isPointersEqual(*removedItem));
+
 			if (it == _collection.end())
 				return false;
 
@@ -35,6 +72,9 @@ namespace skb    //means SerKoz Bicycles
 			return true;
 		}
 
+		/*
+			return pointer to the const std collection 
+		*/
 		const CollectionType<ItemType, std::allocator<ItemType> >* getItems() const
 		{
 			return &_collection;

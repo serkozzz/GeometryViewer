@@ -29,6 +29,42 @@ namespace gvModelUnitTests
 		{
 			_call = std::make_shared<CallWithValue<int> >(Method::itemRemovedEventMethod, "", arg.item);
 		}
+
+
+		class rValueTestClass
+		{
+			char* buffer;
+		public:
+			rValueTestClass(const char* str) : buffer(new char[strlen(str) + 1])
+			{
+				strcpy(buffer, str);
+			}
+
+			~rValueTestClass()
+			{
+				delete buffer;
+			}
+
+			rValueTestClass(const rValueTestClass& other) : buffer(new char[strlen(other.buffer) + 1])
+			{
+				strcpy(buffer, other.buffer);
+			}
+
+
+			//TODO swap
+			rValueTestClass(rValueTestClass&& other)
+			{
+				buffer = other.buffer;
+				other.buffer = nullptr;
+			}
+
+
+			void operator=(rValueTestClass other)
+			{
+				std::swap(buffer, other.buffer);
+			}
+
+		};
 	public:
 
 		TEST_METHOD(AppendTest)
@@ -128,6 +164,14 @@ namespace gvModelUnitTests
 
 			if (requierdCall != *_call)
 				Assert::Fail();
+		}
+
+
+		TEST_METHOD(lValueTest)
+		{
+			skb::ObserverableCollection< std::list, rValueTestClass > col;
+			rValueTestClass c1("Obj 1");
+			col.append(std::move(c1));
 		}
 	};
 }

@@ -43,6 +43,13 @@ namespace skb    //means SerKoz Bicycles
 			pointAdded(ItemAddedEventArgs<ItemType>(&_collection.back(), nullptr));
 		}
 
+
+		void append(ItemType&& item)
+		{
+			_collection.push_back(std::move(item));
+			pointAdded(ItemAddedEventArgs<ItemType>(&_collection.back(), nullptr));
+		}
+
 		/*
 		adds item before itemAfterInsertion;
 		WARNING! item from args will be copied and item in the collection will have other adress
@@ -73,7 +80,7 @@ namespace skb    //means SerKoz Bicycles
 		}
 
 		/*
-			return pointer to the const std collection 
+		return pointer to the const std collection 
 		*/
 		const CollectionType<ItemType, std::allocator<ItemType> >* getItems() const
 		{

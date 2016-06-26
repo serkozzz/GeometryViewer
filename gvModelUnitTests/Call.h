@@ -2,21 +2,14 @@
 
 #include <string>
 
+#include "Methods.h"
+
 namespace gvModelUnitTests
 {	
-	enum Method
-	{
-		planElementPropChangedMethod,
-		pointPropChangedMethod,
-		planElementTryPropChangedMethod,
-		pointTryPropChangedMethod,
-		itemAddedEventMethod,
-		itemRemovedEventMethod
-	};
 
 	struct Call
 	{	
-		Call(Method method, std::string propertyName)
+		Call(Methods method, std::string propertyName)
 			: method(method), propertyName(propertyName)
 		{
 		}
@@ -51,14 +44,14 @@ namespace gvModelUnitTests
 		}
 
 	private:
-		Method method;
+		Methods method;
 		std::string propertyName;
 	};
 
 	template<typename T>
 	struct CallWithValue : public Call
 	{
-		CallWithValue(Method method, std::string propertyName, const T* value) 
+		CallWithValue(Methods method, std::string propertyName, const T* value) 
 			: Call(method, propertyName), value(value)
 		{
 		}

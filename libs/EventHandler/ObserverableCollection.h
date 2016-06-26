@@ -54,10 +54,18 @@ namespace skb    //means SerKoz Bicycles
 		adds item before itemAfterInsertion;
 		WARNING! item from args will be copied and item in the collection will have other adress
 		*/
-		void insert(const ItemType* insertableItem, const ItemType* itemAfterInsertion)
+		void insert(const ItemType& insertableItem, const ItemType* itemAfterInsertion)
 		{
 			auto it = std::find_if(_collection.begin(), _collection.end(), isPointersEqual(*itemAfterInsertion));
-			_collection.insert(it, *insertableItem);
+			_collection.insert(it, insertableItem);
+			it--;
+			pointAdded(ItemAddedEventArgs<ItemType>(&(*it), itemAfterInsertion));
+		}
+
+		void insert(ItemType&& insertableItem, const ItemType* itemAfterInsertion)
+		{
+			auto it = std::find_if(_collection.begin(), _collection.end(), isPointersEqual(*itemAfterInsertion));
+			_collection.insert(it, std::move(insertableItem));
 			it--;
 			pointAdded(ItemAddedEventArgs<ItemType>(&(*it), itemAfterInsertion));
 		}
@@ -92,3 +100,4 @@ namespace skb    //means SerKoz Bicycles
 		skb::EventHandler<const ItemRemovedEventArgs<ItemType>& > pointRemoved;
 	};
 }
+

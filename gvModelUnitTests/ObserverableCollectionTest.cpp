@@ -21,17 +21,17 @@ namespace gvModelUnitTests
 
 		void ItemAdded(const skb::ItemAddedEventArgs<int>& arg)
 		{
-			_call = std::make_shared<CallWithValue<int> >(Method::itemAddedEventMethod, "", arg.item);
+			_call = std::make_shared<CallWithValue<int> >(Methods::itemAddedEventMethods, "", arg.item);
 		}
 
 
 		void ItemRemoved(const skb::ItemRemovedEventArgs<int>& arg)
 		{
-			_call = std::make_shared<CallWithValue<int> >(Method::itemRemovedEventMethod, "", arg.item);
+			_call = std::make_shared<CallWithValue<int> >(Methods::itemRemovedEventMethods, "", arg.item);
 		}
 
 
-		class rValueTestClass
+		class rValueTestClass : public callsDispatcher
 		{
 			char* buffer;
 		public:
@@ -48,6 +48,7 @@ namespace gvModelUnitTests
 			rValueTestClass(const rValueTestClass& other) : buffer(new char[strlen(other.buffer) + 1])
 			{
 				strcpy(buffer, other.buffer);
+				rValueTestClass::addCall(Methods::copyConstructor);
 			}
 
 
@@ -56,6 +57,7 @@ namespace gvModelUnitTests
 			{
 				buffer = other.buffer;
 				other.buffer = nullptr;
+				rValueTestClass::addCall(Methods::moveConstructor);
 			}
 
 
@@ -79,7 +81,7 @@ namespace gvModelUnitTests
 			if (col.getItems()->size() != 1 || item1 != testItem1)
 				Assert::Fail();
 
-			CallWithValue<int> requierdCall(Method::itemAddedEventMethod, "", &item1);
+			CallWithValue<int> requierdCall(Methods::itemAddedEventMethods, "", &item1);
 			if (requierdCall != *_call)
 				Assert::Fail();
 
@@ -91,7 +93,7 @@ namespace gvModelUnitTests
 			if (col.getItems()->size() != 2 || item2 != testItem2)
 				Assert::Fail();
 
-			CallWithValue<int> requierdCall2(Method::itemAddedEventMethod, "", &item2);
+			CallWithValue<int> requierdCall2(Methods::itemAddedEventMethods, "", &item2);
 			if (requierdCall2 != *_call)
 				Assert::Fail();
 
@@ -112,7 +114,7 @@ namespace gvModelUnitTests
 			col.append(testItem1);
 			col.append(testItem2);
 
-			col.insert(&insertableItem, &col.getItems()->back());
+			col.insert(insertableItem, &col.getItems()->back());
 
 			auto it = col.getItems()->begin();
 			it++;
@@ -121,20 +123,20 @@ namespace gvModelUnitTests
 			if (col.getItems()->size() != 3 || item2 != insertableItem)
 				Assert::Fail();
 
-			CallWithValue<int> requierdCall(Method::itemAddedEventMethod, "", &item2);
+			CallWithValue<int> requierdCall(Methods::itemAddedEventMethods, "", &item2);
 			if (requierdCall != *_call)
 				Assert::Fail();
 
 
 
 			int insertableItem2 = 112;
-			col.insert(&insertableItem2, nullptr);
+			col.insert(insertableItem2, nullptr);
 
 			const int& item4 = col.getItems()->back();
 			if (col.getItems()->size() != 4 || item4 != insertableItem2)
 				Assert::Fail();
 
-			CallWithValue<int> requierdCall2(Method::itemAddedEventMethod, "", &item4);
+			CallWithValue<int> requierdCall2(Methods::itemAddedEventMethods, "", &item4);
 			if (requierdCall2 != *_call)
 				Assert::Fail();
 
@@ -156,7 +158,7 @@ namespace gvModelUnitTests
 			const int& item1 = col.getItems()->front();
 
 			col.remove(&item1);
-			CallWithValue<int> requierdCall(Method::itemRemovedEventMethod, "", &item1);
+			CallWithValue<int> requierdCall(Methods::itemRemovedEventMethods, "", &item1);
 
 			if (col.getItems()->size() != 1 || col.getItems()->front() != testItem2)
 				Assert::Fail();

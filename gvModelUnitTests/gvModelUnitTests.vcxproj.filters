@@ -24,6 +24,9 @@
     <ClInclude Include="Call.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="Methods.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">

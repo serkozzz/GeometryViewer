@@ -45,25 +45,25 @@ namespace gvModelUnitTests
 
 		void planElementPropChanged(PlanElementPropChangedArgs& arg)
 		{
-			_callList.push_back(Call(Methods::planElementPropChangedMethods, arg.propName));
+			_callList.push_back(Call(Call::Method_planElementPropChanged, arg.propName));
 		}
 
 
 		void pointPropChanged(PointPropChangedArgs& arg)
 		{
-			_callList.push_back(Call(Methods::pointPropChangedMethods, arg.propName));
+			_callList.push_back(Call(Call::Method_pointPropChanged, arg.propName));
 		}
 
 
 		void planElementTryPropChanged(PlanElementTryPropChangedArgs& arg)
 		{
-			_callList.push_back(Call(Methods::planElementTryPropChangedMethods, arg.propName));
+			_callList.push_back(Call(Call::Method_planElementTryPropChanged, arg.propName));
 		}
 
 
 		void pointTryPropChanged(PointTryPropChangedArgs& arg)
 		{
-			_callList.push_back(Call(Methods::pointTryPropChangedMethods, arg.propName));
+			_callList.push_back(Call(Call::Method_pointTryPropChanged, arg.propName));
 		}
 
 	public:
@@ -94,24 +94,24 @@ namespace gvModelUnitTests
 #pragma region TryPropertyChanged
 			point1.trySetName(_name);
 			std::list<Call> requiredCallList;
-			requiredCallList.push_back(Call(Methods::planElementTryPropChangedMethods, Point::namePropertyName));
-			requiredCallList.push_back(Call(Methods::pointTryPropChangedMethods, Point::namePropertyName));
+			requiredCallList.push_back(Call(Call::Method_planElementPropChanged, Point::namePropertyName));
+			requiredCallList.push_back(Call(Call::Method_pointTryPropChanged, Point::namePropertyName));
 			if (!checkEvents(_callList, requiredCallList))
 				Assert::Fail();
 			requiredCallList.clear();
 			_callList.clear();
 
 			point1.trySetPosition(_position);
-			requiredCallList.push_back(Call(Methods::planElementTryPropChangedMethods, Point::positionPropertyName));
-			requiredCallList.push_back(Call(Methods::pointTryPropChangedMethods, Point::positionPropertyName));
+			requiredCallList.push_back(Call(Call::Method_planElementTryPropChanged, Point::positionPropertyName));
+			requiredCallList.push_back(Call(Call::Method_pointTryPropChanged, Point::positionPropertyName));
 			if (!checkEvents(_callList, requiredCallList))
 				Assert::Fail();
 			requiredCallList.clear();
 			_callList.clear();
 
 			point1.trySetScale(_scale);
-			requiredCallList.push_back(Call(Methods::planElementTryPropChangedMethods, Point::scalePropertyName));
-			requiredCallList.push_back(Call(Methods::pointTryPropChangedMethods, Point::scalePropertyName));
+			requiredCallList.push_back(Call(Call::Method_planElementTryPropChanged, Point::scalePropertyName));
+			requiredCallList.push_back(Call(Call::Method_pointTryPropChanged, Point::scalePropertyName));
 			if (!checkEvents(_callList, requiredCallList))
 				Assert::Fail();
 			requiredCallList.clear();
@@ -119,8 +119,8 @@ namespace gvModelUnitTests
 
 
 			point1.trySetRotationEuler(_rotation);
-			requiredCallList.push_back(Call(Methods::planElementTryPropChangedMethods, Point::rotationPropertyName));
-			requiredCallList.push_back(Call(Methods::pointTryPropChangedMethods, Point::rotationPropertyName));
+			requiredCallList.push_back(Call(Call::Method_planElementTryPropChanged, Point::rotationPropertyName));
+			requiredCallList.push_back(Call(Call::Method_pointTryPropChanged, Point::rotationPropertyName));
 			if (!checkEvents(_callList, requiredCallList))
 				Assert::Fail();
 			requiredCallList.clear();
@@ -128,8 +128,8 @@ namespace gvModelUnitTests
 
 
 			point1.trySetPrimitive(_primitive);
-			requiredCallList.push_back(Call(Methods::planElementTryPropChangedMethods, Point::primitivePropertyName));
-			requiredCallList.push_back(Call(Methods::pointTryPropChangedMethods, Point::primitivePropertyName));
+			requiredCallList.push_back(Call(Call::Method_planElementTryPropChanged, Point::primitivePropertyName));
+			requiredCallList.push_back(Call(Call::Method_pointTryPropChanged, Point::primitivePropertyName));
 			if (!checkEvents(_callList, requiredCallList))
 				Assert::Fail();
 			requiredCallList.clear();
@@ -140,24 +140,24 @@ namespace gvModelUnitTests
 #pragma region PropertyChanged
 			point1.setName(_name);
 			requiredCallList;
-			requiredCallList.push_back(Call(Methods::planElementPropChangedMethods, Point::namePropertyName));
-			requiredCallList.push_back(Call(Methods::pointPropChangedMethods, Point::namePropertyName));
+			requiredCallList.push_back(Call(Call::Method_planElementPropChanged, Point::namePropertyName));
+			requiredCallList.push_back(Call(Call::Method_pointPropChanged, Point::namePropertyName));
 			if (!checkEvents(_callList, requiredCallList))
 				Assert::Fail();
 			requiredCallList.clear();
 			_callList.clear();
 
 			point1.setPosition(_position);
-			requiredCallList.push_back(Call(Methods::planElementPropChangedMethods, Point::positionPropertyName));
-			requiredCallList.push_back(Call(Methods::pointPropChangedMethods, Point::positionPropertyName));
+			requiredCallList.push_back(Call(Call::Method_planElementPropChanged, Point::positionPropertyName));
+			requiredCallList.push_back(Call(Call::Method_pointPropChanged, Point::positionPropertyName));
 			if (!checkEvents(_callList, requiredCallList))
 				Assert::Fail();
 			requiredCallList.clear();
 			_callList.clear();
 
 			point1.setScale(_scale);
-			requiredCallList.push_back(Call(Methods::planElementPropChangedMethods, Point::scalePropertyName));
-			requiredCallList.push_back(Call(Methods::pointPropChangedMethods, Point::scalePropertyName));
+			requiredCallList.push_back(Call(Call::Method_planElementPropChanged, Point::scalePropertyName));
+			requiredCallList.push_back(Call(Call::Method_pointPropChanged, Point::scalePropertyName));
 			if (!checkEvents(_callList, requiredCallList))
 				Assert::Fail();
 			requiredCallList.clear();
@@ -165,8 +165,8 @@ namespace gvModelUnitTests
 
 
 			point1.setRotationEuler(_rotation);
-			requiredCallList.push_back(Call(Methods::planElementPropChangedMethods, Point::rotationPropertyName));
-			requiredCallList.push_back(Call(Methods::pointPropChangedMethods, Point::rotationPropertyName));
+			requiredCallList.push_back(Call(Call::Method_planElementPropChanged, Point::rotationPropertyName));
+			requiredCallList.push_back(Call(Call::Method_pointPropChanged, Point::rotationPropertyName));
 			if (!checkEvents(_callList, requiredCallList))
 				Assert::Fail();
 			requiredCallList.clear();
@@ -174,8 +174,8 @@ namespace gvModelUnitTests
 
 
 			point1.setPrimitive(_primitive);
-			requiredCallList.push_back(Call(Methods::planElementPropChangedMethods, Point::primitivePropertyName));
-			requiredCallList.push_back(Call(Methods::pointPropChangedMethods, Point::primitivePropertyName));
+			requiredCallList.push_back(Call(Call::Method_planElementPropChanged, Point::primitivePropertyName));
+			requiredCallList.push_back(Call(Call::Method_pointPropChanged, Point::primitivePropertyName));
 			if (!checkEvents(_callList, requiredCallList))
 				Assert::Fail();
 			requiredCallList.clear();

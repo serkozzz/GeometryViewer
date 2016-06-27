@@ -9,9 +9,8 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
     </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    <Filter Include="skb">
+      <UniqueIdentifier>{63492bfb-380d-41d7-bd11-7bc407e43d98}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -21,8 +20,14 @@
     <ClInclude Include="targetver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Methods.h">
+    <ClInclude Include="..\libs\skb\UnitTestUtils\TestClass.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libs\skb\UnitTestUtils\BaseCall.h">
+      <Filter>skb</Filter>
+    </ClInclude>
+    <ClInclude Include="..\libs\skb\UnitTestUtils\CallsDispatcher.h">
+      <Filter>skb</Filter>
     </ClInclude>
     <ClInclude Include="Call.h">
       <Filter>Header Files</Filter>
@@ -38,10 +43,10 @@
     <ClCompile Include="FigureTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ObserverableCollectionTest.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="..\libs\skb\UnitTestUtils\CallDispatcher.cpp">
+      <Filter>skb</Filter>
     </ClCompile>
-    <ClCompile Include="Methods.cpp">
+    <ClCompile Include="..\libs\skb\EventHandler\UnitTests\ObserverableCollectionTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

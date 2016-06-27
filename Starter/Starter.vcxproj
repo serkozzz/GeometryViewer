@@ -55,7 +55,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>Use</PrecompiledHeader>
-      <AdditionalIncludeDirectories>..\libs\EventHandler;..\Common;..\libs\glm-0.9.7.1;..\libs\Logger</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\libs\skb\EventHandler;..\Common;..\libs\glm-0.9.7.1;..\libs\Logger</AdditionalIncludeDirectories>
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
     </ClCompile>
     <Link>
@@ -74,7 +74,7 @@
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>WIN32;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PrecompiledHeader>Use</PrecompiledHeader>
-      <AdditionalIncludeDirectories>..\libs\EventHandler;..\Common;..\libs\glm-0.9.7.1</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\libs\skb\EventHandler;..\Common;..\libs\glm-0.9.7.1;</AdditionalIncludeDirectories>
       <FunctionLevelLinking>
       </FunctionLevelLinking>
     </ClCompile>

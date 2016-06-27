@@ -2,35 +2,31 @@
 
 #include <string>
 
-#include "Methods.h"
+#include <UnitTestUtils\BaseCall.h>
 
 namespace gvModelUnitTests
 {	
 
-	struct Call
+	struct Call : public skb::UnitTestUtils::BaseCall
 	{	
-		Call(Methods method, std::string propertyName)
-			: method(method), propertyName(propertyName)
+		enum
 		{
-		}
+			Method_planElementPropChanged,
+			Method_pointPropChanged,
+			Method_planElementTryPropChanged,
+			Method_pointTryPropChanged,
+		};
 
-		Call(const Call& other)
-		{
-			this->method = other.method;
-			this->propertyName = other.propertyName;
-		}
 
-		const Call& operator= (const Call& other)
+		Call(int methodType, std::string propertyName)
+			: BaseCall(methodType), methodType(methodType), propertyName(propertyName)
 		{
-			this->method = other.method;
-			this->propertyName = other.propertyName;
-			return *this;
 		}
 
 
 		bool operator== (const Call& other)
 		{
-			if (this->method != other.method)
+			if (this->methodType != other.methodType)
 				return false;
 			if (this->propertyName != other.propertyName)
 				return false;
@@ -38,36 +34,8 @@ namespace gvModelUnitTests
 			return true;
 		}
 
-		bool operator!= (const Call& other)
-		{
-			return !this->operator==(other);
-		}
-
 	private:
-		Methods method;
+		int methodType;
 		std::string propertyName;
-	};
-
-	template<typename T>
-	struct CallWithValue : public Call
-	{
-		CallWithValue(Methods method, std::string propertyName, const T* value) 
-			: Call(method, propertyName), value(value)
-		{
-		}
-
-		//bool operator== (const CallWithValue<T>& other)
-		//{
-		//	if (this->method != other.method)
-		//		return false;
-		//	if (this->propertyName != other.propertyName)
-		//		return false;
-		//	if (this->value != other.value)
-		//		return false;
-
-		//	return true;
-		//}
-	private:
-		const T* value;
 	};
 }

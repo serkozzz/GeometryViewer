@@ -25,6 +25,12 @@
     <ClCompile Include="Figure.cpp">
       <Filter>Data</Filter>
     </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>Data</Filter>
+    </ClCompile>
+    <ClCompile Include="Plan.cpp">
+      <Filter>Data</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PlanElement.h">

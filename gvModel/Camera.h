@@ -2,35 +2,28 @@
 
 #include <EventHandler.h>
 
+#include "PlanElement.h"
+
+
 namespace gv
 {
 	namespace Model
 	{
-		//class Camera;
-		//typedef skb::PropertyChangedArgs<Camera> CameraPropChangedArgs;
-		//class Camera
-		//{
-		//public:
+		class Camera;
+		typedef skb::PropertyChangedArgs<Camera> CameraPropChangedArgs;
+		typedef skb::TryPropertyChangedArgs<Camera> CameraTryPropChangedArgs;
 
-		//	static const std::string transformPropertyName;
-		//	static const std::string namePropertyName;
-		//	static const std::string positionPropertyName;
+		class Camera : public PlanElement
+		{
+		public:
+			Camera();
 
-		//	virtual glm::mat4 getTransform() const = 0;
-		//	virtual void trySetTransform(const glm::mat4& newTransform) const = 0;
+			mutable skb::EventHandler<CameraPropChangedArgs> propertyChanged;
+			mutable	skb::EventHandler<CameraTryPropChangedArgs> tryPropertyChanged;
 
-		//	virtual glm::vec3 getPosition() const = 0;
-		//	virtual void trySetPosition(const glm::vec3& newPosition) const = 0;
-
-		//	//TODO
-		//	//virtual glm::vec3 getRotation() const = 0;
-		//	//virtual void trySetRotation(const glm::vec3& newRotation) const = 0;
-
-
-		//	virtual std::string getName() const = 0;
-		//	virtual void trySetName(const std::string& newName) const = 0;
-
-		//	skb::EventHandler<const CameraPropChangedArgs&> propertyChanged;
-		//};
+		protected:
+			virtual void sendPropertyChanged(const std::string& propName) const;
+			virtual void sendTryPropertyChanged(const void* newValue, const std::string& propName) const;
+		};
 	}
 }

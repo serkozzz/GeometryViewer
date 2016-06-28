@@ -23,7 +23,7 @@ namespace gv
 			void setPrimitive(const PrimitiveType& newPrimitive);
 			void trySetPrimitive(const PrimitiveType& newPrimitive) const;
 
-			skb::EventHandler<PointPropChangedArgs> propertyChanged;
+			mutable skb::EventHandler<PointPropChangedArgs> propertyChanged;
 			mutable	skb::EventHandler<PointTryPropChangedArgs> tryPropertyChanged;
 
 		protected:

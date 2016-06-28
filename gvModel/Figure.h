@@ -2,8 +2,11 @@
 
 #include <list>
 
-#include "Point.h"
+#include <ObserverableCollection.h>
+#include <common.h>
 
+
+#include "Point.h"
 
 
 namespace gv
@@ -14,16 +17,18 @@ namespace gv
 		typedef skb::PropertyChangedArgs<Figure> FigurePropChangedArgs;
 		typedef skb::TryPropertyChangedArgs<Figure> FigureTryPropChangedArgs;
 
+		typedef skb::NonCopiableObserverableCollection<std::list, Point> PointsCollection;
+
 		class Figure : public PlanElement
 		{
-			std::list<Point> _points;
+
+			PointsCollection _points;
 		public:
-			const std::list<Point>* getPoints() const;
 
+			const PointsCollection* getPoints() const;
+			PointsCollection* getPoints();
 
-
-
-			skb::EventHandler<FigurePropChangedArgs> propertyChanged;
+			mutable skb::EventHandler<FigurePropChangedArgs> propertyChanged;
 			mutable	skb::EventHandler<FigureTryPropChangedArgs> tryPropertyChanged;
 
 		protected:

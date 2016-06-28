@@ -8,10 +8,11 @@ using namespace Microsoft::VisualStudio::CppUnitTestFramework;
 #include <algorithm>
 #include <memory>
 
+#include <common.h>
 #include <EventHandler/ObserverableCollection.h>
 
 #include <UnitTestUtils/BaseCall.h>
-#include <UnitTestUtils\TestClass.h>
+#include <UnitTestUtils/TestClass.h>
 
 using namespace skb::UnitTestUtils;
 

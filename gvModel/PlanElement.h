@@ -15,6 +15,18 @@ namespace gv
 		typedef skb::PropertyChangedArgs<PlanElement> PlanElementPropChangedArgs;
 		typedef skb::TryPropertyChangedArgs<PlanElement> PlanElementTryPropChangedArgs;
 
+
+
+		/*
+		Base class for all plan elements.
+
+		inheritance:
+			classes is inherited from PlanElement must define own propertyChanged and tryPropertyChanged members
+			with type = skb::EventHandler<DerivedClassName>(it will hide base class members). 
+			Also derived class must realize own sendPropertyChanged and sendTryPropertyChanged methods, which emit own 
+			propertyChanged or tryPropertyChanged events and call PlanElement::sendPropertyChanged or PlanElement::sendTryPropertyChanged.
+			This scheme need for appearence to specify concrete class(not only PlanElement) as subscribed function argument type.
+		*/
 		class PlanElement
 		{
 			std::string _name;
@@ -47,7 +59,7 @@ namespace gv
 			void setName(const std::string& newName);
 
 
-			skb::EventHandler<PlanElementPropChangedArgs> propertyChanged;
+			mutable skb::EventHandler<PlanElementPropChangedArgs> propertyChanged;
 			mutable	skb::EventHandler<PlanElementTryPropChangedArgs> tryPropertyChanged;
 
 

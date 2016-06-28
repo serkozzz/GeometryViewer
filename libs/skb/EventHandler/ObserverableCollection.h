@@ -19,7 +19,6 @@ namespace skb    //means SerKoz Bicycles
 
 		class isPointersEqual
 		{
-
 			const ItemType& _baseItem;
 		public:
 			isPointersEqual(const ItemType& baseItem) : _baseItem(baseItem)
@@ -96,8 +95,19 @@ namespace skb    //means SerKoz Bicycles
 		}
 
 
-		skb::EventHandler<const ItemAddedEventArgs<ItemType>& > pointAdded;
-		skb::EventHandler<const ItemRemovedEventArgs<ItemType>& > pointRemoved;
+		mutable skb::EventHandler<const ItemAddedEventArgs<ItemType>& > pointAdded;
+		mutable skb::EventHandler<const ItemRemovedEventArgs<ItemType>& > pointRemoved;
+	};
+
+	template< template<typename, typename> class CollectionType, typename ItemType >
+	class NonCopiableObserverableCollection : public ObserverableCollection<CollectionType, ItemType>
+	{
+		NonCopiableObserverableCollection(const NonCopiableObserverableCollection&);
+		NonCopiableObserverableCollection(const NonCopiableObserverableCollection&&);
+		void operator =(NonCopiableObserverableCollection);
+	public:
+		NonCopiableObserverableCollection()
+		{}
 	};
 }
 

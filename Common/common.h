@@ -1,9 +1,11 @@
 #pragma once
 
+#include <ObserverableCollection.h>
 
 
 namespace gv
 {
+
 	template <typename T>
 	class Identifier
 	{

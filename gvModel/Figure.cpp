@@ -2,17 +2,16 @@
 
 using namespace gv::Model;
 
-const std::list<Point>* Figure::getPoints() const
+
+const PointsCollection* Figure::getPoints() const
 {
 	return &_points;
 }
 
-
-//std::list<Point>* Figure::getPoints()
-//{
-//	return &_points;
-//}
-
+PointsCollection* Figure::getPoints()
+{
+	return &_points;
+}
 
 void Figure::sendPropertyChanged(const std::string& propName) const
 {

@@ -78,20 +78,25 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="CameraMover.cpp" />
     <ClCompile Include="Figure.cpp" />
     <ClCompile Include="Plan.cpp" />
     <ClCompile Include="PlanElement.cpp" />
+    <ClCompile Include="PlanManager.cpp" />
     <ClCompile Include="Point.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="CameraMover.h" />
     <ClInclude Include="Figure.h" />
     <ClInclude Include="Plan.h" />
     <ClInclude Include="PlanElement.h" />
+    <ClInclude Include="PlanManager.h" />
     <ClInclude Include="Point.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />
+    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.vcxproj">

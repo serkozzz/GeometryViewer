@@ -27,10 +27,10 @@
     <ClInclude Include="Transform.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\libs\EventHandler\ObserverableCollection.h">
+    <ClInclude Include="..\libs\EventHandler\EventHandler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\libs\EventHandler\EventHandler.h">
+    <ClInclude Include="..\libs\skb\EventHandler\ObserverableCollection.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

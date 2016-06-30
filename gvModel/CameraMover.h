@@ -1,21 +1,19 @@
 #pragma once
 
-#include "mCamera.h"
+#include "Camera.h"
 
 namespace gv
 {
 	namespace Model
 	{
-
-
 		class CameraMover
 		{
-			mCamera* _camera;
+			Camera* _camera;
 			int _subscriptiomId;
-			void cameraTryPropertyChanged(const CameraPropChangedArgs&);
+			void cameraTryPropertyChanged(const CameraTryPropChangedArgs&);
 
 		public:
-			CameraMover(mCamera* camera);
+			CameraMover(Camera* camera);
 			~CameraMover();			
 		};
 	}

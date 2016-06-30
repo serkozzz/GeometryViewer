@@ -4,37 +4,37 @@
 #include <map>
 
 
-#include "IPlan.h"
+#include "Plan.h"
 #include "CameraMover.h"
 
 namespace gv
 {
 	namespace Model
 	{
-		class mPlan;
-
 		class PlanManager
 		{
-			mPlan* _plan;
+			Plan _plan;
 			std::shared_ptr<CameraMover> _cameraMover;
-			std::map<std::shared_ptr<IPoint>, int> _subscriptions;
+
+			std::map<const Point*, int> _subscriptions;
+
+			void onFigureAdded(const FigureAddedEventArgs& arg);
+			void onFigureRemoved(const FigureRemovedEventArgs& arg);
 
 			void onTryPointPropChanged(PointPropChangedArgs args);
+
+
 		public:
 			PlanManager();
-			~PlanManager();
 
-			IPlan* getPlan();
+			const Plan* getPlan() const;
 
-			void createNewPoint();
-			void removePoint(const IPoint* point);
-
-#ifdef UNIT_TESTS
-			mPlan* getPlanRegerenceForTest()
-			{
-				return _plan;
-			}
-#endif
+//#ifdef UNIT_TESTS
+//			mPlan* getPlanRegerenceForTest()
+//			{
+//				return _plan;
+//			}
+//#endif
 		};
 	}
 }

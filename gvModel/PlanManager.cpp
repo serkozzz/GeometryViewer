@@ -1,26 +1,52 @@
 #include "PlanManager.h"
-#include "mPlan.h"
+#include "Plan.h"
 
 using namespace gv;
 using namespace gv::Model;
 
-PlanManager::PlanManager()
+
+typedef skb::ItemAddedEventArgs<Figure> FigureAddedEventArgs;
+typedef skb::ItemRemovedEventArgs<Figure> FigureRemovedEventArgs;
+
+
+PlanManager::PlanManager() 
 {
-	_plan = new mPlan();
-	_cameraMover.reset(new CameraMover(_plan->getmCamera()));
+	_cameraMover.reset(new CameraMover(_plan.getCamera()));
+
+	const FiguresCollection* figuresCollection = _plan.getFigures();
+	figuresCollection->itemAdded += std::bind(&PlanManager::onFigureAdded, this, std::placeholders::_1);
+	figuresCollection->itemRemoved += std::bind(&PlanManager::onFigureRemoved, this, std::placeholders::_1);
 }
 
-PlanManager::~PlanManager()
+
+const Plan* PlanManager::getPlan() const
 {
-	_cameraMover.reset();
-	if (_plan)
-		delete _plan;
+	return &_plan;
 }
 
-IPlan* PlanManager::getPlan()
+
+void PlanManager::onFigureAdded(const FigureAddedEventArgs& arg)
 {
-	return _plan;
+
 }
+
+
+void PlanManager::onFigureRemoved(const FigureRemovedEventArgs& arg)
+{
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 void PlanManager::createNewPoint()

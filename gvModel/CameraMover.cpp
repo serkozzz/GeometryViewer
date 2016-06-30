@@ -3,7 +3,7 @@
 using namespace gv::Model;
 
 
-CameraMover::CameraMover(mCamera* camera)
+CameraMover::CameraMover(Camera* camera)
 	: _camera(camera)
 {
 	_subscriptiomId = 
@@ -16,21 +16,26 @@ CameraMover::~CameraMover()
 }
 
 
-void CameraMover::cameraTryPropertyChanged(const CameraPropChangedArgs& arg)
+void CameraMover::cameraTryPropertyChanged(const CameraTryPropChangedArgs& arg)
 {
-	if (arg.propName == ICamera::namePropertyName)
+	if (arg.propName == Camera::namePropertyName)
 	{
 		const std::string* name = static_cast<const std::string*>(arg.newValue);
 		_camera->setName(*name);
 	}
-	else if (arg.propName == ICamera::transformPropertyName)
-	{
-		const glm::mat4* transform = static_cast<const glm::mat4*>(arg.newValue);
-		_camera->setTransform(*transform);
-	}
-	else if (arg.propName == ICamera::positionPropertyName)
+	else if (arg.propName == Camera::positionPropertyName)
 	{
 		const glm::vec3* newPosition = static_cast<const glm::vec3*>(arg.newValue);
 		_camera->setPosition(*newPosition);
 	}
+	else if (arg.propName == Camera::rotationPropertyName)
+	{
+		const glm::vec3* newRotation = static_cast<const glm::vec3*>(arg.newValue);
+		_camera->setRotationEuler(*newRotation);
+	}
+	//else if (arg.propName == Camera::scalePropertyName)
+	//{
+	//	const glm::vec3* newScale = static_cast<const glm::vec3*>(arg.newValue);
+	//	_camera->setRotationEuler(*newScale);
+	//}
 }

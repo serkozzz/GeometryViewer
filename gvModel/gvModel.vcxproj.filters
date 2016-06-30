@@ -31,6 +31,12 @@
     <ClCompile Include="Plan.cpp">
       <Filter>Data</Filter>
     </ClCompile>
+    <ClCompile Include="PlanManager.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraMover.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PlanElement.h">
@@ -48,8 +54,15 @@
     <ClInclude Include="Camera.h">
       <Filter>Data</Filter>
     </ClInclude>
+    <ClInclude Include="PlanManager.h">
+      <Filter>Logic</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraMover.h">
+      <Filter>Logic</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="ClassDiagram.cd" />
+    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
 </Project>

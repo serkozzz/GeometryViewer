@@ -38,7 +38,6 @@ namespace gv
 			static const std::string rotationPropertyName;
 			static const std::string scalePropertyName;
 			static const std::string namePropertyName;
-			static const std::string primitivePropertyName;
 
 			PlanElement();
 

@@ -39,14 +39,14 @@ namespace skb    //means SerKoz Bicycles
 		void append(const ItemType& item)
 		{
 			_collection.push_back(item);
-			pointAdded(ItemAddedEventArgs<ItemType>(&_collection.back(), nullptr));
+			itemAdded(ItemAddedEventArgs<ItemType>(&_collection.back(), nullptr));
 		}
 
 
 		void append(ItemType&& item)
 		{
 			_collection.push_back(std::move(item));
-			pointAdded(ItemAddedEventArgs<ItemType>(&_collection.back(), nullptr));
+			itemAdded(ItemAddedEventArgs<ItemType>(&_collection.back(), nullptr));
 		}
 
 		/*
@@ -58,7 +58,7 @@ namespace skb    //means SerKoz Bicycles
 			auto it = std::find_if(_collection.begin(), _collection.end(), isPointersEqual(*itemAfterInsertion));
 			_collection.insert(it, insertableItem);
 			it--;
-			pointAdded(ItemAddedEventArgs<ItemType>(&(*it), itemAfterInsertion));
+			itemAdded(ItemAddedEventArgs<ItemType>(&(*it), itemAfterInsertion));
 		}
 
 		void insert(ItemType&& insertableItem, const ItemType* itemAfterInsertion)
@@ -66,7 +66,7 @@ namespace skb    //means SerKoz Bicycles
 			auto it = std::find_if(_collection.begin(), _collection.end(), isPointersEqual(*itemAfterInsertion));
 			_collection.insert(it, std::move(insertableItem));
 			it--;
-			pointAdded(ItemAddedEventArgs<ItemType>(&(*it), itemAfterInsertion));
+			itemAdded(ItemAddedEventArgs<ItemType>(&(*it), itemAfterInsertion));
 		}
 
 		/*
@@ -80,7 +80,7 @@ namespace skb    //means SerKoz Bicycles
 			if (it == _collection.end())
 				return false;
 
-			pointRemoved(ItemRemovedEventArgs<ItemType>(&(*it)));
+			itemRemoved(ItemRemovedEventArgs<ItemType>(&(*it)));
 
 			_collection.erase(it);
 			return true;
@@ -95,8 +95,8 @@ namespace skb    //means SerKoz Bicycles
 		}
 
 
-		mutable skb::EventHandler<const ItemAddedEventArgs<ItemType>& > pointAdded;
-		mutable skb::EventHandler<const ItemRemovedEventArgs<ItemType>& > pointRemoved;
+		mutable skb::EventHandler<const ItemAddedEventArgs<ItemType>& > itemAdded;
+		mutable skb::EventHandler<const ItemRemovedEventArgs<ItemType>& > itemRemoved;
 	};
 
 	template< template<typename, typename> class CollectionType, typename ItemType >

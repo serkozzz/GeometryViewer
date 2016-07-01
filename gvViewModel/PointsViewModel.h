@@ -15,7 +15,6 @@ namespace gv
 			BindingList<PointViewModel^>^ _pointsVM;
 
 			Model::IPlan* _plan;
-			Model::PlanManager& _planManager;
 
 			int pointAddedSubscId;
 			int pointRemovedSubscId;		
@@ -60,7 +59,6 @@ namespace gv
 		private:
 			void modelPointAddedEvent(const std::shared_ptr<IPoint>& newPoint)
 			{
-				newPoint->getPosition();
 				_pointsVM->Add(gcnew PointViewModel(newPoint.get()));
 			}
 

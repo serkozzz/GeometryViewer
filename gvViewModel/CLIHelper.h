@@ -2,6 +2,8 @@
 
 #include <msclr\marshal_cppstd.h>
 
+#include <EventHandler.h>
+
 using namespace System;
 using namespace System::Runtime::InteropServices;
 

@@ -30,9 +30,21 @@
     <ClInclude Include="CLIHelper.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="FiguresViewModel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SelectedElementViewModel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SelectedElementViewModel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="PointsViewModel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

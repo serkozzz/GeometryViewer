@@ -79,11 +79,15 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CLIHelper.h" />
+    <ClInclude Include="FiguresViewModel.h" />
     <ClInclude Include="MainViewModel.h" />
     <ClInclude Include="PointsViewModel.h" />
     <ClInclude Include="PointViewModel.h" />
+    <ClInclude Include="SelectedElementViewModel.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="PointsViewModel.cpp" />
+    <ClCompile Include="SelectedElementViewModel.cpp" />
     <ClCompile Include="Source.cpp" />
   </ItemGroup>
   <ItemGroup>

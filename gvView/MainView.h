@@ -283,6 +283,7 @@ namespace gv
 			void InitializeComponent(void)
 			{
 				this->panel1 = (gcnew System::Windows::Forms::Panel());
+				this->label8 = (gcnew System::Windows::Forms::Label());
 				this->label7 = (gcnew System::Windows::Forms::Label());
 				this->label6 = (gcnew System::Windows::Forms::Label());
 				this->label3 = (gcnew System::Windows::Forms::Label());
@@ -312,7 +313,6 @@ namespace gv
 				this->listboxCameraMatrix = (gcnew System::Windows::Forms::ListBox());
 				this->label5 = (gcnew System::Windows::Forms::Label());
 				this->dtGrdVPoints = (gcnew System::Windows::Forms::DataGridView());
-				this->label8 = (gcnew System::Windows::Forms::Label());
 				this->panel1->SuspendLayout();
 				this->panel2->SuspendLayout();
 				this->menuStrip1->SuspendLayout();
@@ -338,6 +338,17 @@ namespace gv
 				this->panel1->Name = L"panel1";
 				this->panel1->Size = System::Drawing::Size(684, 141);
 				this->panel1->TabIndex = 0;
+				// 
+				// label8
+				// 
+				this->label8->Anchor = static_cast<System::Windows::Forms::AnchorStyles>(((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Bottom) 
+					| System::Windows::Forms::AnchorStyles::Right));
+				this->label8->AutoSize = true;
+				this->label8->Location = System::Drawing::Point(250, 20);
+				this->label8->Name = L"label8";
+				this->label8->Size = System::Drawing::Size(73, 13);
+				this->label8->TabIndex = 13;
+				this->label8->Text = L"transformation";
 				// 
 				// label7
 				// 
@@ -574,7 +585,7 @@ namespace gv
 				this->menuStrip1->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(1) {this->menuToolStripMenuItem});
 				this->menuStrip1->Location = System::Drawing::Point(0, 0);
 				this->menuStrip1->Name = L"menuStrip1";
-				this->menuStrip1->Size = System::Drawing::Size(708, 24);
+				this->menuStrip1->Size = System::Drawing::Size(708, 25);
 				this->menuStrip1->TabIndex = 7;
 				this->menuStrip1->Text = L"menuStrip1";
 				// 
@@ -583,20 +594,20 @@ namespace gv
 				this->menuToolStripMenuItem->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(2) {this->loadPlanToolStripMenuItem, 
 					this->savePlanToolStripMenuItem});
 				this->menuToolStripMenuItem->Name = L"menuToolStripMenuItem";
-				this->menuToolStripMenuItem->Size = System::Drawing::Size(50, 20);
+				this->menuToolStripMenuItem->Size = System::Drawing::Size(53, 21);
 				this->menuToolStripMenuItem->Text = L"Menu";
 				// 
 				// loadPlanToolStripMenuItem
 				// 
 				this->loadPlanToolStripMenuItem->Name = L"loadPlanToolStripMenuItem";
-				this->loadPlanToolStripMenuItem->Size = System::Drawing::Size(126, 22);
+				this->loadPlanToolStripMenuItem->Size = System::Drawing::Size(133, 22);
 				this->loadPlanToolStripMenuItem->Text = L"Load Plan";
 				this->loadPlanToolStripMenuItem->Click += gcnew System::EventHandler(this, &MainView::loadPlanToolStripMenuItem_Click);
 				// 
 				// savePlanToolStripMenuItem
 				// 
 				this->savePlanToolStripMenuItem->Name = L"savePlanToolStripMenuItem";
-				this->savePlanToolStripMenuItem->Size = System::Drawing::Size(126, 22);
+				this->savePlanToolStripMenuItem->Size = System::Drawing::Size(133, 22);
 				this->savePlanToolStripMenuItem->Text = L"Save Plan";
 				this->savePlanToolStripMenuItem->Click += gcnew System::EventHandler(this, &MainView::savePlanToolStripMenuItem_Click);
 				// 
@@ -645,17 +656,6 @@ namespace gv
 				this->dtGrdVPoints->Size = System::Drawing::Size(708, 154);
 				this->dtGrdVPoints->TabIndex = 14;
 				this->dtGrdVPoints->SelectionChanged += gcnew System::EventHandler(this, &MainView::dtGrdVPoints_SelectionChanged);
-				// 
-				// label8
-				// 
-				this->label8->Anchor = static_cast<System::Windows::Forms::AnchorStyles>(((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Bottom) 
-					| System::Windows::Forms::AnchorStyles::Right));
-				this->label8->AutoSize = true;
-				this->label8->Location = System::Drawing::Point(250, 20);
-				this->label8->Name = L"label8";
-				this->label8->Size = System::Drawing::Size(73, 13);
-				this->label8->TabIndex = 13;
-				this->label8->Text = L"transformation";
 				// 
 				// MainView
 				// 

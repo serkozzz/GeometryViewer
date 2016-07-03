@@ -20,18 +20,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="IView.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="gvView.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Common\IPoint.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="vPoint.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="CLIHelper.h">
       <Filter>Header Files</Filter>
     </ClInclude>

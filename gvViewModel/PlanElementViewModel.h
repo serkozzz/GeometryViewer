@@ -8,10 +8,10 @@ namespace gv
 	namespace ViewModel
 	{
 
-		public ref class SelectedElementViewModel: System::ComponentModel::INotifyPropertyChanged
+		public ref class PlanElementViewModel: System::ComponentModel::INotifyPropertyChanged
 		{
 			int subscriptionId;
-			Model::PlanElement* _planElement;
+			const Model::PlanElement* _planElement;
 
 			delegate void propChanged(Model::PlanElementPropChangedArgs args);
 			propChanged^ _propChangedDel;
@@ -21,11 +21,11 @@ namespace gv
 		
 		public:
 
-			SelectedElementViewModel(Model::PlanElement* planElement);
-			~SelectedElementViewModel();
+			PlanElementViewModel(const Model::PlanElement* planElement);
+			~PlanElementViewModel();
 
 
-			//const IPoint* getModelPoint();
+			const Model::PlanElement* getModelPlanElementPtr();
 
 #pragma region Transform
 

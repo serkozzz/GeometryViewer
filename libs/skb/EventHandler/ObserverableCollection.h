@@ -95,6 +95,21 @@ namespace skb    //means SerKoz Bicycles
 		}
 
 
+		mutable typename CollectionType<ItemType, std::allocator<ItemType> >::const_iterator it;
+
+		//check situation without startEnumeration call
+		const ItemType* nextItem() const
+		{
+			if (it != _collection.end())
+				return &(*(it++));
+			return nullptr;
+		}
+
+		void startEnumeration() const
+		{
+			it = _collection.begin();
+		}
+
 		mutable skb::EventHandler<const ItemAddedEventArgs<ItemType>& > itemAdded;
 		mutable skb::EventHandler<const ItemRemovedEventArgs<ItemType>& > itemRemoved;
 	};

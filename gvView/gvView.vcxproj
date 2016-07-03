@@ -91,14 +91,10 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\Common\IPoint.h" />
     <ClInclude Include="CLIHelper.h" />
-    <ClInclude Include="gvView.h" />
-    <ClInclude Include="IView.h" />
     <ClInclude Include="MainView.h">
       <FileType>CppForm</FileType>
     </ClInclude>
-    <ClInclude Include="vPoint.h" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="MainView.resx">

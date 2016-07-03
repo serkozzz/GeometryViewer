@@ -82,7 +82,6 @@
     <ClCompile Include="Figure.cpp" />
     <ClCompile Include="Plan.cpp" />
     <ClCompile Include="PlanElement.cpp" />
-    <ClCompile Include="PlanManager.cpp" />
     <ClCompile Include="Point.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -91,7 +90,6 @@
     <ClInclude Include="Figure.h" />
     <ClInclude Include="Plan.h" />
     <ClInclude Include="PlanElement.h" />
-    <ClInclude Include="PlanManager.h" />
     <ClInclude Include="Point.h" />
   </ItemGroup>
   <ItemGroup>

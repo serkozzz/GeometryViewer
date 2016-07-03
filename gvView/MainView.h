@@ -45,7 +45,6 @@ namespace gv
 			MainView(MainViewModel^ viewModel) : _viewModel(viewModel), _indexOfSelectedRow(-1)
 			{
 				InitializeComponent();
-
 				dtGrdVPoints->DataSource = _viewModel->PointsVM->GetPoints();
 
 				subscribeToSelectedPoint();

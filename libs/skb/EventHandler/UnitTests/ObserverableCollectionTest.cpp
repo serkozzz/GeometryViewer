@@ -76,7 +76,7 @@ namespace gvModelUnitTests
 		{
 			skb::ObserverableCollection< std::list, int > col;
 
-			int subsriptionId = (col.pointAdded += std::bind(&ObserverableCollectionTest::ItemAdded, this, std::placeholders::_1));
+			int subsriptionId = (col.itemAdded += std::bind(&ObserverableCollectionTest::ItemAdded, this, std::placeholders::_1));
 			int testItem1 = 11;
 
 			col.append(testItem1);
@@ -100,7 +100,7 @@ namespace gvModelUnitTests
 			if (requierdCall2 != *_call)
 				Assert::Fail();
 
-			col.pointAdded -= subsriptionId;
+			col.itemAdded -= subsriptionId;
 		}
 
 
@@ -108,7 +108,7 @@ namespace gvModelUnitTests
 		{
 			skb::ObserverableCollection< std::list, int > col;
 
-			int subsriptionId = (col.pointAdded += std::bind(&ObserverableCollectionTest::ItemAdded, this, std::placeholders::_1));
+			int subsriptionId = (col.itemAdded += std::bind(&ObserverableCollectionTest::ItemAdded, this, std::placeholders::_1));
 			int testItem1 = 11;
 			int testItem2 = 34;
 			int insertableItem = 88;
@@ -143,14 +143,14 @@ namespace gvModelUnitTests
 			if (requierdCall2 != *_call)
 				Assert::Fail();
 
-			col.pointAdded -= subsriptionId;
+			col.itemAdded -= subsriptionId;
 		}
 
 
 		TEST_METHOD(RemoveTest)
 		{
 			skb::ObserverableCollection< std::list, int > col;
-			int subsriptionId = (col.pointRemoved += std::bind(&ObserverableCollectionTest::ItemRemoved, this, std::placeholders::_1));
+			int subsriptionId = (col.itemRemoved += std::bind(&ObserverableCollectionTest::ItemRemoved, this, std::placeholders::_1));
 
 			int testItem1 = 11;
 			int testItem2 = 34;

@@ -2,7 +2,7 @@
 #include <msclr\marshal_cppstd.h>
 
 #include "CLIHelper.h"
-#include "SelectedElementViewModel.h"
+#include "PlanElementViewModel.h"
 
 
 
@@ -14,22 +14,28 @@ using namespace gv::ViewModel;
 using namespace gv::Model;
 
 
-SelectedElementViewModel::SelectedElementViewModel(PlanElement* planElement) : _planElement(planElement)
+PlanElementViewModel::PlanElementViewModel(const PlanElement* planElement) : _planElement(planElement)
 {			
-	_propChangedDel =  gcnew propChanged(this, &SelectedElementViewModel::planElementPropertyChangedEvent);
+	_propChangedDel =  gcnew propChanged(this, &PlanElementViewModel::planElementPropertyChangedEvent);
 	subscriptionId = 
 		(CLIHelper::SubscribeDelegateToUnmanagedEvent(_propChangedDel, _planElement->propertyChanged));
+	subs
 }
 
 
 
-SelectedElementViewModel::~SelectedElementViewModel()
+PlanElementViewModel::~PlanElementViewModel()
 {
 	_planElement->propertyChanged -= subscriptionId;
 }
 
+const PlanElement* PlanElementViewModel::getModelPlanElementPtr()
+{
+	return _planElement;
+}
 
-void SelectedElementViewModel::planElementPropertyChangedEvent(PlanElementPropChangedArgs arg)
+
+void PlanElementViewModel::planElementPropertyChangedEvent(PlanElementPropChangedArgs arg)
 {
 	if (arg.propName ==	PlanElement::namePropertyName)
 	{
@@ -61,141 +67,141 @@ void SelectedElementViewModel::planElementPropertyChangedEvent(PlanElementPropCh
 #pragma region Transform
 
 
-float SelectedElementViewModel::PositionX::get()
+float PlanElementViewModel::PositionX::get()
 {
 	return _planElement->getPosition().x;
 }
 
-void  SelectedElementViewModel::PositionX::set(float newx) 
+void  PlanElementViewModel::PositionX::set(float newx) 
 {
 	glm::vec3 pos = _planElement->getPosition();
 	pos.x = newx;	
-	_planElement->setPosition(pos);
+	_planElement->trySetPosition(pos);
 }
 
 
 
-float SelectedElementViewModel::PositionY::get() 
+float PlanElementViewModel::PositionY::get() 
 {
 	return _planElement->getPosition().y;
 }
 
-void SelectedElementViewModel::PositionY::set(float newy) 
+void PlanElementViewModel::PositionY::set(float newy) 
 {
 	glm::vec3 pos = _planElement->getPosition();
 	pos.y = newy;	
-	_planElement->setPosition(pos);
+	_planElement->trySetPosition(pos);
 } 
 
 
 
-float SelectedElementViewModel::PositionZ::get()
+float PlanElementViewModel::PositionZ::get()
 {
 	return _planElement->getPosition().z;
 }
 
-void SelectedElementViewModel::PositionZ::set(float newz) 
+void PlanElementViewModel::PositionZ::set(float newz) 
 {
 	glm::vec3 pos = _planElement->getPosition();
 	pos.z = newz;	
-	_planElement->setPosition(pos);
+	_planElement->trySetPosition(pos);
 }
 
 
 
-float SelectedElementViewModel::RotationX::get()
+float PlanElementViewModel::RotationX::get()
 {
 	return _planElement->getRotationEuler().x;
 }
 
-void SelectedElementViewModel::RotationX::set(float newX)
+void PlanElementViewModel::RotationX::set(float newX)
 {
 	glm::vec3 rot = _planElement->getRotationEuler();
 	rot.x = newX;	
-	_planElement->setRotationEuler(rot);
+	_planElement->trySetRotationEuler(rot);
 }
 
 
 
-float SelectedElementViewModel::RotationY::get()
+float PlanElementViewModel::RotationY::get()
 {
 	return _planElement->getRotationEuler().y;
 }
 
-void SelectedElementViewModel::RotationY::set(float newY)
+void PlanElementViewModel::RotationY::set(float newY)
 {
 	glm::vec3 rot = _planElement->getRotationEuler();
 	rot.y = newY;	
-	_planElement->setRotationEuler(rot);
+	_planElement->trySetRotationEuler(rot);
 }
 
 
 
-float SelectedElementViewModel::RotationZ::get()
+float PlanElementViewModel::RotationZ::get()
 {
 	return _planElement->getRotationEuler().z;
 }
 
-void SelectedElementViewModel::RotationZ::set(float newZ)
+void PlanElementViewModel::RotationZ::set(float newZ)
 {
 	glm::vec3 rot = _planElement->getRotationEuler();
 	rot.z = newZ;	
-	_planElement->setRotationEuler(rot);
+	_planElement->trySetRotationEuler(rot);
 }
 
 
 
-float SelectedElementViewModel::ScaleX::get()
+float PlanElementViewModel::ScaleX::get()
 {
 	return _planElement->getScale().x;
 }
 
-void SelectedElementViewModel::ScaleX::set(float newX)
+void PlanElementViewModel::ScaleX::set(float newX)
 {
 	glm::vec3 scale = _planElement->getScale();
 	scale.x = newX;	
-	_planElement->setScale(scale);
+	_planElement->trySetScale(scale);
 }
 
 
-float SelectedElementViewModel::ScaleY::get()
+float PlanElementViewModel::ScaleY::get()
 {
 	return _planElement->getScale().y;
 }
 
-void SelectedElementViewModel::ScaleY::set(float newY)
+void PlanElementViewModel::ScaleY::set(float newY)
 {
 	glm::vec3 scale = _planElement->getScale();
 	scale.y = newY;	
-	_planElement->setScale(scale);
+	_planElement->trySetScale(scale);
 }
 
 
-float SelectedElementViewModel::ScaleZ::get()
+float PlanElementViewModel::ScaleZ::get()
 {
 	return _planElement->getScale().z;
 }
 
-void SelectedElementViewModel::ScaleZ::set(float newZ)
+void PlanElementViewModel::ScaleZ::set(float newZ)
 {
 	glm::vec3 scale = _planElement->getScale();
 	scale.z = newZ;	
-	_planElement->setScale(scale);
+	_planElement->trySetScale(scale);
 }
 
 #pragma endregion Transform
 
 
 
-System::String^ SelectedElementViewModel::Name::get() 
+System::String^ PlanElementViewModel::Name::get() 
 {
 	System::String^ name = gcnew System::String(_planElement->getName().c_str());
 	return name;
 }
 
-void SelectedElementViewModel::Name::set(System::String^ newName) 
+void PlanElementViewModel::Name::set(System::String^ newName) 
 {
 	std::string name = marshal_as<std::string>(newName);
-	_planElement->setName(name);
+	_planElement->trySetName(name);
 }
 

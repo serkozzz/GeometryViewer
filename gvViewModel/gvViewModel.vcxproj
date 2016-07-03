@@ -20,7 +20,7 @@
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v110</PlatformToolset>
-    <CharacterSet>Unicode</CharacterSet>
+    <CharacterSet>MultiByte</CharacterSet>
     <CLRSupport>true</CLRSupport>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
@@ -41,7 +41,9 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <EnableManagedIncrementalBuild>false</EnableManagedIncrementalBuild>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <PrecompiledHeader>
@@ -78,17 +80,18 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="CLIHelper.h" />
-    <ClInclude Include="FiguresViewModel.h" />
+    <ClInclude Include="FiguresCollectionViewModel.h" />
+    <ClInclude Include="FigureViewModel.h" />
     <ClInclude Include="MainViewModel.h" />
-    <ClInclude Include="PointsViewModel.h" />
+    <ClInclude Include="PlanElementNameViewModel.h" />
+    <ClInclude Include="PlanElementViewModel.h" />
+    <ClInclude Include="PointsCollectionViewModel.h" />
     <ClInclude Include="PointViewModel.h" />
-    <ClInclude Include="SelectedElementViewModel.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="PointsViewModel.cpp" />
-    <ClCompile Include="SelectedElementViewModel.cpp" />
-    <ClCompile Include="Source.cpp" />
+    <ClCompile Include="FiguresCollectionViewModel.cpp" />
+    <ClCompile Include="PlanElementViewModel.cpp" />
+    <ClCompile Include="PointsCollectionViewModel.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.vcxproj">

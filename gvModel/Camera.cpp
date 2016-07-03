@@ -2,7 +2,7 @@
 
 using namespace gv::Model;
 
-Camera::Camera()
+Camera::Camera(const std::string& name) : PlanElement(name)
 {
 
 }

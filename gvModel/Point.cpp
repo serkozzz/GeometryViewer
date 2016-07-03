@@ -7,6 +7,15 @@ using namespace gv::Model;
 
 const std::string Point::primitivePropertyName = "primitive";
 
+
+
+Point::Point(const std::string& name) : PlanElement(name)
+{
+
+}
+
+
+
 PrimitiveType Point::getPrimitive() const
 {
 	return _primitive;

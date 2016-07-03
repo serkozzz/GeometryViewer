@@ -24,3 +24,18 @@ Camera* Plan::getCamera()
 {
 	return &_camera;
 }
+
+
+
+const Figure* Plan::addNewFigure(const Figure* figureAfterInsertion)
+{
+	size_t pointsNumber = _figures.size();
+	
+	return _figures.insert(Figure("figure " + std::to_string(pointsNumber)), figureAfterInsertion);
+}
+
+
+bool Plan::removeFigure(const Figure* figure)
+{
+	return _figures.remove(figure);
+}

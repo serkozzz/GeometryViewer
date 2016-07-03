@@ -11,9 +11,10 @@ const std::string PlanElement::scalePropertyName = "scale";
 const std::string PlanElement::namePropertyName = "name";
 
 
-PlanElement::PlanElement()
+PlanElement::PlanElement(const std::string& name) 
+	: _transform( std::make_shared<Transform>()), 
+	_name(name)
 {
-	_transform = std::make_shared<Transform>();
 }
 
 

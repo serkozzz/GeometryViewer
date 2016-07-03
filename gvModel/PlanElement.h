@@ -39,7 +39,7 @@ namespace gv
 			static const std::string scalePropertyName;
 			static const std::string namePropertyName;
 
-			PlanElement();
+			PlanElement(const std::string& name);
 
 			glm::vec3 getPosition() const;
 			void trySetPosition(const glm::vec3& newPosition) const;

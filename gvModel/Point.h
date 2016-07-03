@@ -19,6 +19,8 @@ namespace gv
 
 			static const std::string primitivePropertyName;
 
+			Point(const std::string& name);
+
 			PrimitiveType getPrimitive() const;
 			void setPrimitive(const PrimitiveType& newPrimitive);
 			void trySetPrimitive(const PrimitiveType& newPrimitive) const;

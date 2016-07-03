@@ -19,6 +19,9 @@ namespace gv
 
 			const Camera* getCamera() const;
 			Camera* getCamera();
+
+			const Figure* addNewFigure(const Figure* figureAfterInsertion);
+			bool removeFigure(const Figure* figure);
 		};
 	}
 }

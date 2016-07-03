@@ -36,37 +36,41 @@ namespace skb    //means SerKoz Bicycles
 		adds item to the tail of collection;
 		WARNING! item from args will be copied and item in the collection will have other adress
 		*/
-		void append(const ItemType& item)
+		const ItemType* append(const ItemType& item)
 		{
 			_collection.push_back(item);
 			itemAdded(ItemAddedEventArgs<ItemType>(&_collection.back(), nullptr));
+			return &_collection.back();
 		}
 
 
-		void append(ItemType&& item)
+		const ItemType* append(ItemType&& item)
 		{
 			_collection.push_back(std::move(item));
 			itemAdded(ItemAddedEventArgs<ItemType>(&_collection.back(), nullptr));
+			return &_collection.back();
 		}
 
 		/*
-		adds item before itemAfterInsertion;
+		insert item before itemAfterInsertion(if itemAfterInsertion is nullptr, insert to the tail of collection);
 		WARNING! item from args will be copied and item in the collection will have other adress
 		*/
-		void insert(const ItemType& insertableItem, const ItemType* itemAfterInsertion)
+		const ItemType* insert(const ItemType& insertableItem, const ItemType* itemAfterInsertion)
 		{
 			auto it = std::find_if(_collection.begin(), _collection.end(), isPointersEqual(*itemAfterInsertion));
 			_collection.insert(it, insertableItem);
-			it--;
+			const ItemType* addedItemPtr = &(*(--it));
 			itemAdded(ItemAddedEventArgs<ItemType>(&(*it), itemAfterInsertion));
+			return addedItemPtr;
 		}
 
-		void insert(ItemType&& insertableItem, const ItemType* itemAfterInsertion)
+		const ItemType* insert(ItemType&& insertableItem, const ItemType* itemAfterInsertion)
 		{
 			auto it = std::find_if(_collection.begin(), _collection.end(), isPointersEqual(*itemAfterInsertion));
 			_collection.insert(it, std::move(insertableItem));
-			it--;
-			itemAdded(ItemAddedEventArgs<ItemType>(&(*it), itemAfterInsertion));
+			const ItemType* addedItemPtr = &(*(--it));
+			itemAdded(ItemAddedEventArgs<ItemType>(addedItemPtr, itemAfterInsertion));
+			return addedItemPtr;
 		}
 
 		/*
@@ -94,6 +98,13 @@ namespace skb    //means SerKoz Bicycles
 			return &_collection;
 		}
 
+		/*
+			return items number
+		*/
+		size_t size() const
+		{
+			return _collection.size();
+		}
 
 		mutable typename CollectionType<ItemType, std::allocator<ItemType> >::const_iterator it;
 

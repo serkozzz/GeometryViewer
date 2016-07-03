@@ -16,7 +16,7 @@ namespace gv
 		class Camera : public PlanElement
 		{
 		public:
-			Camera();
+			Camera(const std::string& name);
 
 			mutable skb::EventHandler<CameraPropChangedArgs> propertyChanged;
 			mutable	skb::EventHandler<CameraTryPropChangedArgs> tryPropertyChanged;

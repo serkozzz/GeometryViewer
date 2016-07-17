@@ -1,6 +1,9 @@
 #pragma once
 
+#include <memory>
+
 #include "EventHandler.h"
+
 
 namespace skb    //means SerKoz Bicycles
 {
@@ -15,7 +18,7 @@ namespace skb    //means SerKoz Bicycles
 	template< template<typename, typename> class CollectionType, typename ItemType >
 	class ObserverableCollection
 	{
-		CollectionType<ItemType, std::allocator<ItemType> > _collection;
+		std::unique_ptr<CollectionType<ItemType, std::allocator<ItemType> > > _collection;
 
 		class isPointersEqual
 		{
@@ -38,17 +41,17 @@ namespace skb    //means SerKoz Bicycles
 		*/
 		const ItemType* append(const ItemType& item)
 		{
-			_collection.push_back(item);
-			itemAdded(ItemAddedEventArgs<ItemType>(&_collection.back(), nullptr));
-			return &_collection.back();
+			_collection->push_back(item);
+			itemAdded(ItemAddedEventArgs<ItemType>(&_collection->back(), nullptr));
+			return &_collection->back();
 		}
 
 
 		const ItemType* append(ItemType&& item)
 		{
-			_collection.push_back(std::move(item));
-			itemAdded(ItemAddedEventArgs<ItemType>(&_collection.back(), nullptr));
-			return &_collection.back();
+			_collection->push_back(std::move(item));
+			itemAdded(ItemAddedEventArgs<ItemType>(&_collection->back(), nullptr));
+			return &_collection->back();
 		}
 
 		/*
@@ -57,8 +60,8 @@ namespace skb    //means SerKoz Bicycles
 		*/
 		const ItemType* insert(const ItemType& insertableItem, const ItemType* itemAfterInsertion)
 		{
-			auto it = std::find_if(_collection.begin(), _collection.end(), isPointersEqual(*itemAfterInsertion));
-			_collection.insert(it, insertableItem);
+			auto it = std::find_if(_collection->begin(), _collection->end(), isPointersEqual(*itemAfterInsertion));
+			_collection->insert(it, insertableItem);
 			const ItemType* addedItemPtr = &(*(--it));
 			itemAdded(ItemAddedEventArgs<ItemType>(&(*it), itemAfterInsertion));
 			return addedItemPtr;
@@ -66,8 +69,8 @@ namespace skb    //means SerKoz Bicycles
 
 		const ItemType* insert(ItemType&& insertableItem, const ItemType* itemAfterInsertion)
 		{
-			auto it = std::find_if(_collection.begin(), _collection.end(), isPointersEqual(*itemAfterInsertion));
-			_collection.insert(it, std::move(insertableItem));
+			auto it = std::find_if(_collection->begin(), _collection->end(), isPointersEqual(*itemAfterInsertion));
+			_collection->insert(it, std::move(insertableItem));
 			const ItemType* addedItemPtr = &(*(--it));
 			itemAdded(ItemAddedEventArgs<ItemType>(addedItemPtr, itemAfterInsertion));
 			return addedItemPtr;
@@ -79,14 +82,14 @@ namespace skb    //means SerKoz Bicycles
 		*/
 		bool remove(const ItemType* removedItem)
 		{
-			auto it = std::find_if(_collection.begin(), _collection.end(), isPointersEqual(*removedItem));
+			auto it = std::find_if(_collection->begin(), _collection->end(), isPointersEqual(*removedItem));
 
-			if (it == _collection.end())
+			if (it == _collection->end())
 				return false;
 
 			itemRemoved(ItemRemovedEventArgs<ItemType>(&(*it)));
 
-			_collection.erase(it);
+			_collection->erase(it);
 			return true;
 		}
 
@@ -95,15 +98,15 @@ namespace skb    //means SerKoz Bicycles
 		*/
 		const CollectionType<ItemType, std::allocator<ItemType> >* getItems() const
 		{
-			return &_collection;
+			return _collection->get();
 		}
 
 		/*
-			return items number
+		return items number
 		*/
 		size_t size() const
 		{
-			return _collection.size();
+			return _collection->size();
 		}
 
 		mutable typename CollectionType<ItemType, std::allocator<ItemType> >::const_iterator it;
@@ -111,14 +114,50 @@ namespace skb    //means SerKoz Bicycles
 		//check situation without startEnumeration call
 		const ItemType* nextItem() const
 		{
-			if (it != _collection.end())
+			if (it != _collection->end())
 				return &(*(it++));
 			return nullptr;
 		}
 
 		void startEnumeration() const
 		{
-			it = _collection.begin();
+			it = _collection->begin();
+		}
+
+		ObserverableCollection() : 	_collection(new CollectionType<ItemType, std::allocator<ItemType> >())
+		{
+
+		}
+
+		//очень вероятно, что можно было не писать всю эту байду вручную, ведь у классов контейнеров есть кон-р копирования пермещением
+		//так что можно наверно было оставить _collection членом по значеню
+		//TODO поэкспериментировать с к-рами копирования перемещением коллекций
+		ObserverableCollection(const ObserverableCollection& other) : ObserverableCollection()
+		{
+			_collection = std::make_unique<CollectionType<ItemType, std::allocator<ItemType> >(other._collection);
+		}
+
+		ObserverableCollection& operator= (const ObserverableCollection& other)
+		{
+			ObserverableCollection temp(other);
+			swap(*this, other);
+		}
+
+
+		ObserverableCollection(ObserverableCollection&& other)
+		{
+			this->_collection = std::move(other._collection);
+		}
+
+		ObserverableCollection& operator= (ObserverableCollection&& other)
+		{
+			ObserverableCollection temp(std::move(other));
+			swap(*this, temp);
+		}
+
+		friend void swap(ObserverableCollection& one, ObserverableCollection& other)
+		{
+			one._collection.swap(other._collection);
 		}
 
 		mutable skb::EventHandler<const ItemAddedEventArgs<ItemType>& > itemAdded;
@@ -129,10 +168,11 @@ namespace skb    //means SerKoz Bicycles
 	class NonCopiableObserverableCollection : public ObserverableCollection<CollectionType, ItemType>
 	{
 		NonCopiableObserverableCollection(const NonCopiableObserverableCollection&);
-		NonCopiableObserverableCollection(const NonCopiableObserverableCollection&&);
-		void operator =(NonCopiableObserverableCollection);
+		void operator =(NonCopiableObserverableCollection&);
 	public:
-		NonCopiableObserverableCollection()
+		NonCopiableObserverableCollection(const NonCopiableObserverableCollection&& other) : ObserverableCollection(std::move(other))
+		{}
+		NonCopiableObserverableCollection() : ObserverableCollection()
 		{}
 	};
 }

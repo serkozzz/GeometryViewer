@@ -38,9 +38,6 @@ namespace gv
 		protected:
 			virtual void sendPropertyChanged(const std::string& propName) const;
 			virtual void sendTryPropertyChanged(const void* newValue, const std::string& propName) const;
-
-		private:
-			Figure(const Figure&);
 		};
 	}
 }

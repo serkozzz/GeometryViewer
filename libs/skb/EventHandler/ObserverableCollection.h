@@ -134,7 +134,8 @@ namespace skb    //means SerKoz Bicycles
 		//TODO поэкспериментировать с к-рами копирования перемещением коллекций
 		ObserverableCollection(const ObserverableCollection& other) : ObserverableCollection()
 		{
-			_collection = std::make_unique<CollectionType<ItemType, std::allocator<ItemType> >(other._collection);
+			auto ptr = new CollectionType<ItemType, std::allocator<ItemType> > (other._collection.get())
+			_collection.reset(ptr);
 		}
 
 		ObserverableCollection& operator= (const ObserverableCollection& other)
@@ -168,9 +169,9 @@ namespace skb    //means SerKoz Bicycles
 	class NonCopiableObserverableCollection : public ObserverableCollection<CollectionType, ItemType>
 	{
 		NonCopiableObserverableCollection(const NonCopiableObserverableCollection&);
-		void operator =(NonCopiableObserverableCollection&);
+		//void operator =(NonCopiableObserverableCollection&);
 	public:
-		NonCopiableObserverableCollection(const NonCopiableObserverableCollection&& other) : ObserverableCollection(std::move(other))
+		NonCopiableObserverableCollection(NonCopiableObserverableCollection&& other) : ObserverableCollection(std::move(other))
 		{}
 		NonCopiableObserverableCollection() : ObserverableCollection()
 		{}

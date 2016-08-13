@@ -30,8 +30,8 @@ Camera* Plan::getCamera()
 const Figure* Plan::addNewFigure(const Figure* figureAfterInsertion)
 {
 	size_t pointsNumber = _figures.size();
-	
-	return _figures.insert(Figure("figure " + std::to_string(pointsNumber)), figureAfterInsertion);
+	Figure f ("figure " + std::to_string(pointsNumber));
+	return _figures.insert(std::move(f), figureAfterInsertion);
 }
 
 

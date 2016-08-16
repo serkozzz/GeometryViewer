@@ -76,7 +76,6 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\libs\EventHandler\EventHandler.h" />
     <ClInclude Include="..\libs\Logger\Logger.h" />
     <ClInclude Include="..\libs\skb\EventHandler\ObserverableCollection.h" />
     <ClInclude Include="common.h" />

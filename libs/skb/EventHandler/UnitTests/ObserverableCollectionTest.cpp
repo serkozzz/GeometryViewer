@@ -25,7 +25,7 @@ namespace gvModelUnitTests
 		template<typename T>
 		struct Call : public BaseCall
 		{
-			Call(int methodType, std::string propertyName, const T* value) 
+			Call(int methodType, std::string propertyName, const T& value) 
 				: BaseCall(methodType), methodType(methodType), propertyName(propertyName), value(value)
 			{
 			}
@@ -39,6 +39,7 @@ namespace gvModelUnitTests
 
 			bool operator== (const Call& other)
 			{
+				//todo call of base class operator
 				if (this->methodType != other.methodType)
 					return false;
 				if (this->propertyName != other.propertyName)
@@ -52,7 +53,7 @@ namespace gvModelUnitTests
 		private:
 			int methodType;
 			std::string propertyName;
-			const T* value;
+			const T& value;
 
 		};
 
@@ -77,28 +78,20 @@ namespace gvModelUnitTests
 			skb::ObserverableCollection< std::list, int > col;
 
 			int subsriptionId = (col.itemAdded += std::bind(&ObserverableCollectionTest::ItemAdded, this, std::placeholders::_1));
-			int testItem1 = 11;
 
-			col.append(testItem1);
-			const int* item1 =  &col.getItems()->front();
-			if (col.getItems()->size() != 1 || *item1 != testItem1)
-				Assert::Fail();
+			for (int i = 1; i <= 10; i++)
+			{
+				int testItem = 11 * i;
 
-			Call<int> requierdCall(Call<int>::Method_itemAddedEvent, "", item1);
-			if (requierdCall != *_call)
-				Assert::Fail();
+				col.push_back(testItem);
 
+				if (col.size() != i || col.back() != testItem)
+					Assert::Fail();
 
-
-			int testItem2 = 34;
-			col.append(testItem2);
-			const int* item2 =  &col.getItems()->back();
-			if (col.getItems()->size() != 2 || *item2 != testItem2)
-				Assert::Fail();
-
-			Call<int> requierdCall2(Call<int>::Method_itemAddedEvent, "", item2);
-			if (requierdCall2 != *_call)
-				Assert::Fail();
+				Call<int> requieredCall(Call<int>::Method_itemAddedEvent, "", col.back());
+				if (requieredCall != *_call)
+					Assert::Fail();
+			}
 
 			col.itemAdded -= subsriptionId;
 		}
@@ -114,33 +107,19 @@ namespace gvModelUnitTests
 			int insertableItem = 88;
 
 
-			col.append(testItem1);
-			col.append(testItem2);
+			col.push_back(testItem1);
+			col.push_back(testItem2);
 
-			col.insert(insertableItem, &col.getItems()->back());
+			col.insert(--col.end(), insertableItem);
 
-			auto it = col.getItems()->begin();
+			auto it = col.begin();
 			it++;
 
-			const int* item2 = &(*it);
-			if (col.getItems()->size() != 3 || *item2 != insertableItem)
+			if (col.size() != 3 || *it != insertableItem)
 				Assert::Fail();
 
-			Call<int> requierdCall(Call<int>::Method_itemAddedEvent, "", item2);
+			Call<int> requierdCall(Call<int>::Method_itemAddedEvent, "", *it);
 			if (requierdCall != *_call)
-				Assert::Fail();
-
-
-
-			int insertableItem2 = 112;
-			col.insert(insertableItem2, nullptr);
-
-			const int* item4 = &col.getItems()->back();
-			if (col.getItems()->size() != 4 || *item4 != insertableItem2)
-				Assert::Fail();
-
-			Call<int> requierdCall2(Call<int>::Method_itemAddedEvent, "", item4);
-			if (requierdCall2 != *_call)
 				Assert::Fail();
 
 			col.itemAdded -= subsriptionId;
@@ -155,15 +134,14 @@ namespace gvModelUnitTests
 			int testItem1 = 11;
 			int testItem2 = 34;
 
-			col.append(testItem1);
-			col.append(testItem2);
+			col.push_back(testItem1);
+			col.push_back(testItem2);
 
-			const int* item1 = &col.getItems()->front();
+			int firstItem = col.front();
+			col.erase(col.begin());
+			Call<int> requierdCall(Call<int>::Method_itemRemovedEvent, "", firstItem);
 
-			col.remove(item1);
-			Call<int> requierdCall(Call<int>::Method_itemRemovedEvent, "", item1);
-
-			if (col.getItems()->size() != 1 || col.getItems()->front() != testItem2)
+			if (col.size() != 1 || col.front() != testItem2)
 				Assert::Fail();
 
 
@@ -176,7 +154,7 @@ namespace gvModelUnitTests
 		{
 			skb::ObserverableCollection< std::list, SimpleTestClass > col;
 			SimpleTestClass testItem1("Obj 1");
-			col.append(std::move(testItem1));
+			col.push_back(std::move(testItem1));
 
 			auto callsList = SimpleTestClass::getMethodCallList();
 			const BaseCall moveConstructorCall(BaseCall::Method_Move_Constructor);
@@ -191,17 +169,16 @@ namespace gvModelUnitTests
 
 
 
-			if (col.getItems()->size() != 1)
+			if (col.size() != 1)
 				Assert::Fail();
 
-			col.append(SimpleTestClass("Obj 2"));
+			col.push_back(SimpleTestClass("Obj 2"));
 
-			auto it = col.getItems()->begin();
+			auto it = col.begin();
 			it++;
-			const SimpleTestClass* item2Ptr = &(*it);
 
 			SimpleTestClass::clearMethodCallList();
-			col.insert(SimpleTestClass("insertableObj"), item2Ptr);
+			col.insert(it, SimpleTestClass("insertableObj"));
 
 			if (std::find_if(callsList.begin(), callsList.end(), [&moveConstructorCall] (const std::shared_ptr<BaseCall>& call) -> bool
 			{
@@ -212,7 +189,7 @@ namespace gvModelUnitTests
 			}
 
 
-			if (col.getItems()->size() != 3)
+			if (col.size() != 3)
 				Assert::Fail();
 
 		}

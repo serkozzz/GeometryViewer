@@ -99,11 +99,6 @@
     </ClCompile>
     <ClCompile Include="eventsTest.cpp" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\gvModel\gvModel.vcxproj">
-      <Project>{1cef1409-52c9-4c7b-940c-c4e2022f51ce}</Project>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

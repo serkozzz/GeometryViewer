@@ -34,12 +34,20 @@ void Figure::sendTryPropertyChanged(const void* newValue, const std::string& pro
 const Point* Figure::addNewPoint(const Point* pointAfterInsertion)
 {
 	size_t pointsNumber = _points.size();
-	Point newPoint("point " + std::to_string(pointsNumber));
-	return _points.insert(std::move(newPoint), pointAfterInsertion);
+	std::unique_ptr<Point> newPoint(new Point("point " + std::to_string(pointsNumber)));
+
+	if (pointAfterInsertion == nullptr)
+	{
+		_points.push_back(std::move(newPoint));
+		return _points.back().get();
+	}
+	auto it = _points.find(pointAfterInsertion);
+	return (*_points.insert(it, std::move(newPoint))).get();
 }
 
 
 bool Figure::removePoint(const Point* point)
 {
-	return _points.remove(point);
+	_points.erase(_points.find(point));
+	return true;
 }

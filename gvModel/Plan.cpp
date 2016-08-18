@@ -29,13 +29,21 @@ Camera* Plan::getCamera()
 
 const Figure* Plan::addNewFigure(const Figure* figureAfterInsertion)
 {
-	size_t pointsNumber = _figures.size();
-	Figure f ("figure " + std::to_string(pointsNumber));
-	return _figures.insert(std::move(f), figureAfterInsertion);
+	size_t figuresNumber = _figures.size();
+	std::unique_ptr<Figure> newFigure(new Figure("figure " + std::to_string(figuresNumber)));
+
+	if (figureAfterInsertion == nullptr)
+	{
+		_figures.push_back(std::move(newFigure));
+		return _figures.back().get();
+	}
+	auto it = _figures.find(figureAfterInsertion);
+	return (*_figures.insert(it, std::move(newFigure))).get();
 }
 
 
 bool Plan::removeFigure(const Figure* figure)
 {
-	return _figures.remove(figure);
+	_figures.erase(_figures.find(figure));
+	return true;
 }

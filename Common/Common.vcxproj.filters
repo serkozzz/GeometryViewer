@@ -27,6 +27,9 @@
     <ClInclude Include="..\libs\skb\EventHandler\ObserverableCollection.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="PtrsObserverableCollection.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\libs\Logger\Logger.cpp">

@@ -8,7 +8,7 @@ namespace gv
 {
 	namespace Model
 	{
-		typedef skb::ObserverableCollection<std::list, Figure> FiguresCollection;
+		typedef skb::PtrsObserverableCollection<std::list, Figure> FiguresCollection;
 		class Plan
 		{
 			FiguresCollection _figures;

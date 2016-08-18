@@ -2,9 +2,9 @@
 
 #include <list>
 
-#include <ObserverableCollection.h>
+#include <PtrsObserverableCollection.h>
 #include <common.h>
-
+#include <memory>
 
 #include "Point.h"
 
@@ -17,7 +17,7 @@ namespace gv
 		typedef skb::PropertyChangedArgs<Figure> FigurePropChangedArgs;
 		typedef skb::TryPropertyChangedArgs<Figure> FigureTryPropChangedArgs;
 
-		typedef skb::NonCopiableObserverableCollection<std::list, Point> PointsCollection;
+		typedef skb::PtrsObserverableCollection<std::list, Point > PointsCollection;
 
 		class Figure : public PlanElement
 		{

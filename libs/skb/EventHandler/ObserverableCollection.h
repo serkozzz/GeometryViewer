@@ -17,13 +17,12 @@ namespace skb    //means SerKoz Bicycles
 	template< template<typename, typename> class CollectionType, typename ItemType >
 	class ObserverableCollection
 	{
-		typedef typename CollectionType<ItemType, std::allocator<ItemType> >::const_iterator const_iterator;
-		typedef typename CollectionType<ItemType, std::allocator<ItemType> >::iterator iterator;
-
+	protected:
 		CollectionType<ItemType, std::allocator<ItemType> > _collection;
 
 	public:
-
+		typedef typename CollectionType<ItemType, std::allocator<ItemType> >::const_iterator const_iterator;
+		typedef typename CollectionType<ItemType, std::allocator<ItemType> >::iterator iterator;
 		/*
 		return items number
 		*/

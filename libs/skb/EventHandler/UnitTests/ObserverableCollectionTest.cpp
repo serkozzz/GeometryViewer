@@ -229,5 +229,29 @@ namespace gvModelUnitTests
 			}
 
 		}
+
+
+		TEST_METHOD(FindTest)
+		{
+			skb::ObserverableCollection<std::list, std::unique_ptr<int>> col;
+			{
+				for (int i = 0; i < 10; i++)
+				{
+					col.push_back(std::unique_ptr<int>(new int(i)));
+				}
+			}
+
+			auto it = std::find_if(col.begin(), col.end(), [] (std::unique_ptr<int>& item) 
+			{
+				if ( *item == 7)
+					return true;
+				return false;
+			});
+
+			if(**(++it) != 8)
+			{
+				Assert::Fail();
+			}
+		}
 	};
 }

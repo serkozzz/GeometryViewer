@@ -37,9 +37,6 @@
     <ClCompile Include="stdafx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="eventsTest.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="FigureTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -47,6 +44,9 @@
       <Filter>skb</Filter>
     </ClCompile>
     <ClCompile Include="..\libs\skb\EventHandler\UnitTests\ObserverableCollectionTest.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="eventsTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -57,27 +57,36 @@ namespace gvModelUnitTests
 
 		};
 
-
-		std::shared_ptr<Call<int> > _call;
-
-		void ItemAdded(const skb::ItemAddedEventArgs<int>& arg)
+		template<typename T>
+		class Registrator
 		{
-			_call = std::make_shared<Call<int> >(Call<int>::Method_itemAddedEvent, "", arg.item);
-		}
+			std::shared_ptr<Call<T> > _call;
+		public:
+			Call<T>* getCall()
+			{
+				return _call.get();
+			}
+
+			void ItemAdded(const skb::ItemAddedEventArgs<T>& arg)
+			{
+				_call = std::make_shared<Call<int> >(Call<int>::Method_itemAddedEvent, "", arg.item);
+			}
 
 
-		void ItemRemoved(const skb::ItemRemovedEventArgs<int>& arg)
-		{
-			_call = std::make_shared<Call<int> >(Call<int>::Method_itemRemovedEvent, "", arg.item);
-		}
+			void ItemRemoved(const skb::ItemRemovedEventArgs<T>& arg)
+			{
+				_call = std::make_shared<Call<int> >(Call<int>::Method_itemRemovedEvent, "", arg.item);
+			}
+		};
 
 	public:
 
 		TEST_METHOD(AppendTest)
 		{
 			skb::ObserverableCollection< std::list, int > col;
-
-			int subsriptionId = (col.itemAdded += std::bind(&ObserverableCollectionTest::ItemAdded, this, std::placeholders::_1));
+			Registrator<int> registrator;
+			//int subsriptionId = (col.itemAdded  += &registrator.ItemAdded);
+			int subsriptionId = (col.itemAdded += std::bind(&Registrator<int>::ItemAdded, &registrator, std::placeholders::_1));
 
 			for (int i = 1; i <= 10; i++)
 			{
@@ -89,7 +98,7 @@ namespace gvModelUnitTests
 					Assert::Fail();
 
 				Call<int> requieredCall(Call<int>::Method_itemAddedEvent, "", col.back());
-				if (requieredCall != *_call)
+				if (requieredCall != *registrator.getCall())
 					Assert::Fail();
 			}
 
@@ -100,8 +109,8 @@ namespace gvModelUnitTests
 		TEST_METHOD(InsertTest)
 		{
 			skb::ObserverableCollection< std::list, int > col;
-
-			int subsriptionId = (col.itemAdded += std::bind(&ObserverableCollectionTest::ItemAdded, this, std::placeholders::_1));
+			Registrator<int> registrator;
+			int subsriptionId = (col.itemAdded += std::bind(&Registrator<int>::ItemAdded, &registrator, std::placeholders::_1));
 			int testItem1 = 11;
 			int testItem2 = 34;
 			int insertableItem = 88;
@@ -109,6 +118,7 @@ namespace gvModelUnitTests
 
 			col.push_back(testItem1);
 			col.push_back(testItem2);
+
 
 			col.insert(--col.end(), insertableItem);
 
@@ -119,7 +129,7 @@ namespace gvModelUnitTests
 				Assert::Fail();
 
 			Call<int> requierdCall(Call<int>::Method_itemAddedEvent, "", *it);
-			if (requierdCall != *_call)
+			if (requierdCall != *registrator.getCall())
 				Assert::Fail();
 
 			col.itemAdded -= subsriptionId;
@@ -129,7 +139,8 @@ namespace gvModelUnitTests
 		TEST_METHOD(RemoveTest)
 		{
 			skb::ObserverableCollection< std::list, int > col;
-			int subsriptionId = (col.itemRemoved += std::bind(&ObserverableCollectionTest::ItemRemoved, this, std::placeholders::_1));
+			Registrator<int> registrator;
+			int subsriptionId = (col.itemRemoved += std::bind(&Registrator<int>::ItemRemoved, &registrator, std::placeholders::_1));
 
 			int testItem1 = 11;
 			int testItem2 = 34;
@@ -145,7 +156,7 @@ namespace gvModelUnitTests
 				Assert::Fail();
 
 
-			if (requierdCall != *_call)
+			if (requierdCall != *registrator.getCall())
 				Assert::Fail();
 		}
 
@@ -153,6 +164,7 @@ namespace gvModelUnitTests
 		TEST_METHOD(MoveSemanticsTest)
 		{
 			skb::ObserverableCollection< std::list, SimpleTestClass > col;
+
 			SimpleTestClass testItem1("Obj 1");
 			col.push_back(std::move(testItem1));
 
@@ -166,7 +178,6 @@ namespace gvModelUnitTests
 			{
 				Assert::Fail();
 			}
-
 
 
 			if (col.size() != 1)
@@ -187,7 +198,6 @@ namespace gvModelUnitTests
 			{
 				Assert::Fail();
 			}
-
 
 			if (col.size() != 3)
 				Assert::Fail();

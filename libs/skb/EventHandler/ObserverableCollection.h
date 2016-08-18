@@ -32,22 +32,22 @@ namespace skb    //means SerKoz Bicycles
 			return _collection.size();
 		}
 
-		const_iterator& begin() const
+		const_iterator begin() const
 		{
 			return _collection.begin();
 		}
 
-		iterator& begin()
+		iterator begin()
 		{
 			return _collection.begin();
 		}
 
-		const_iterator& end() const
+		const_iterator end() const
 		{
 			return _collection.end();
 		}
 
-		iterator& end()
+		iterator end()
 		{
 			return _collection.end();
 		}
@@ -91,25 +91,26 @@ namespace skb    //means SerKoz Bicycles
 
 		iterator insert(const_iterator pos, const ItemType& value)
 		{
-			auto it = _collection->insert(pos, value);
+			auto it = _collection.insert(pos, value);
 			itemAdded(ItemAddedEventArgs<ItemType>(*it));
 			return it;
 		}
 
 		iterator insert(const_iterator pos, ItemType&& value)
 		{
-			auto it = _collection->insert(pos, std::move(value));
+			auto it = _collection.insert(pos, std::move(value));
 			itemAdded(ItemAddedEventArgs<ItemType>(*it));
 			return it;
 		}
 
 
-
+		/*
+		// Return iterator of next item after deleted item (like stl erase)
+		*/
 		iterator erase(const_iterator pos)
 		{
 			itemRemoved(ItemRemovedEventArgs<ItemType>(*pos));
-			auto it = _collection->erase(pos)
-			return it;
+			return _collection.erase(pos);
 		}
 
 		///*
@@ -117,7 +118,7 @@ namespace skb    //means SerKoz Bicycles
 		//*/
 		//const CollectionType<ItemType, std::allocator<ItemType> >* getItems() const
 		//{
-		//	return _collection->get();
+		//	return _collection.get();
 		//}
 
 

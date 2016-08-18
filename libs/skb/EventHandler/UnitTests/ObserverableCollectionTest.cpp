@@ -203,5 +203,31 @@ namespace gvModelUnitTests
 				Assert::Fail();
 
 		}
+
+
+		TEST_METHOD(UniquePtrCollection)
+		{
+			skb::ObserverableCollection<std::list, std::unique_ptr<int>> col;
+			{
+				for (int i = 1; i < 10; i++)
+				{
+					col.push_back(std::unique_ptr<int>(new int(i)));
+				}
+
+				for (int i = 0; i > -5; i--)
+				{
+					col.insert(col.begin(), std::unique_ptr<int>(new int(i)));
+				}
+			}
+			auto it = col.begin();
+			int i = -4;
+			for (it, i; it != col.end(); i++, it++)
+			{
+				int* value = (*it).get(); 
+				if (**it != i)
+					Assert::Fail();
+			}
+
+		}
 	};
 }
